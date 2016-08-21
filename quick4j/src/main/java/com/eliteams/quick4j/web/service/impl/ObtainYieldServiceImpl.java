@@ -70,7 +70,7 @@ public class ObtainYieldServiceImpl implements ObtainYieldService {
 	 */
 	@Override
 	public void obtainoYieldAndStockFromSqlserver(List<DShiftOutput> sqlserverList) {
-		log.info("解析sqlserverList");
+		log.debug("解析sqlserverList");
 		for (DShiftOutput sqlserver : sqlserverList) {
 			
 //			从每一条sqlserver中得到当前产量，分别插入更新表和流水记录表
@@ -114,7 +114,7 @@ public class ObtainYieldServiceImpl implements ObtainYieldService {
 		// 获取最新设备报工数
 		long numTwo = sqlserver.getDaNum().longValue();
 		long numThree = numTwo - numOne;//计算最新生产量
-		log.info("上一次采集量为"+numOne+" 最新一次为"+numTwo+" 计算最新产量为"+numThree);
+		log.debug("上一次采集量为"+numOne+" 最新一次为"+numTwo+" 计算最新产量为"+numThree);
 		// 插入到更新表
 		obtainYieldMapper.insertOrUpdate(obtainYield);
 		
