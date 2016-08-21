@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eliteams.quick4j.web.dao.SapOrderMapper">
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.SapOrder">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="product_order_id" jdbcType="VARCHAR" property="productOrderId" />
+    <result column="product_order_type" jdbcType="VARCHAR" property="productOrderType" />
+    <result column="sale_order_id" jdbcType="VARCHAR" property="saleOrderId" />
+    <result column="sale_order_row" jdbcType="VARCHAR" property="saleOrderRow" />
+    <result column="user_simple_name" jdbcType="VARCHAR" property="userSimpleName" />
+    <result column="manufacture_version" jdbcType="VARCHAR" property="manufactureVersion" />
+    <result column="material_id" jdbcType="VARCHAR" property="materialId" />
+    <result column="material_describe" jdbcType="VARCHAR" property="materialDescribe" />
+    <result column="target_sum" jdbcType="INTEGER" property="targetSum" />
+    <result column="finished_total" jdbcType="INTEGER" property="finishedTotal" />
+    <result column="waste_total" jdbcType="INTEGER" property="wasteTotal" />
+    <result column="relate_scarp" jdbcType="INTEGER" property="relateScarp" />
+    <result column="state_mark" jdbcType="INTEGER" property="stateMark" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="plan_start_date" jdbcType="DATE" property="planStartDate" />
+    <result column="plan_end_date" jdbcType="DATE" property="planEndDate" />
+    <result column="del_remark" jdbcType="CHAR" property="delRemark" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  
+  <resultMap type="com.eliteams.quick4j.web.model.OrderNode" id="OrderNodeResultMap">
+  	<id column="id" jdbcType="BIGINT" property="id" />
+  	<result column="product_order_id" jdbcType="VARCHAR" property="productOrderId" />
+  	<result column="material_id" jdbcType="VARCHAR" property="materialId" />
+    <result column="target_sum" jdbcType="INTEGER" property="targetSum" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, product_order_id, product_order_type, sale_order_id, sale_order_row, user_simple_name, 
+    manufacture_version, material_id, material_describe, target_sum, finished_total, 
+    waste_total, relate_scarp, state_mark,unit, plan_start_date, plan_end_date, del_remark, state, 
+    create_time
+  </sql>
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="example.criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="example.criteria.criteria" item="criterion" >
+              <choose >
+                <when test="example.criterion.noValue" >
+                  and ${example.criterion.condition}
+                </when>
+                <when test="example.criterion.singleValue" >
+                  and ${example.criterion.condition} #{criterion.value}
+                </when>
+                <when test="example.criterion.betweenValue" >
+                  and ${example.criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="example.criterion.listValue" >
+                  and ${example.criterion.condition}
+                  <foreach collection="example.criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{example.listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+      	and del_remark != 'X'
+    </where>
+  </sql>
+  
+  <select id="getSapOrderByPageAndKeywordsExample" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <if test="example.distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sap_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="keywords != null and keywords != '' ">
+		AND (
+			product_order_id LIKE "%"#{keywords}"%"
+			or product_order_type LIKE "%"#{keywords}"%"
+			or user_simple_name LIKE "%"#{keywords}"%"
+			or sale_order_id LIKE "%"#{keywords}"%"
+			or material_id LIKE "%"#{keywords}"%"
+			or material_describe LIKE "%"#{keywords}"%"
+		)
+ 	</if>
+    <if test="example.orderByClause != null" >
+      order by ${example.orderByClause}
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sap_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.SapOrder">
+    insert into sap_order (product_order_id, product_order_type, 
+      sale_order_id, sale_order_row, user_simple_name, 
+      manufacture_version, material_id, material_describe, 
+      target_sum, finished_total, waste_total, relate_scarp, state_mark,
+      unit, plan_start_date, plan_end_date, 
+      del_remark, state, create_time
+      )
+    values (#{productOrderId,jdbcType=VARCHAR}, #{productOrderType,jdbcType=VARCHAR}, 
+      #{saleOrderId,jdbcType=VARCHAR}, #{saleOrderRow,jdbcType=VARCHAR}, #{userSimpleName,jdbcType=VARCHAR}, 
+      #{manufactureVersion,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{materialDescribe,jdbcType=VARCHAR}, 
+      #{targetSum,jdbcType=INTEGER}, #{finishedTotal,jdbcType=INTEGER}, #{wasteTotal,jdbcType=INTEGER}, #{relateScarp,jdbcType=INTEGER},
+      #{stateMark,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR}, #{planStartDate,jdbcType=DATE}, #{planEndDate,jdbcType=DATE}, 
+      #{delRemark,jdbcType=CHAR}, #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+      ON DUPLICATE KEY UPDATE 
+      product_order_type = #{productOrderType,jdbcType=VARCHAR},
+      sale_order_id = #{saleOrderId,jdbcType=VARCHAR},
+      sale_order_row = #{saleOrderRow,jdbcType=VARCHAR},
+      user_simple_name = #{userSimpleName,jdbcType=VARCHAR},
+      manufacture_version = #{manufactureVersion,jdbcType=VARCHAR},
+      material_id = #{materialId,jdbcType=VARCHAR},
+      material_describe = #{materialDescribe,jdbcType=VARCHAR},
+      target_sum = #{targetSum,jdbcType=INTEGER},
+      finished_total = #{finishedTotal,jdbcType=INTEGER},
+      waste_total = #{wasteTotal,jdbcType=INTEGER},
+      relate_scarp = #{relateScarp,jdbcType=INTEGER},
+      state_mark = #{stateMark,jdbcType=INTEGER},
+      unit = #{unit,jdbcType=VARCHAR},
+      plan_start_date = #{planStartDate,jdbcType=DATE},
+      plan_end_date = #{planEndDate,jdbcType=DATE},
+      del_remark = #{delRemark,jdbcType=CHAR},
+      state = #{state,jdbcType=VARCHAR}
+  </insert>
+  <!-- <insert id="insert" parameterType="com.eliteams.quick4j.web.model.SapOrder">
+    insert into sap_order (id, product_order_id, product_order_type, 
+      sale_order_id, sale_order_row, user_simple_name, 
+      manufacture_version, material_id, material_describe, 
+      target_sum, finished_total, waste_total, 
+      unit, plan_start_date, plan_end_date, 
+      del_remark, state, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{productOrderId,jdbcType=VARCHAR}, #{productOrderType,jdbcType=VARCHAR}, 
+      #{saleOrderId,jdbcType=VARCHAR}, #{saleOrderRow,jdbcType=VARCHAR}, #{userSimpleName,jdbcType=VARCHAR}, 
+      #{manufactureVersion,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{materialDescribe,jdbcType=VARCHAR}, 
+      #{targetSum,jdbcType=INTEGER}, #{finishedTotal,jdbcType=INTEGER}, #{wasteTotal,jdbcType=INTEGER}, 
+      #{unit,jdbcType=VARCHAR}, #{planStartDate,jdbcType=DATE}, #{planEndDate,jdbcType=DATE}, 
+      #{delRemark,jdbcType=CHAR}, #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert> -->
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.SapOrder">
+    update sap_order
+    set product_order_id = #{productOrderId,jdbcType=VARCHAR},
+      product_order_type = #{productOrderType,jdbcType=VARCHAR},
+      sale_order_id = #{saleOrderId,jdbcType=VARCHAR},
+      sale_order_row = #{saleOrderRow,jdbcType=VARCHAR},
+      user_simple_name = #{userSimpleName,jdbcType=VARCHAR},
+      manufacture_version = #{manufactureVersion,jdbcType=VARCHAR},
+      material_id = #{materialId,jdbcType=VARCHAR},
+      material_describe = #{materialDescribe,jdbcType=VARCHAR},
+      target_sum = #{targetSum,jdbcType=INTEGER},
+      finished_total = #{finishedTotal,jdbcType=INTEGER},
+      waste_total = #{wasteTotal,jdbcType=INTEGER},
+      relate_scarp = #{relateScarp,jdbcType=INTEGER},
+      state_mark = #{stateMark,jdbcType=INTEGER},
+      unit = #{unit,jdbcType=VARCHAR},
+      plan_start_date = #{planStartDate,jdbcType=DATE},
+      plan_end_date = #{planEndDate,jdbcType=DATE},
+      del_remark = #{delRemark,jdbcType=CHAR},
+      state = #{state,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, product_order_id, product_order_type, sale_order_id, sale_order_row, user_simple_name, 
+    manufacture_version, material_id, material_describe, target_sum, finished_total, 
+    waste_total, relate_scarp, state_mark, unit, plan_start_date, plan_end_date, del_remark, state, create_time
+    from sap_order
+    where id = #{id,jdbcType=BIGINT} AND del_remark != 'X'
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, product_order_id, product_order_type, sale_order_id, sale_order_row, user_simple_name, 
+    manufacture_version, material_id, material_describe, target_sum, finished_total, 
+    waste_total, relate_scarp, state_mark, unit, plan_start_date, plan_end_date, del_remark, state, create_time
+    from sap_order AND del_remark != 'X'
+  </select>
+  <select id="getSapOrderByPage" resultMap="BaseResultMap" parameterType="com.eliteams.quick4j.core.feature.orm.mybatis.Page" >
+    select * from sap_order where del_remark != 'X' ORDER BY sale_order_id DESC 
+  </select>
+  <select id="getSapOrderByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
+    select * from sap_order where del_remark != 'X'
+    	<if test="keywords != null and keywords !='' ">
+				AND (
+					product_order_id LIKE "%"#{keywords}"%"
+					or product_order_type LIKE "%"#{keywords}"%"
+					or user_simple_name LIKE "%"#{keywords}"%"
+					or sale_order_id LIKE "%"#{keywords}"%"
+					or material_id LIKE "%"#{keywords}"%"
+					or material_describe LIKE "%"#{keywords}"%"
+				)
+   		</if>
+   <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="orderByClause == null" >
+      order by sale_order_id DESC
+    </if>
+  </select>
+  <select id="selectByProductOrderId" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select * from sap_order where product_order_id = #{productOrderId,jdbcType=VARCHAR} AND del_remark != 'X'
+  </select>
+  <select id="getSapOrderListBySaleOrderId" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select * from sap_order where sale_order_id = #{saleOrderId,jdbcType=VARCHAR} AND del_remark != 'X'
+  </select>
+  <select id="getSapOrderListBySaleOrderIdAndSaleOrderRow" resultMap="BaseResultMap" parameterType="map">
+  	select * from sap_order where sale_order_id = #{saleOrderId,jdbcType=VARCHAR} AND sale_order_row = #{saleOrderRow,jdbcType=VARCHAR} AND del_remark != 'X'
+  </select>
+  <select id="getBySaleOrderIdAndSimpleDescribe" resultMap="BaseResultMap" parameterType="map">
+  	select * from sap_order where sale_order_id = #{saleOrderId,jdbcType=VARCHAR} AND sale_order_row = #{saleOrderRow,jdbcType=VARCHAR} AND material_describe LIKE "%"#{simpleDescribe}"%" AND del_remark != 'X'
+  </select>
+  
+  <select id="getSapOrderBySaleOrderId" resultMap="OrderNodeResultMap" parameterType="java.lang.String">
+  	select * from sap_order where sale_order_id = #{saleOrderId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectSapOrderList" resultMap="BaseResultMap">
+  	select * from sap_order where del_remark != 'X' and ISNULL(state_mark)
+  </select>
+  <update id="updateSapOrderStateMark" parameterType="java.lang.String">
+    update sap_order
+    set state_mark ='2'
+    where product_order_id = #{productOrderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateSapOrderStateMarkToAllocate" parameterType="java.lang.String">
+    update sap_order
+    set state_mark ='1'
+    where product_order_id = #{productOrderId,jdbcType=VARCHAR}
+  </update>
+  <select id="getMaterialIdFromUnstart" resultType="java.lang.String">
+  	select DISTINCT material_id from sap_order where del_remark != 'X' and ISNULL(state_mark)
+  </select>
+</mapper>

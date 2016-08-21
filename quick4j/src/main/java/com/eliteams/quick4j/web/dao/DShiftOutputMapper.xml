@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.DShiftOutputMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.DShiftOutput" >
+    <id column="d_so_id" property="dSoId" jdbcType="VARCHAR" />
+    <result column="eqpt_id" property="eqptId" jdbcType="INTEGER" />
+    <result column="shift_id" property="shiftId" jdbcType="INTEGER" />
+    <result column="output_date" property="outputDate" jdbcType="DATE" />
+    <result column="wo_code" property="woCode" jdbcType="VARCHAR" />
+    <result column="da_num" property="daNum" jdbcType="DECIMAL" />
+    <result column="report_num" property="reportNum" jdbcType="BIGINT" />
+    <result column="pre_da_num" property="preDaNum" jdbcType="DECIMAL" />
+    <result column="pre_report_num" property="preReportNum" jdbcType="DECIMAL" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="beat_real" property="beatReal" jdbcType="DECIMAL" />
+    <result column="beat_total" property="beatTotal" jdbcType="DECIMAL" />
+    <result column="beat_count" property="beatCount" jdbcType="INTEGER" />
+  </resultMap>
+ 
+  <select id="selectByOutputDate" resultMap="BaseResultMap" parameterType="java.sql.Date" >
+    select d_so_id, eqpt_id, shift_id, output_date, wo_code, da_num, report_num, pre_da_num, 
+    pre_report_num, last_update_time, beat_real, beat_total, beat_count
+    from d_shift_output
+    where output_date = #{outputDate,jdbcType=TIMESTAMP}
+    </select>
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.SysSerialNumberMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.SysSerialNumber" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="module_code" property="moduleCode" jdbcType="VARCHAR" />
+    <result column="module_name" property="moduleName" jdbcType="VARCHAR" />
+    <result column="max_serial" property="maxSerial" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_serial_number
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.SysSerialNumber" >
+    insert into sys_serial_number (id, module_code, module_name, 
+      max_serial, create_time)
+    values (#{id,jdbcType=BIGINT}, #{moduleCode,jdbcType=VARCHAR}, #{moduleName,jdbcType=VARCHAR}, 
+      #{maxSerial,jdbcType=BIGINT}, NOW())
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.SysSerialNumber" >
+    update sys_serial_number
+    set module_code = #{moduleCode,jdbcType=VARCHAR},
+      module_name = #{moduleName,jdbcType=VARCHAR},
+      max_serial = #{maxSerial,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, module_code, module_name, max_serial, create_time
+    from sys_serial_number
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, module_code, module_name, max_serial, create_time
+    from sys_serial_number
+  </select>
+  
+  <select id="getMaxSerialByModuleCode" resultType="java.lang.Long" parameterType="java.lang.String" >
+    select MAX(max_serial) from sys_serial_number where module_code = #{moduleCode,jdbcType=VARCHAR}
+  </select>
+</mapper>

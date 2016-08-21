@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.BomOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.BomOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="product_order_id" property="productOrderId" jdbcType="VARCHAR" />
+    <result column="preserve_id" property="preserveId" jdbcType="VARCHAR" />
+    <result column="preserve_project" property="preserveProject" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="target_sum" property="targetSum" jdbcType="DOUBLE" />
+    <result column="del_remark" property="delRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap type="com.eliteams.quick4j.web.model.OrderNode" id="OrderNodeResultMap">
+  	<id column="id" property="id" jdbcType="BIGINT" />
+  	<result column="product_order_id" property="productOrderId" jdbcType="VARCHAR" />
+  	<result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="target_sum" property="targetSum" jdbcType="DOUBLE" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bom_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.BomOrder" >
+    insert into bom_order (id, product_order_id, preserve_id, 
+      preserve_project, material_id, target_sum, 
+      del_remark)
+    values (#{id,jdbcType=BIGINT}, #{productOrderId,jdbcType=VARCHAR}, #{preserveId,jdbcType=VARCHAR}, 
+      #{preserveProject,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{targetSum,jdbcType=DOUBLE}, 
+      #{delRemark,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.BomOrder" >
+    update bom_order
+    set product_order_id = #{productOrderId,jdbcType=VARCHAR},
+      preserve_id = #{preserveId,jdbcType=VARCHAR},
+      preserve_project = #{preserveProject,jdbcType=VARCHAR},
+      material_id = #{materialId,jdbcType=VARCHAR},
+      target_sum = #{targetSum,jdbcType=DOUBLE},
+      del_remark = #{delRemark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, product_order_id, preserve_id, preserve_project, material_id, target_sum, 
+    del_remark
+    from bom_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, product_order_id, preserve_id, preserve_project, material_id, target_sum, 
+    del_remark
+    from bom_order
+  </select>
+  <select id="getBomOrderByProductOrderId" resultMap="OrderNodeResultMap" parameterType="java.lang.String">
+  	select * from bom_order where product_order_id = #{productOrderId,jdbcType=VARCHAR}
+  </select>
+</mapper>

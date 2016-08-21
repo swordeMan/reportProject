@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.ReworkReasonMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.ReworkReason" >
+
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rework_reason
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.ReworkReason" >
+    insert into rework_reason (id, category, reason
+      )
+    values (#{id,jdbcType=BIGINT}, #{category,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.ReworkReason" >
+    update rework_reason
+    set category = #{category,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, category, reason
+    from rework_reason
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, category, reason
+    from rework_reason
+  </select>
+   <select id="getReworkReasonByPage" resultMap="BaseResultMap" parameterType="com.eliteams.quick4j.core.feature.orm.mybatis.Page" >
+    SELECT * FROM rework_reason ORDER BY id DESC
+  </select>
+  <select id="getReworkReasonByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
+    SELECT * FROM rework_reason  where 1=1
+    	<if test="keywords != null and keywords !='' ">
+				AND (
+					category LIKE "%"#{keywords}"%"
+					or reason LIKE "%"#{keywords}"%"
+					)
+   		</if>
+   <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByMaterialName" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select * from rework_reason where category= #{materialName,jdbcType=VARCHAR}
+  </select>
+</mapper>

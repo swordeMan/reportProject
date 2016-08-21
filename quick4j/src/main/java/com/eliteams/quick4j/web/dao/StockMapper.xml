@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.StockMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.Stock" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="material_describe" property="materialDescribe" jdbcType="VARCHAR" />
+    <result column="total_production" property="totalProduction" jdbcType="BIGINT" />
+    <result column="stock_num" property="stockNum" jdbcType="BIGINT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from stock
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.Stock" >
+    insert into stock (id, material_id, material_describe, 
+      total_production, stock_num)
+    values (#{id,jdbcType=BIGINT}, #{materialId,jdbcType=VARCHAR}, #{materialDescribe,jdbcType=VARCHAR}, 
+      #{totalProduction,jdbcType=BIGINT}, #{stockNum,jdbcType=BIGINT})
+  </insert>
+  <update id="updateByStockMaterialId" parameterType="com.eliteams.quick4j.web.model.Stock" >
+    update stock
+    set stock_num = #{stockNum,jdbcType=BIGINT}
+    where material_id = #{materialId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, material_id, material_describe, total_production, stock_num
+    from stock
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, material_id, material_describe, total_production, stock_num
+    from stock
+  </select>
+  <select id="selectByMaterialId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select  * from stock where material_id = #{materialId,jdbcType=VARCHAR}
+  </select>
+  <update id="updateByMaterialId" parameterType="com.eliteams.quick4j.web.model.Correct">
+    update stock
+    set 
+      total_production =total_production+#{correctNum,jdbcType=VARCHAR},
+      stock_num =stock_num+#{correctNum,jdbcType=VARCHAR}
+    where material_id = #{materialId,jdbcType=VARCHAR}
+  </update>
+  <select id="getStockByPage" resultMap="BaseResultMap" parameterType="com.eliteams.quick4j.core.feature.orm.mybatis.Page" >
+    SELECT * FROM stock ORDER BY id DESC
+  </select>
+  <select id="getStockByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
+    SELECT * FROM  stock where 1=1
+    	<if test="keywords != null and keywords !='' ">
+				AND (
+					material_id           LIKE "%"#{keywords}"%"
+					or material_describe  LIKE "%"#{keywords}"%"
+					or total_production   LIKE "%"#{keywords}"%"
+					or stock_num          LIKE "%"#{keywords}"%"
+					)
+   		</if>
+     ORDER BY id DESC
+  </select>
+  <update id="updateByMaterialIdMap"  parameterType="java.util.Map">
+  
+  	insert into stock (material_id, material_describe, 
+      total_production, stock_num)
+    values (#{materialId,jdbcType=VARCHAR}, #{materialDescribe,jdbcType=VARCHAR}, 
+      #{numThree,jdbcType=BIGINT}, #{numThree,jdbcType=BIGINT})
+  	ON DUPLICATE KEY UPDATE
+     total_production =total_production+#{numThree,jdbcType=BIGINT},
+     stock_num =stock_num+#{numThree,jdbcType=BIGINT}
+  </update>
+   <update id="updateByReworkId" parameterType="com.eliteams.quick4j.web.model.Rework">
+    update stock
+    set 
+      total_production =total_production-#{reworkNum,jdbcType=BIGINT},
+      stock_num =stock_num-#{reworkNum,jdbcType=BIGINT}
+    where material_id = #{materialId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByMaterialName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from stock where material_describe like ""#{material,jdbcType=VARCHAR}"%"
+  </select>
+  <select id="selectByMaterialNameOne" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from stock where material_describe like ""#{material,jdbcType=VARCHAR}"%" or material_describe like "旋压%"
+  </select>
+</mapper>

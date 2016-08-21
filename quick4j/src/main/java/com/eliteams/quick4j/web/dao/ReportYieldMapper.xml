@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.ReportYieldMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.ReportYield" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="message_id" property="messageId" jdbcType="VARCHAR" />
+    <result column="operation" property="operation" jdbcType="CHAR" />
+    <result column="operation_finish_no" property="operationFinishNo" jdbcType="INTEGER" />
+    <result column="confirm_count" property="confirmCount" jdbcType="INTEGER" />
+    <result column="product_order_id" property="productOrderId" jdbcType="VARCHAR" />
+    <result column="sale_order_id" property="saleOrderId" jdbcType="VARCHAR" />
+    <result column="sale_order_row" property="saleOrderRow" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="material_describe" property="materialDescribe" jdbcType="VARCHAR" />
+    <result column="process_describe" property="processDescribe" jdbcType="VARCHAR" />
+    <result column="current_yield" property="currentYield" jdbcType="INTEGER" />
+    <result column="current_waste" property="currentWaste" jdbcType="INTEGER" />
+    <result column="report_username" property="reportUsername" jdbcType="VARCHAR" />
+    <result column="manufacture_date" property="manufactureDate" jdbcType="DATE" />
+    <result column="classes" property="classes" jdbcType="VARCHAR" />
+    <result column="account_date" property="accountDate" jdbcType="DATE" />
+    <result column="message_type" property="messageType" jdbcType="CHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from report_yield
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.ReportYield" >
+    insert into report_yield (message_id, operation, 
+      operation_finish_no, confirm_count, product_order_id, 
+      sale_order_id, sale_order_row, material_id, material_describe, process_describe, 
+      current_yield, current_waste, report_username, 
+      manufacture_date, classes, account_date, 
+      message_type, message, create_time
+      )
+    values (#{messageId,jdbcType=VARCHAR}, #{operation,jdbcType=CHAR}, 
+      #{operationFinishNo,jdbcType=INTEGER}, #{confirmCount,jdbcType=INTEGER}, #{productOrderId,jdbcType=VARCHAR}, 
+      #{saleOrderId,jdbcType=VARCHAR}, #{saleOrderRow,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{materialDescribe,jdbcType=VARCHAR}, #{processDescribe,jdbcType=VARCHAR}, 
+      #{currentYield,jdbcType=INTEGER}, #{currentWaste,jdbcType=INTEGER}, #{reportUsername,jdbcType=VARCHAR}, 
+      #{manufactureDate,jdbcType=DATE}, #{classes,jdbcType=VARCHAR}, #{accountDate,jdbcType=DATE}, 
+      #{messageType,jdbcType=CHAR}, #{message,jdbcType=VARCHAR}, NOW()
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.ReportYield" >
+    update report_yield
+    set message_id = #{messageId,jdbcType=VARCHAR},
+      operation = #{operation,jdbcType=CHAR},
+      operation_finish_no = #{operationFinishNo,jdbcType=INTEGER},
+      confirm_count = #{confirmCount,jdbcType=INTEGER},
+      product_order_id = #{productOrderId,jdbcType=VARCHAR},
+      sale_order_id = #{saleOrderId,jdbcType=VARCHAR},
+      sale_order_row = #{saleOrderRow,jdbcType=VARCHAR},
+      material_id = #{materialId,jdbcType=VARCHAR},
+      material_describe = #{materialDescribe,jdbcType=VARCHAR},
+      process_describe = #{processDescribe,jdbcType=VARCHAR},
+      current_yield = #{currentYield,jdbcType=INTEGER},
+      current_waste = #{currentWaste,jdbcType=INTEGER},
+      report_username = #{reportUsername,jdbcType=VARCHAR},
+      manufacture_date = #{manufactureDate,jdbcType=DATE},
+      classes = #{classes,jdbcType=VARCHAR},
+      account_date = #{accountDate,jdbcType=DATE},
+      message_type = #{messageType,jdbcType=CHAR},
+      message = #{message,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, message_id, operation, operation_finish_no, confirm_count, product_order_id, 
+    sale_order_id, sale_order_row, material_id, material_describe, process_describe, current_yield, current_waste, report_username, 
+    manufacture_date, classes, account_date, message_type, message, create_time
+    from report_yield
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByMessageId" resultMap="BaseResultMap" parameterType="com.eliteams.quick4j.web.model.ReportYield" >
+    select id, message_id, operation, operation_finish_no, confirm_count, product_order_id, 
+    sale_order_id, sale_order_row, material_id, material_describe, process_describe, current_yield, current_waste, report_username, 
+    manufacture_date, classes, account_date, message_type, message, create_time
+    from report_yield
+    where message_id = #{messageId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, message_id, operation, operation_finish_no, confirm_count, product_order_id, 
+    sale_order_id, sale_order_row, material_id, material_describe, process_describe, current_yield, current_waste, report_username, 
+    manufacture_date, classes, account_date, message_type, message, create_time
+    from report_yield
+  </select>
+  
+  <select id="getReportYieldByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
+    select id, message_id, operation, operation_finish_no, confirm_count, product_order_id, 
+    sale_order_id, sale_order_row,  material_id, material_describe, process_describe, current_yield, current_waste, report_username, 
+    manufacture_date, classes, account_date, message_type, message, create_time
+    from report_yield where 1=1
+    	<if test="keywords != null and keywords !='' ">
+				AND (
+					message_id LIKE "%"#{keywords}"%"
+					or product_order_id LIKE "%"#{keywords}"%"
+					or sale_order_id LIKE "%"#{keywords}"%"
+					or report_username LIKE "%"#{keywords}"%"
+				)
+   		</if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="orderByClause == null" >
+      order by message_id DESC
+    </if>
+  </select>
+  
+  <select id="getALLReportYieldByProductOrderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, message_id, operation, operation_finish_no, confirm_count, product_order_id, 
+    sale_order_id, sale_order_row, material_id, material_describe, process_describe, current_yield, current_waste, report_username, 
+    manufacture_date, classes, account_date, message_type, message, create_time
+    from report_yield where product_order_id = #{productOrderId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getAReportYieldByProductOrderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, message_id, operation, operation_finish_no, confirm_count, product_order_id, 
+    sale_order_id, sale_order_row, material_id, material_describe, process_describe, current_yield, current_waste, report_username, 
+    manufacture_date, classes, account_date, message_type, message, create_time
+    from report_yield where operation = 'A' AND product_order_id = #{productOrderId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getBReportYieldByProductOrderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, message_id, operation, operation_finish_no, confirm_count, product_order_id, 
+    sale_order_id, sale_order_row, material_id, material_describe, process_describe, current_yield, current_waste, report_username, 
+    manufacture_date, classes, account_date, message_type, message, create_time
+    from report_yield where operation = 'B' AND product_order_id = #{productOrderId,jdbcType=VARCHAR}
+  </select>
+</mapper>

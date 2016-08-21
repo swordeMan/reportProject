@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.ObtainYieldMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.ObtainYield" >
+    <id column="d_so_id" property="dSoId" jdbcType="VARCHAR" />
+    <result column="eqpt_id" property="eqptId" jdbcType="INTEGER" />
+    <result column="shift_id" property="shiftId" jdbcType="INTEGER" />
+    <result column="output_date" property="outputDate" jdbcType="TIMESTAMP" />
+    <result column="report_num" property="reportNum" jdbcType="BIGINT" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from obtain_yield
+    where dSoId = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.ObtainYield" >
+    insert into obtain_yield (d_so_id, eqpt_id, 
+      shift_id, output_date, report_num, 
+      last_update_time)
+    values (#{dSoId,jdbcType=VARCHAR}, #{eqptId,jdbcType=INTEGER}, 
+      #{shiftId,jdbcType=INTEGER}, #{outputDate,jdbcType=TIMESTAMP}, #{reportNum,jdbcType=BIGINT}, 
+      #{lastUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.ObtainYield" >
+    update obtain_yield
+    set
+      eqpt_id = #{eqptId,jdbcType=INTEGER},
+      shift_id = #{shiftId,jdbcType=INTEGER},
+      output_date = #{outputDate,jdbcType=TIMESTAMP},
+      report_num = #{reportNum,jdbcType=BIGINT},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+    where d_so_id = #{dSoId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select d_so_id, eqpt_id, shift_id, output_date, report_num, last_update_time
+    from obtain_yield
+    where d_so_id = #{dSoId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select d_so_id, eqpt_id, shift_id, output_date, report_num, last_update_time
+    from obtain_yield
+  </select>
+  <insert id="insertOrUpdate" parameterType="com.eliteams.quick4j.web.model.ObtainYield" >
+    insert into obtain_yield (d_so_id, eqpt_id, 
+      shift_id, output_date, report_num, 
+      last_update_time)
+    values (#{dSoId,jdbcType=VARCHAR}, #{eqptId,jdbcType=INTEGER}, 
+      #{shiftId,jdbcType=INTEGER}, #{outputDate,jdbcType=TIMESTAMP}, #{reportNum,jdbcType=BIGINT}, 
+      #{lastUpdateTime,jdbcType=TIMESTAMP})
+      on duplicate key update  
+      eqpt_id = #{eqptId,jdbcType=INTEGER},
+      shift_id = #{shiftId,jdbcType=INTEGER},
+      output_date = #{outputDate,jdbcType=TIMESTAMP},
+      report_num = #{reportNum,jdbcType=BIGINT},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP};
+  </insert>
+  <select id="selectByShiftIdDate" resultType="java.lang.Long" parameterType="com.eliteams.quick4j.web.model.ObtainYield"  >
+    select report_num
+    from obtain_yield
+    where eqpt_id = #{eqptId,jdbcType=INTEGER} and shift_id = #{shiftId,jdbcType=INTEGER} and output_date = #{outputDate,jdbcType=TIMESTAMP}
+  </select>
+  
+  <select id="selectByShiftIdDate1" resultType="java.lang.Long" >
+    select count(*)
+    from obtain_yield
+  </select>
+</mapper>

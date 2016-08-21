@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.WorkshopMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.Workshop" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="
+workshop" property="
+workshop" jdbcType="VARCHAR" />
+    <result column="factory" property="factory" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from workshop where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.Workshop" >
+    insert into workshop (id,workshop,factory)
+    values (#{id,jdbcType=INTEGER}, #{workshop,jdbcType=VARCHAR}, #{factory,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.Workshop" >
+    update workshop set workshop = #{workshop,jdbcType=VARCHAR},factory = #{factory,jdbcType=VARCHAR} where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, 
+workshop, factory
+    from workshop
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, 
+workshop, factory
+    from workshop
+  </select>
+   <select id="getWorkshopByPage" resultMap="BaseResultMap" parameterType="com.eliteams.quick4j.core.feature.orm.mybatis.Page">
+    select id, 
+workshop, factory
+    from workshop workshop ORDER BY id DESC
+  </select>
+  <select id="getWorkshopByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
+    select * from workshop as a where 1=1
+    <if test="keywords != null and keywords !='' ">
+				 AND a.workshop LIKE "%"#{keywords}"%"
+   		</if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

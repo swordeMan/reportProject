@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.ScrapViewMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.ScrapView" >
+    <result column="s_reason" property="sReason" jdbcType="VARCHAR" />
+    <result column="illustration" property="illustration" jdbcType="VARCHAR" />
+    <result column="scrap_num" property="scrapNum" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="product_order_id" property="productOrderId" jdbcType="VARCHAR" />
+    <result column="scrap_id" property="scrapId" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="material_describe" property="materialDescribe" jdbcType="VARCHAR" />
+    <result column="scrap_time" property="scrapTime" jdbcType="TIMESTAMP" />
+    <result column="classes" property="classes" jdbcType="VARCHAR" />
+    <result column="production_process" property="productionProcess" jdbcType="VARCHAR" />
+    <result column="inspector" property="inspector" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="auditing_time" property="auditingTime" jdbcType="TIMESTAMP" />
+    <result column="auditing_contents" property="auditingContents" jdbcType="VARCHAR" />
+    <result column="scrap_auditing" property="scrapAuditing" jdbcType="INTEGER" />
+    <result column="file" property="file" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="sale_order_id" property="saleOrderId" jdbcType="VARCHAR" />
+    <result column="waste_total" property="wasteTotal" jdbcType="INTEGER" />
+    <result column="user_simple_name" jdbcType="VARCHAR" property="userSimpleName" />
+    <result column="classification" property="classification" jdbcType="VARCHAR" />
+    <result column="sale_order_row" jdbcType="VARCHAR" property="saleOrderRow" />
+  </resultMap>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.ScrapView" >
+    insert into scrap_view (s_reason, illustration, scrap_num, 
+      id, product_order_id, scrap_id, 
+      material_id, material_describe, scrap_time, 
+      classes, production_process, inspector, 
+      create_time, auditor, auditing_time, 
+      auditing_contents, scrap_auditing, file, 
+      state, sale_order_id, waste_total, user_simple_name, classification,sale_order_row)
+    values (#{sReason,jdbcType=VARCHAR}, #{illustration,jdbcType=VARCHAR}, #{scrapNum,jdbcType=INTEGER}, 
+      #{id,jdbcType=BIGINT}, #{productOrderId,jdbcType=VARCHAR}, #{scrapId,jdbcType=VARCHAR}, 
+      #{materialId,jdbcType=VARCHAR}, #{materialDescribe,jdbcType=VARCHAR}, #{scrapTime,jdbcType=TIMESTAMP}, 
+      #{classes,jdbcType=VARCHAR}, #{productionProcess,jdbcType=VARCHAR}, #{inspector,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{auditor,jdbcType=VARCHAR}, #{auditingTime,jdbcType=TIMESTAMP}, 
+      #{auditingContents,jdbcType=VARCHAR}, #{scrapAuditing,jdbcType=INTEGER}, #{file,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR}, #{saleOrderId,jdbcType=VARCHAR}, #{wasteTotal,jdbcType=INTEGER},
+      #{userSimpleName,jdbcType=VARCHAR}, #{classification,jdbcType=VARCHAR},#{saleOrderRow,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select s_reason, illustration, scrap_num, id, product_order_id, scrap_id, material_id, 
+    material_describe, scrap_time, classes, production_process, inspector, create_time, 
+    auditor, auditing_time, auditing_contents, scrap_auditing, file, state, sale_order_id, 
+    waste_total, user_simple_name, classification,sale_order_row
+    from scrap_view
+    where scrap_id = #{scrapId,jdbcType=VARCHAR}
+  </select>
+  <select id="getScrapDetailsByScrapView" parameterType="com.eliteams.quick4j.web.model.ScrapView" resultMap="BaseResultMap">
+  	SELECT s_reason,SUM(scrap_num) as scrapNum FROM scrap_view WHERE production_process=#{productionProcess,jdbcType=VARCHAR}
+  	and state="审核通过"
+  	and scrap_time LIKE ""#{time}"%"
+  	<if test="classification != null and classification != '' "  >
+      AND(
+      	 classification = #{classification,jdbcType=VARCHAR}
+      )
+    </if>
+  	GROUP BY production_process,s_reason
+  	ORDER BY scrapNum DESC
+  </select>
+  
+  <select id="getScrapTotalByMonth" parameterType="com.eliteams.quick4j.web.model.ScrapView" resultType="java.util.HashMap">
+  	select DATE_FORMAT(scrap_time,'%c') as month,SUM(scrap_num) as scrapNum from scrap_view where DATE_FORMAT(scrap_time,'%Y')=#{time,jdbcType=VARCHAR} 
+  	and production_process=#{productionProcess,jdbcType=VARCHAR}
+  	group by month;
+  </select>
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.ReworkMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.Rework" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="rework_id" property="reworkId" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="material_describe" property="materialDescribe" jdbcType="VARCHAR" />
+    <result column="production_procedure" property="productionProcedure" jdbcType="VARCHAR" />
+    <result column="factory" property="factory" jdbcType="VARCHAR" />
+    <result column="rework_time" property="reworkTime" jdbcType="DATE" />
+    <result column="classes" property="classes" jdbcType="VARCHAR" />
+    <result column="rework_num" property="reworkNum" jdbcType="BIGINT" />
+    <result column="create_personnel" property="createPersonnel" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="auditing_time" property="auditingTime" jdbcType="TIMESTAMP" />
+    <result column="auditing_illustration" property="auditingIllustration" jdbcType="VARCHAR" />
+    <result column="file" property="file" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="income" property="income" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rework
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.Rework" >
+    insert into rework (id, rework_id, material_id, 
+      material_describe, production_procedure, 
+      factory, rework_time, classes, 
+      rework_num, create_personnel, create_time, 
+      auditor, auditing_time, auditing_illustration, 
+      file, state, income
+      )
+    values (#{id,jdbcType=BIGINT}, #{reworkId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, 
+      #{materialDescribe,jdbcType=VARCHAR}, #{productionProcedure,jdbcType=VARCHAR}, 
+      #{factory,jdbcType=VARCHAR}, #{reworkTime,jdbcType=DATE}, #{classes,jdbcType=VARCHAR}, 
+      #{reworkNum,jdbcType=BIGINT}, #{createPersonnel,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{auditor,jdbcType=VARCHAR}, #{auditingTime,jdbcType=TIMESTAMP}, #{auditingIllustration,jdbcType=VARCHAR}, 
+      #{file,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{income,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.Rework" >
+    update rework
+    set rework_id = #{reworkId,jdbcType=VARCHAR},
+      material_id = #{materialId,jdbcType=VARCHAR},
+      material_describe = #{materialDescribe,jdbcType=VARCHAR},
+      production_procedure = #{productionProcedure,jdbcType=VARCHAR},
+      factory = #{factory,jdbcType=VARCHAR},
+      rework_time = #{reworkTime,jdbcType=DATE},
+      classes = #{classes,jdbcType=VARCHAR},
+      rework_num = #{reworkNum,jdbcType=BIGINT},
+      create_personnel = #{createPersonnel,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      auditing_time = #{auditingTime,jdbcType=TIMESTAMP},
+      auditing_illustration = #{auditingIllustration,jdbcType=VARCHAR},
+      file = #{file,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      income = #{income,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, rework_id, material_id, material_describe, production_procedure, factory, 
+    rework_time, classes, rework_num, create_personnel, create_time, auditor, auditing_time, 
+    auditing_illustration, file, state, income
+    from rework
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, rework_id, material_id, material_describe, production_procedure, factory, 
+    rework_time, classes, rework_num, create_personnel, create_time, auditor, auditing_time, 
+    auditing_illustration, file, state, income
+    from rework
+  </select>
+  <select id="selectByReworkId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select id, rework_id, material_id, material_describe, production_procedure, factory, rework_time,
+    classes, rework_num, create_personnel, create_time, auditor, auditing_time, auditing_illustration, 
+    file, state, income
+    from rework
+    where rework_id = #{reworkId,jdbcType=VARCHAR}
+  </select>
+  <select id="getReworkByPage" resultMap="BaseResultMap" parameterType="com.eliteams.quick4j.core.feature.orm.mybatis.Page" >
+    SELECT * FROM rework ORDER BY id DESC
+  </select>
+  <select id="getReworkByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
+    SELECT * FROM rework  where 1=1
+    	<if test="keywords != null and keywords !='' ">
+				AND (
+					rework_id LIKE "%"#{keywords}"%"
+					or material_describe  LIKE "%"#{keywords}"%"
+					or material_id LIKE "%"#{keywords}"%"
+					or production_procedure LIKE "%"#{keywords}"%"
+					or factory LIKE "%"#{keywords}"%"
+					or classes LIKE "%"#{keywords}"%"
+					or rework_num LIKE "%"#{keywords}"%"
+					or create_personnel LIKE "%"#{keywords}"%"
+					)
+   		</if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="orderByClause == null" >
+      order by rework_id DESC
+    </if>
+  </select>
+</mapper>

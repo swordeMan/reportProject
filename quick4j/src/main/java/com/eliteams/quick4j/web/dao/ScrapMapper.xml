@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.ScrapMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.Scrap" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="product_order_id" property="productOrderId" jdbcType="VARCHAR" />
+    <result column="scrap_id" property="scrapId" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="material_describe" property="materialDescribe" jdbcType="VARCHAR" />
+    <result column="scrap_time" property="scrapTime" jdbcType="TIMESTAMP" />
+    <result column="classes" property="classes" jdbcType="VARCHAR" />
+    <result column="scrap_num" property="scrapNum" jdbcType="INTEGER" />
+    <result column="production_process" property="productionProcess" jdbcType="VARCHAR" />
+    <result column="inspector" property="inspector" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="auditing_time" property="auditingTime" jdbcType="TIMESTAMP" />
+    <result column="auditing_contents" property="auditingContents" jdbcType="VARCHAR" />
+    <result column="scrap_auditing" property="scrapAuditing" jdbcType="INTEGER" />
+    <result column="file" property="file" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="relate_scrap" property="relateScrap" jdbcType="INTEGER" />
+    <result column="sale_order_id" property="saleOrderId" jdbcType="VARCHAR" />
+    <result column="user_simple_name" jdbcType="VARCHAR" property="userSimpleName" />
+    <result column="classification" property="classification" jdbcType="VARCHAR" />
+    <result column="message_type" property="messageType" jdbcType="CHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="sale_order_row" jdbcType="VARCHAR" property="saleOrderRow" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from scrap
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.Scrap" >
+    insert into scrap (id, product_order_id, scrap_id, 
+      material_id, material_describe, scrap_time, 
+      classes, scrap_num, production_process, 
+      inspector, create_time, auditor, 
+      auditing_time, auditing_contents, scrap_auditing, 
+      file, state, relate_scrap, sale_order_id, user_simple_name, classification,message_type,message,sale_order_row)
+    values (#{id,jdbcType=BIGINT}, #{productOrderId,jdbcType=VARCHAR}, #{scrapId,jdbcType=VARCHAR}, 
+      #{materialId,jdbcType=VARCHAR}, #{materialDescribe,jdbcType=VARCHAR}, #{scrapTime,jdbcType=TIMESTAMP}, 
+      #{classes,jdbcType=VARCHAR}, #{scrapNum,jdbcType=INTEGER}, #{productionProcess,jdbcType=VARCHAR}, 
+      #{inspector,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{auditor,jdbcType=VARCHAR}, 
+      #{auditingTime,jdbcType=TIMESTAMP}, #{auditingContents,jdbcType=VARCHAR}, #{scrapAuditing,jdbcType=INTEGER}, 
+      #{file,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR},#{relateScrap,jdbcType=INTEGER},#{saleOrderId,jdbcType=VARCHAR},#{userSimpleName,jdbcType=VARCHAR},#{classification,jdbcType=VARCHAR},
+      #{messageType,jdbcType=CHAR}, #{message,jdbcType=VARCHAR},#{saleOrderRow,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.Scrap" >
+    update scrap
+    set product_order_id = #{productOrderId,jdbcType=VARCHAR},
+      scrap_id = #{scrapId,jdbcType=VARCHAR},
+      material_id = #{materialId,jdbcType=VARCHAR},
+      material_describe = #{materialDescribe,jdbcType=VARCHAR},
+      scrap_time = #{scrapTime,jdbcType=TIMESTAMP},
+      classes = #{classes,jdbcType=VARCHAR},
+      scrap_num = #{scrapNum,jdbcType=INTEGER},
+      production_process = #{productionProcess,jdbcType=VARCHAR},
+      inspector = #{inspector,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      auditing_time = #{auditingTime,jdbcType=TIMESTAMP},
+      auditing_contents = #{auditingContents,jdbcType=VARCHAR},
+      scrap_auditing = #{scrapAuditing,jdbcType=INTEGER},
+      file = #{file,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      relate_scrap = #{relateScrap,jdbcType=INTEGER},
+      sale_order_id = #{saleOrderId,jdbcType=VARCHAR},
+      user_simple_name = #{userSimpleName,jdbcType=VARCHAR},
+      classification = #{classification,jdbcType=VARCHAR},
+      message_type = #{messageType,jdbcType=CHAR},
+      message = #{message,jdbcType=VARCHAR},
+      sale_order_row = #{saleOrderRow,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, product_order_id, scrap_id, material_id, material_describe, scrap_time, 
+    classes, scrap_num, production_process, inspector, create_time, auditor, auditing_time, 
+    auditing_contents, scrap_auditing, file, state, relate_scrap, sale_order_id, user_simple_name, classification,
+    message_type,message,sale_order_row
+    from scrap
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByscrapId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, product_order_id, scrap_id, material_id, material_describe, scrap_time, 
+    classes, scrap_num, production_process, inspector, create_time, auditor, auditing_time, 
+    auditing_contents, scrap_auditing, file, state, relate_scrap, sale_order_id, user_simple_name, classification,
+    message_type,message,sale_order_row
+    from scrap
+    where scrap_id = #{scrapId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, product_order_id, scrap_id, material_id, material_describe, scrap_time, 
+    classes, scrap_num, production_process, inspector, create_time, auditor, auditing_time, 
+    auditing_contents, scrap_auditing, file, state, relate_scrap, sale_order_id, user_simple_name, classification,
+    message_type,message,sale_order_row
+    from scrap 
+    order by scrap_id Desc
+  </select>
+  
+  <select id="selectScrapListByProductId" resultMap="BaseResultMap"  parameterType="java.lang.String" >
+    select id, product_order_id, scrap_id, material_id, material_describe, scrap_time, 
+    classes, scrap_num, production_process, inspector, create_time, auditor, auditing_time, 
+    auditing_contents, scrap_auditing, file, state, relate_scrap, sale_order_id, user_simple_name, classification,message_type,message,sale_order_row
+    from scrap where product_order_id = #{productOrderId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getUserInfoByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
+  	select * from scrap where 1 = 1
+  	<if test="keywords != null">
+  		AND(
+			product_order_id LIKE "%"#{keywords}"%"
+			or scrap_id LIKE "%"#{keywords}"%"
+			or material_id LIKE "%"#{keywords}"%"
+			or material_describe LIKE "%"#{keywords}"%"
+			or scrap_num LIKE "%"#{keywords}"%"
+			or inspector LIKE "%"#{keywords}"%"
+			or auditor LIKE "%"#{keywords}"%"
+			or auditing_contents LIKE "%"#{keywords}"%"
+			or sale_order_id LIKE "%"#{keywords}"%"
+			or user_simple_name LIKE "%"#{keywords}"%"
+			or message_type LIKE "%"#{keywords}"%"
+			)
+		</if>
+	<if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="orderByClause == null" >
+      order by scrap_id DESC
+    </if>
+	</select>
+	<select id="getExceptionScrapByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
+  	select * from scrap where message_type="E"
+  	<if test="keywords != null">
+  		AND(
+			product_order_id LIKE "%"#{keywords}"%"
+			or scrap_id LIKE "%"#{keywords}"%"
+			or material_id LIKE "%"#{keywords}"%"
+			or material_describe LIKE "%"#{keywords}"%"
+			or scrap_num LIKE "%"#{keywords}"%"
+			or inspector LIKE "%"#{keywords}"%"
+			or auditor LIKE "%"#{keywords}"%"
+			or auditing_contents LIKE "%"#{keywords}"%"
+			or sale_order_id LIKE "%"#{keywords}"%"
+			or user_simple_name LIKE "%"#{keywords}"%"
+			or message_type LIKE "%"#{keywords}"%"
+			)
+		</if>
+	<if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="orderByClause == null" >
+      order by scrap_id DESC
+    </if>
+	</select>	
+	<update id="updateByScrap" parameterType="com.eliteams.quick4j.web.model.Scrap">
+		update scrap
+		set 
+		auditor = #{auditor,jdbcType=VARCHAR},
+		auditing_time = #{auditingTime,jdbcType=TIMESTAMP},
+		auditing_contents = #{auditingContents,jdbcType=VARCHAR},
+		file = #{file,jdbcType=VARCHAR},
+		state = #{state,jdbcType=VARCHAR},
+		message_type = #{messageType,jdbcType=CHAR},
+        message = #{message,jdbcType=VARCHAR}
+		where scrap_id = #{scrapId,jdbcType=VARCHAR}
+	</update>
+</mapper>

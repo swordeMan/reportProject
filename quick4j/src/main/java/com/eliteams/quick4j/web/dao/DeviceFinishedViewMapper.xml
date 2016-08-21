@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.DeviceFinishedViewMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.DeviceFinishedView" >
+    <result column="deivice_describe" property="deiviceDescribe" jdbcType="VARCHAR" />
+    <result column="report_num" property="reportNum" jdbcType="BIGINT" />
+    <result column="output_date" property="outputDate" jdbcType="DATE" />
+    <result column="device_id" property="deviceId" jdbcType="INTEGER" />
+    <result column="process_id" property="processId" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.DeviceFinishedView" >
+    insert into device_finished_view (deivice_describe, report_num, output_date, 
+      device_id, process_id)
+    values (#{deiviceDescribe,jdbcType=VARCHAR}, #{reportNum,jdbcType=BIGINT}, #{outputDate,jdbcType=DATE}, 
+      #{deviceId,jdbcType=INTEGER}, #{processId,jdbcType=INTEGER})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select deivice_describe, report_num, output_date, device_id, process_id
+    from device_finished_view
+  </select>
+  
+  <select id="getFinishedTotalByMonth" parameterType="com.eliteams.quick4j.web.model.DeviceFinishedView" resultType="java.util.HashMap">
+	select DATE_FORMAT(output_date,'%c') as month,SUM(report_num) as finishedNum from device_finished_view where DATE_FORMAT(output_date,'%Y')=#{time,jdbcType=VARCHAR}
+	and deivice_describe=#{deiviceDescribe,jdbcType=VARCHAR}
+	group by month;
+  </select>
+</mapper>

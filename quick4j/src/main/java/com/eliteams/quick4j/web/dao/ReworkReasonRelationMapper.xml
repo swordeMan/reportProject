@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.ReworkReasonRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.ReworkReasonRelation" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="rework_id" property="reworkId" jdbcType="VARCHAR" />
+    <result column="rework_reason_id" property="reworkReasonId" jdbcType="BIGINT" />
+    <result column="illustration" property="illustration" jdbcType="VARCHAR" />
+    <result column="rework_num" property="reworkNum" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rework_reason_relation
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.ReworkReasonRelation" >
+    insert into rework_reason_relation (id, rework_id, rework_reason_id, 
+      illustration, rework_num)
+    values (#{id,jdbcType=BIGINT}, #{reworkId,jdbcType=VARCHAR}, #{reworkReasonId,jdbcType=BIGINT}, 
+      #{illustration,jdbcType=VARCHAR}, #{reworkNum,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.ReworkReasonRelation" >
+    update rework_reason_relation
+    set rework_id = #{reworkId,jdbcType=VARCHAR},
+      rework_reason_id = #{reworkReasonId,jdbcType=BIGINT},
+      illustration = #{illustration,jdbcType=VARCHAR},
+      rework_num = #{reworkNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, rework_id, rework_reason_id, illustration, rework_num
+    from rework_reason_relation
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, rework_id, rework_reason_id, illustration, rework_num
+    from rework_reason_relation
+  </select>
+   <select id="selectByReworkId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from rework_reason_relation
+    where rework_id = #{reworkId,jdbcType=VARCHAR}
+  </select>
+   <select id="selectByReworkIdGetReasonId" resultType="java.lang.Long" parameterType="java.lang.String" >
+    select rework_reason_id from rework_reason_relation
+    where rework_id = #{reworkId,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.AssignmentViewMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.AssignmentView" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="product_order_id" property="productOrderId" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="material_describe" property="materialDescribe" jdbcType="VARCHAR" />
+    <result column="assignment_num" property="assignmentNum" jdbcType="INTEGER" />
+    <result column="plan_time" property="planTime" jdbcType="DATE" />
+    <result column="classes" property="classes" jdbcType="INTEGER" />
+    <result column="cmd_time" property="cmdTime" jdbcType="DATE" />
+    <result column="cmd_person" property="cmdPerson" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="sale_order_id" property="saleOrderId" jdbcType="VARCHAR" />
+    <result column="user_simple_name" property="userSimpleName" jdbcType="VARCHAR" />
+    <result column="deivice_describe" property="deiviceDescribe" jdbcType="VARCHAR" />
+    <result column="device_id" property="deviceId" jdbcType="INTEGER" />
+    <result column="sale_order_row" jdbcType="VARCHAR" property="saleOrderRow" />
+    <result column="target_sum" jdbcType="INTEGER" property="targetSum" />
+    <result column="finished_total" jdbcType="INTEGER" property="finishedTotal" />
+  </resultMap>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.AssignmentView" >
+    insert into assignment_view (id, product_order_id, material_id, 
+      material_describe, assignment_num, plan_time, 
+      classes, cmd_time, cmd_person, 
+      start_time, sale_order_id, user_simple_name, 
+      deivice_describe, device_id,sale_order_row,target_sum,finished_total)
+    values (#{id,jdbcType=BIGINT}, #{productOrderId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, 
+      #{materialDescribe,jdbcType=VARCHAR}, #{assignmentNum,jdbcType=INTEGER}, #{planTime,jdbcType=DATE}, 
+      #{classes,jdbcType=INTEGER}, #{cmdTime,jdbcType=DATE}, #{cmdPerson,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{saleOrderId,jdbcType=VARCHAR}, #{userSimpleName,jdbcType=VARCHAR}, 
+      #{deiviceDescribe,jdbcType=VARCHAR}, #{deviceId,jdbcType=INTEGER},#{saleOrderRow,jdbcType=VARCHAR},
+      #{targetSum,jdbcType=INTEGER}, #{finishedTotal,jdbcType=INTEGER})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, product_order_id, material_id, material_describe, assignment_num, plan_time, 
+    classes, cmd_time, cmd_person, start_time, sale_order_id, user_simple_name, deivice_describe, 
+    device_id,sale_order_row,target_sum,finished_total
+    from assignment_view
+  </select>
+  <select id="getSapOrderByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
+    SELECT * FROM assignment_view  where 1=1
+    	<if test="keywords != null and keywords !='' ">
+				AND (
+					product_order_id LIKE "%"#{keywords}"%"
+					or material_id   LIKE "%"#{keywords}"%"
+					or material_describe   LIKE "%"#{keywords}"%"
+					or deivice_describe   LIKE "%"#{keywords}"%"
+					or assignment_num   LIKE "%"#{keywords}"%"
+					or sale_order_id LIKE "%"#{keywords}"%"
+					)
+   		</if>
+   		 <if test="deviceId != null">
+    			And(device_id =#{deviceId,jdbcType=INTEGER}) and start_time is null
+    	</if>
+   		<if test="orderByClause != null" >
+      			order by ${orderByClause}
+   		</if>
+   		<if test="orderByClause == null" >
+      			order by start_time DESC
+   		</if>
+  </select>
+  <select id="getMaterialIdAndDescribeByDeviceDes" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  	SELECT DISTINCT material_describe,material_id FROM assignment_view WHERE device_id =#{deviceId,jdbcType=INTEGER} and start_time is not null
+  </select>
+  
+  <select id="getUserSimpleNameByDeviceDes" parameterType="java.lang.Integer" resultType="java.lang.String">
+  	SELECT DISTINCT user_simple_name FROM assignment_view WHERE device_id =#{deviceId,jdbcType=INTEGER} and start_time is not null
+  </select>
+  
+  <select id="selectAssignmentViewById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, product_order_id, material_id, material_describe, assignment_num, plan_time, 
+    classes, cmd_time, cmd_person, start_time, sale_order_id, user_simple_name, deivice_describe, 
+    device_id,sale_order_row,target_sum,finished_total
+    from assignment_view
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+</mapper>

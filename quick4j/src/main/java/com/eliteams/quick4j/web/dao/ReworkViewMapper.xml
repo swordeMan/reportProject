@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.ReworkViewMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.ReworkView" >
+    <result column="rework_id" property="reworkId" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="material_describe" property="materialDescribe" jdbcType="VARCHAR" />
+    <result column="production_procedure" property="productionProcedure" jdbcType="VARCHAR" />
+    <result column="rework_time" property="reworkTime" jdbcType="DATE" />
+    <result column="classes" property="classes" jdbcType="VARCHAR" />
+    <result column="create_personnel" property="createPersonnel" jdbcType="VARCHAR" />
+    <result column="waste_total" property="wasteTotal" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="auditing_time" property="auditingTime" jdbcType="TIMESTAMP" />
+    <result column="auditing_illustration" property="auditingIllustration" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="income" property="income" jdbcType="VARCHAR" />
+    <result column="file" property="file" jdbcType="VARCHAR" />
+    <result column="rework_reason_id" property="reworkReasonId" jdbcType="BIGINT" />
+    <result column="illustration" property="illustration" jdbcType="VARCHAR" />
+    <result column="rework_num" property="reworkNum" jdbcType="INTEGER" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.ReworkView" >
+    insert into rework_view (rework_id, material_id, material_describe, 
+      production_procedure, rework_time, classes, 
+      create_personnel, waste_total, create_time, 
+      auditor, auditing_time, auditing_illustration, 
+      state, income, file, 
+      rework_reason_id, illustration, rework_num, 
+      reason)
+    values (#{reworkId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{materialDescribe,jdbcType=VARCHAR}, 
+      #{productionProcedure,jdbcType=VARCHAR}, #{reworkTime,jdbcType=DATE}, #{classes,jdbcType=VARCHAR}, 
+      #{createPersonnel,jdbcType=VARCHAR}, #{wasteTotal,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{auditor,jdbcType=VARCHAR}, #{auditingTime,jdbcType=TIMESTAMP}, #{auditingIllustration,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR}, #{income,jdbcType=VARCHAR}, #{file,jdbcType=VARCHAR}, 
+      #{reworkReasonId,jdbcType=BIGINT}, #{illustration,jdbcType=VARCHAR}, #{reworkNum,jdbcType=INTEGER}, 
+      #{reason,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select rework_id, material_id, material_describe, production_procedure, rework_time, 
+    classes, create_personnel, waste_total, create_time, auditor, auditing_time, auditing_illustration, 
+    state, income, file, rework_reason_id, illustration, rework_num, reason
+    from rework_view
+  </select>
+  <select id="selectByReworkId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from rework_view where rework_id=#{reworkId,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.RolePermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.RolePermission" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="role_id" property="roleId" jdbcType="BIGINT" />
+    <result column="permission_id" property="permissionId" jdbcType="BIGINT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from role_permission
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.RolePermission" >
+    insert into role_permission (id, role_id, permission_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{permissionId,jdbcType=BIGINT}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.RolePermission" >
+    update role_permission
+    set role_id = #{roleId,jdbcType=BIGINT},
+      permission_id = #{permissionId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, role_id, permission_id
+    from role_permission
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, role_id, permission_id
+    from role_permission
+  </select>
+  <select id="selectPermissionListByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, role_id, permission_id
+    from role_permission 
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </select>
+  <delete id="deletePermissionByRoleId" parameterType="java.lang.Long" >
+    delete from role_permission
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </delete>
+  
+</mapper>

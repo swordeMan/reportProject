@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.CorrectMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.Correct" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="correct_id" property="correctId" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="material_describe" property="materialDescribe" jdbcType="VARCHAR" />
+    <result column="correct_num" property="correctNum" jdbcType="INTEGER" />
+    <result column="revoke_personnel" property="revokePersonnel" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_reason" property="createReason" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from correct
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.Correct" >
+    insert into correct (id, correct_id, material_id, 
+      material_describe, correct_num, revoke_personnel, 
+      create_time, create_reason)
+    values (#{id,jdbcType=BIGINT}, #{correctId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, 
+      #{materialDescribe,jdbcType=VARCHAR}, #{correctNum,jdbcType=INTEGER}, #{revokePersonnel,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createReason,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.Correct" >
+    update correct
+    set correct_id = #{correctId,jdbcType=VARCHAR},
+      material_id = #{materialId,jdbcType=VARCHAR},
+      material_describe = #{materialDescribe,jdbcType=VARCHAR},
+      correct_num = #{correctNum,jdbcType=INTEGER},
+      revoke_personnel = #{revokePersonnel,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_reason = #{createReason,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, correct_id, material_id, material_describe, correct_num, revoke_personnel, 
+    create_time, create_reason
+    from correct
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, correct_id, material_id, material_describe, correct_num, revoke_personnel, 
+    create_time, create_reason
+    from correct
+  </select>
+  <select id="selectByCorrectId" resultMap="BaseResultMap" parameterType="java.lang.String">
+  select * from correct where correct_id = #{correctId,jdbcType=VARCHAR}
+  </select>
+  <select id="getCorrectByPage" resultMap="BaseResultMap" parameterType="com.eliteams.quick4j.core.feature.orm.mybatis.Page" >
+    SELECT * FROM correct ORDER BY id DESC
+  </select>
+  <select id="getCorrectByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
+    SELECT * FROM correct  where 1=1
+    	<if test="keywords != null and keywords !='' ">
+				AND (
+					correct_id           LIKE "%"#{keywords}"%"
+					or material_describe  LIKE "%"#{keywords}"%"
+					or  material_id      LIKE "%"#{keywords}"%"
+					or revoke_personnel  LIKE "%"#{keywords}"%"
+					or create_reason     LIKE "%"#{keywords}"%"
+					)
+   		</if>
+  <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+     <if test="orderByClause == null" >
+      order by correct_id DESC
+    </if>
+  </select>
+</mapper>

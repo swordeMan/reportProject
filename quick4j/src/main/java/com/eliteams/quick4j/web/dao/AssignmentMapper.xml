@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.AssignmentMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.Assignment" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="product_order_id" property="productOrderId" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="material_describe" property="materialDescribe" jdbcType="VARCHAR" />
+    <result column="device_id" property="deviceId" jdbcType="INTEGER" />
+    <result column="assignment_num" property="assignmentNum" jdbcType="INTEGER" />
+    <result column="plan_time" property="planTime" jdbcType="DATE" />
+    <result column="classes" property="classes" jdbcType="INTEGER" />
+    <result column="cmd_time" property="cmdTime" jdbcType="DATE" />
+    <result column="cmd_person" property="cmdPerson" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="sale_order_id" property="saleOrderId" jdbcType="VARCHAR" />
+    <result column="user_simple_name" jdbcType="VARCHAR" property="userSimpleName" />
+    <result column="first_report_time" property="firstReportTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from assignment
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.Assignment" >
+    insert into assignment (id, product_order_id, material_id, 
+      material_describe, device_id, assignment_num, 
+      plan_time, classes, cmd_time, 
+      cmd_person, start_time, sale_order_id, user_simple_name, first_report_time)
+    values (#{id,jdbcType=BIGINT}, #{productOrderId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, 
+      #{materialDescribe,jdbcType=VARCHAR}, #{deviceId,jdbcType=INTEGER}, #{assignmentNum,jdbcType=INTEGER}, 
+      #{planTime,jdbcType=DATE}, #{classes,jdbcType=INTEGER}, #{cmdTime,jdbcType=DATE}, 
+      #{cmdPerson,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{saleOrderId,jdbcType=VARCHAR}, #{userSimpleName,jdbcType=VARCHAR}, #{firstReportTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="java.lang.Long" >
+    update assignment
+    set start_time = NOW()
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, product_order_id, material_id, material_describe, device_id, assignment_num, 
+    plan_time, classes, cmd_time, cmd_person, start_time, sale_order_id, user_simple_name, first_report_time
+    from assignment
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, product_order_id, material_id, material_describe, device_id, assignment_num, 
+    plan_time, classes, cmd_time, cmd_person, start_time, sale_order_id, user_simple_name, first_report_time
+    from assignment
+    ORDER BY product_order_id DESC
+  </select>
+  <select id="selectByProductOrderId" resultMap="BaseResultMap" parameterType="java.lang.String">
+ 	select id, product_order_id, material_id, material_describe, device_id, assignment_num, 
+    start_time, classes, cmd_time, cmd_person, start_time, sale_order_id, user_simple_name, first_report_time
+    from assignment
+    where product_order_id = #{productOrderId,jdbcType=VARCHAR}
+ </select>
+ <select id="selectByDeviceIdAndTime" resultMap="BaseResultMap" parameterType="com.eliteams.quick4j.web.model.Assignment" >
+    select * 
+    from assignment where device_id = #{deviceId,jdbcType=INTEGER} and start_time=(select max(start_time)from assignment where device_id = #{deviceId,jdbcType=INTEGER})
+  </select>
+  <select id="selectAllSaleOrderId" resultType="java.lang.String" >
+    SELECT DISTINCT sale_order_id FROM assignment where start_time is not null
+  </select>
+  <select id="getAllMaterialDesBySaleOrderId" parameterType="java.lang.String" resultType="java.lang.String">
+  	SELECT material_describe from assignment WHERE sale_order_id = #{saleOrderId,jdbcType=VARCHAR}
+  </select>
+  <select id="getAssignmentListBySaleOrderId" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	SELECT * from assignment WHERE sale_order_id = #{saleOrderId,jdbcType=VARCHAR} and start_time is not null
+  </select>
+  <select id="getSapOrderByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
+    SELECT * FROM assignment  where 1=1
+    	<if test="keywords != null and keywords !='' ">
+				AND (
+					product_order_id LIKE "%"#{keywords}"%"
+					or material_id   LIKE "%"#{keywords}"%"
+					or material_describe   LIKE "%"#{keywords}"%"
+					or device_id   LIKE "%"#{keywords}"%"
+					or assignment_num   LIKE "%"#{keywords}"%"
+					)
+   		</if>
+   <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="orderByClause == null" >
+      order by start_time DESC
+    </if>
+  </select>
+  <select id="selectAllMaterialDescribe" resultType="java.lang.String" >
+    SELECT DISTINCT material_describe FROM assignment where start_time is not null
+  </select>
+  <select id="selectAllUserSimpleName" resultType="java.lang.String" >
+    SELECT DISTINCT user_simple_name FROM assignment where start_time is not null
+  </select>
+  
+  <select id="obtainAssignmentByCriteriaQuery" resultMap="BaseResultMap" parameterType="com.eliteams.quick4j.web.model.Assignment" >
+    select * from assignment where start_time=(select max(start_time) from assignment where material_id = #{materialId,jdbcType=VARCHAR} and #{startTime,jdbcType=TIMESTAMP}>start_time
+    	<if test="userSimpleName != null and userSimpleName != '' "  >
+      AND(
+      	 user_simple_name = #{userSimpleName,jdbcType=VARCHAR}
+      )
+    </if>
+    )
+  	
+  </select>
+</mapper>
