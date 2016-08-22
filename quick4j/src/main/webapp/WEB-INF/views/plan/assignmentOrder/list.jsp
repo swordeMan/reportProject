@@ -18,6 +18,15 @@ $(function(){
 	}
 });
 
+function verify(startTime){
+	if(startTime!=null && startTime!=""){
+		//alertMsg.warn("该任务已启动，禁止操作！");
+		$('.delete').hide();
+	}else{
+		$('.delete').show();
+	}
+}
+
 </script>
 
 <div class="pageHeader">
@@ -46,6 +55,7 @@ $(function(){
 			<li><a class="add" target="dialog" mask="true" width="980" height="490" href="rest/assignment/getDeviceInfo"><span>任务下达</span></a></li>
 			<li><a class="edit" target="ajaxTodo" warn="请选择一个任务" href="rest/assignment/startAssignment/{slt_objId}" title="你确定要启动该条任务吗?"><span>任务启动</span></a></li>
 			<li><a class="add" target="dialog" mask="true" width="800" height="470" rel="newScrapNav" warn="请选择一条任务" href="<c:url value='rest/assignment/queryAssignmentView/{slt_objId}'/>" title="新建报废单"><span>新建报废单</span></a></li>
+			<li><a class="delete" target="ajaxTodo" href="rest/assignment/deleteAssignment/{slt_objId}" warn="请选择一条任务" title="你确定要删除吗?"><span>任务删除</span></a></li>
 		</ul>
 	</div>
 	<table class="table" layoutH="138">
@@ -75,7 +85,7 @@ $(function(){
 		</thead>
 		<tbody>
 			<c:forEach var="item" items="${page.result}" varStatus="s">
-			<tr target="slt_objId" rel="${item.id}">
+			<tr target="slt_objId" rel="${item.id}" onclick="verify('${item.startTime}')">
 				<td>${s.index + 1}</td>
 				<td>${item.productOrderId}</td>
 				<%-- <td>${item.productOrderType}</td> --%>

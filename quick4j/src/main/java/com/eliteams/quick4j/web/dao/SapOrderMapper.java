@@ -44,8 +44,11 @@ public interface SapOrderMapper {
 	//查询所有未启动的生产订单信息
 	List<SapOrder> selectSapOrderList();
 	
-	//更新生产订单的启动状态
+	//更新生产订单的启动状态为已启动
 	void updateSapOrderStateMark(String productOrderId);
+	
+	//任务删除后，更新生产订单的启动状态为未启动
+    void updateSapOrderStateMarkToUnAllocate(String productOrderId);
 	
 	//更新生产订单的下达状态
 	void updateSapOrderStateMarkToAllocate(String productOrderId);

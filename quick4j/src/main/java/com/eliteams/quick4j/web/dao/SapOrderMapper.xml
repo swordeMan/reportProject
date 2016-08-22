@@ -223,7 +223,7 @@
   	select * from sap_order where sale_order_id = #{saleOrderId,jdbcType=VARCHAR}
   </select>
   <select id="selectSapOrderList" resultMap="BaseResultMap">
-  	select * from sap_order where del_remark != 'X' and ISNULL(state_mark)
+  	select * from sap_order where del_remark != 'X' and target_sum >finished_total and ISNULL(state_mark)
   </select>
   <update id="updateSapOrderStateMark" parameterType="java.lang.String">
     update sap_order
@@ -233,6 +233,11 @@
   <update id="updateSapOrderStateMarkToAllocate" parameterType="java.lang.String">
     update sap_order
     set state_mark ='1'
+    where product_order_id = #{productOrderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateSapOrderStateMarkToUnAllocate" parameterType="java.lang.String">
+    update sap_order
+    set state_mark = null
     where product_order_id = #{productOrderId,jdbcType=VARCHAR}
   </update>
   <select id="getMaterialIdFromUnstart" resultType="java.lang.String">

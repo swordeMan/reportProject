@@ -197,11 +197,19 @@ public class SapOrderServiceImpl implements SapOrderService {
 	}
 
 	/**
-	 * 更新生产订单的启动状态
+	 * 更新生产订单的启动状态为已启动---1
 	 */
 	@Override
 	public void updateSapOrderStateMark(String productOrderId) {
 		sapOrderMapper.updateSapOrderStateMark(productOrderId);
+	}
+	
+	/**
+	 * 更新生产订单的启动状态为未启动---null
+	 */
+	@Override
+	public void updateSapOrderStateMarkToUnAllocate(String productOrderId) {
+		sapOrderMapper.updateSapOrderStateMarkToUnAllocate(productOrderId);
 	}
 	
 	/**
