@@ -16,12 +16,16 @@ import com.sap.conn.jco.JCoException;
 public interface ReportYieldService{
 	
 	String REPORT_MESSAGE_ID = "BG";//报工消息首字母
+
+	String CANCLE_MESSAGE_ID = "CX";//冲销信息首字母
 	
 	String REPORT_OPREATION = "A";//报工操作
 	
 	String CANCEL_OPREATION = "B";//冲销操作
 	
-	String SUC_MESSAGE_TYPE = "S";
+	String SUC_MESSAGE_TYPE = "S";//报工或冲销成功
+
+	String WARN_MESSAGE_TYPE = "W";//报工或冲销警告
 	
 	String ERR_MESSAGR_TYPE = "E";
 	

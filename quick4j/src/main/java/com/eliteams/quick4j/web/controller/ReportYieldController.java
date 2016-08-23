@@ -76,7 +76,7 @@ public class ReportYieldController extends GenericController {
         	}
         	return json.ajaxConfirmSuccess(notification.toString());
 		} catch (Exception e) {
-			log.error("手动报工提交出错--reportYield.doReportByHand"+e);
+			log.error("手动报工提交出错--reportYield.doReportByHand",e);
 			return json.ajaxDoneError("手动报工失败");
 		}
     }
