@@ -32,14 +32,13 @@ public interface AssignmentService {
 	//查询启动任务中客户简称
 	List<String> selectAllUserSimpleName();
 	
-	/**
-	 * 根据用户输入的三个查询条件查询对应的报工（报废日期、物料描述和客户简称）
-	 * @param reportYield
-	 * @return
-	 */
+	//根据用户输入的三个查询条件查询对应的报工（报废日期、物料描述和客户简称）
 	List<Assignment> obtainAssignmentByCriteriaQuery(Assignment assignment);
 	
 	//循环多条件查询的已启动任务任务列表，根据生产订单号去sapOrder中查询对应的生产订单，
 	//获得报废量，完成量数据，组装成新的list
 	List<Assignment> obtainAssignmentList(Assignment assignment);
+	
+	//根据主键生产生产任务
+	int deleteByPrimaryKey(Long id);
 }

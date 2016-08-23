@@ -131,4 +131,9 @@ public class AssignmentServiceImpl implements AssignmentService {
 		}
 		return newAssignmentList;
 	}
+
+	@Override
+	public int deleteByPrimaryKey(Long id) {
+		return assignmentMapper.deleteByPrimaryKey(id);
+	}
 }

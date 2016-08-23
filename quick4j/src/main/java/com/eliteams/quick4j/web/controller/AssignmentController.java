@@ -316,4 +316,20 @@ public class AssignmentController {
     	
 		return "execute/scrap/criteriaQuery2";
     }
+    
+    @RequestMapping("/deleteAssignment/{id}")
+    @ResponseBody
+   	public Json deleteAssignment(@PathVariable("id") Long id, Json json) {
+    	try {
+    		Assignment ass = assignmentMapper.selectByPrimaryKey(id);
+    		String productOrderId = ass.getProductOrderId();
+    		
+    		assignmentService.deleteByPrimaryKey(id);
+    		sapOrderService.updateSapOrderStateMarkToUnAllocate(productOrderId);
+		} catch (Exception e) {
+			log.error("任务删除失败"+e);
+			return json.ajaxDoneError("任务删除失败");
+		}
+    	return json.ajaxDoneSuccess("任务删除成功");
+   	}
 }
