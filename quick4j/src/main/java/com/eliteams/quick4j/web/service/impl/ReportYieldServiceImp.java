@@ -17,8 +17,6 @@ import com.eliteams.quick4j.web.service.SapOrderService;
 import com.eliteams.quick4j.web.service.StockService;
 import com.sap.conn.jco.*;
 import org.apache.log4j.Logger;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -201,14 +199,10 @@ public class ReportYieldServiceImp implements ReportYieldService {
 		ReportYield reportYielded = null;
 		try {
 			//设置冲销为
-//			reportYield.setOperation(CANCEL_OPREATION);
-//			reportYielded = reportCurrentYield(reportYield);
-//			reportYieldMapper.updateByPrimaryKey(reportYielded);
-
-			reportYieldFactory.createCancelReport(reportYield);
+			reportYield.setOperation(CANCEL_OPREATION);
 			reportYielded = reportCurrentYield(reportYield);
 			reportYieldMapper.updateByPrimaryKey(reportYielded);
-//			reportYieldMapper.insert(reportYielded);
+
 			updateFinishAndWasteTotal(reportYielded);
 			Stock stock = stockService.getStockByMaterialId(reportYielded.getMaterialId());
 			stockService.updateByStockMaterialId(stock, reportYielded);

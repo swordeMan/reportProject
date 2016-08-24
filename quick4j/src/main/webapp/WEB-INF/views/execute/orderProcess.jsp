@@ -55,6 +55,8 @@
 			<tr>
 				<th>报工编号:</th>
 				<th>报工数量:</th>
+				<th>SAP消息类型:</th>
+				<th>SAP消息文本:</th>
 				<th>报工时间:</th>
 				<th>报工员:</th>
 			</tr>
@@ -62,6 +64,15 @@
 					<tr>
 						<td>${item.messageId}</td>
 						<td>${item.currentYield}</td>
+						<td>
+							<c:if test="${item.messageType=='S'}">
+								成功
+							</c:if>
+							<c:if test="${item.messageType=='E'}">
+								失败
+							</c:if>
+						</td>
+						<td>${item.message}</td>
 						<td><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						<td>${item.reportUsername}</td>
 					</tr>
