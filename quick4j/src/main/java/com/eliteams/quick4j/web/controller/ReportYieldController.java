@@ -77,7 +77,7 @@ public class ReportYieldController extends GenericController {
         	return json.ajaxConfirmSuccess(notification.toString());
 		} catch (Exception e) {
 			log.error("手动报工提交出错--reportYield.doReportByHand",e);
-			return json.ajaxDoneError("手动报工失败");
+			return json.ajaxDoneError("系统数据出现异常");
 		}
     }
     
@@ -114,12 +114,6 @@ public class ReportYieldController extends GenericController {
     @ResponseBody
    	public Json cancelReportYield(@PathVariable("id") Long id, Json json) {
     	ReportYield reportYield = reportYieldService.selectReportYieldById(id);
-    	if("B".equals(reportYield.getOperation())){
-    		return json.ajaxDoneError("该条是已冲销报工");
-    	}
-    	if(!"A".equals(reportYield.getOperation())){
-    		return json.ajaxDoneError("该条报工异常，不能冲销");
-    	}
     	ReportYield cancelReportYielded;
     	try {
     		//报工冲销

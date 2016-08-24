@@ -66,11 +66,5 @@ public class ReportYieldFactory {
         return reportYield;
     }
 
-    public ReportYield createCancelReport(ReportYield reportYield){
-        String messageId = sysSerialNumberService.generateSerialNumberByModelCode(ReportYieldService.CANCLE_MESSAGE_ID);
-        reportYield.setMessageId(messageId);
-        reportYield.setOperation(ReportYieldService.CANCEL_OPREATION);//设为B
-        return  reportYield;
-    }
 
 }
