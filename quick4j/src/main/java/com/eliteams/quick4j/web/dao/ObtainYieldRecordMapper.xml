@@ -45,4 +45,7 @@
     insert_time
     from obtain_yield_record
   </select>
+  <delete id="deleteByTwoMonth" parameterType="java.sql.Date" >
+    delete from obtain_yield_record where #{date,jdbcType=TIMESTAMP}> insert_time 
+  </delete>
 </mapper>
