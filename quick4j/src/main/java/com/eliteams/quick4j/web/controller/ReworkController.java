@@ -207,7 +207,7 @@ public class ReworkController extends GenericController {
 	 * 列表界面打印返修单
 	 * @return
 	 */
-	@RequestMapping(value = "/printRework/{reworkId}")
+	/*@RequestMapping(value = "/printRework/{reworkId}")
 	@ResponseBody
 	public Json printRework(@PathVariable("reworkId")String reworkId,Json json){
 		try {
@@ -217,5 +217,5 @@ public class ReworkController extends GenericController {
 			return json.ajaxDoneError();
 		}
 		return json.ajaxDoneSuccess(null);		
-	}
+	}*/
 }

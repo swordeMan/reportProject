@@ -41,7 +41,7 @@
 
         <!--对应数据库表名 -->
 
-        <table tableName="device_finished_view">
+        <table tableName="rework_view">
 
         </table>
     </context>

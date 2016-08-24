@@ -152,13 +152,13 @@ public class ReworkServiceImpl implements ReworkService{
 	 * 打印返修pdf
 	 * @param reworkId
 	 */
-	public void printRewokList(String reworkId){
+	/*public void printRewokList(String reworkId){
 		  //查询reworkView视图
 		 List<ReworkView> reworkViewList= reworkViewMapper.selectByReworkId(reworkId);
 		 pdfReportService.generateReworkPDF(reworkViewList);
 		 //打印pdf
 		// printReworkPdf();
-	}
+	}*/
 	
 	// 截取物料描述的前两个字符串 判断是否进产线
 	@Override

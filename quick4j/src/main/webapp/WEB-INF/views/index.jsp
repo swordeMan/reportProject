@@ -191,7 +191,7 @@ $(function(){
 									<!-- <li><a href="main.html" target="navTab" rel="main">订单执行分析</a></li>
 									<li><a href="main.html" target="navTab" rel="main">报废量统计表</a></li> -->
 									<li><a href="rest/scrapAnalysis/reasonAnalysis" target="navTab" rel="scrapReasonNav">报废原因分析</a></li>
-									<!-- <li><a href="main.html" target="navTab" rel="main">返修原因分析</a></li> -->
+									<li><a href="rest/reworkAnalysis/reasonAnalysis" target="navTab" rel="reworkReasonNav">返修原因分析</a></li>
 									<li><a href="rest/scrapAnalysis/passRateAnalysis" target="navTab" rel="passRateNav">产品合格率分析</a></li>
 								</ul>
 							</li>
