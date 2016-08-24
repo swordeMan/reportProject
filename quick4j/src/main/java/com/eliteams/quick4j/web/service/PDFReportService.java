@@ -17,9 +17,7 @@ public interface PDFReportService {
 	public PdfPTable createBlankTable();
 	/*//形成返修pdf
 	public void generateReworkPDF(List<ReworkView> reworkView);*/
-	//形成返修pdf
-
-	public void generateReworkPDF(List<ReworkView> reworkView);
+	
 	//形成报废pdf
 	public void generateScrapPDF(List<ScrapView> scrapView,int iNum);
 	
