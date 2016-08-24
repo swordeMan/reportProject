@@ -47,8 +47,12 @@ public class OrderUtil {
 		}else if(simpleDescribe.equals(SYNTHESIS)){
 			String sporkProductId = sapOrderService.getBySaleOrderIdAndSimpleDescribe(saleId, saleOrderRow,SPORK);
 			String rimProductId = sapOrderService.getBySaleOrderIdAndSimpleDescribe(saleId,saleOrderRow, RIM);
-			childProductIds.add(sporkProductId);
-			childProductIds.add(rimProductId);
+			if(sporkProductId!=null){
+				childProductIds.add(sporkProductId);
+			}
+			if(rimProductId!=null){
+				childProductIds.add(rimProductId);
+			}
 			return childProductIds;
 		}else{
 			return null;

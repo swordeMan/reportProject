@@ -230,7 +230,8 @@ public class SapOrderServiceImpl implements SapOrderService {
 
 	@Override
 	public String getBySaleOrderIdAndSimpleDescribe(String saleOrderId, String saleOrderRow,String simpleDescribe) {
-		return sapOrderMapper.getBySaleOrderIdAndSimpleDescribe(saleOrderId,saleOrderRow,simpleDescribe).getProductOrderId();
+		SapOrder sapOrder = sapOrderMapper.getBySaleOrderIdAndSimpleDescribe(saleOrderId, saleOrderRow, simpleDescribe);
+		return  sapOrder==null?null:sapOrder.getProductOrderId();
 	}
 
 

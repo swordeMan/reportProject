@@ -16,6 +16,32 @@ $(function(){
 	}
 });
 
+function isReportSW(operation,type) {
+	//报工类型，成功与警告
+	if((operation=="A"&&type=="S")||(operation=="A"&&type=="W")){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+function isCancelE(operation,type) {
+	if(operation=="B"&&type=="E"){
+		return true;
+	}else {
+		return false;
+	}
+}
+
+function cancelVerify(operation,type) {
+	if(isReportSW(operation,type)||isCancelE(operation,type)){
+		$('.delete').show();
+	}else {
+		$('.delete').hide();
+	}
+
+}
+
 </script>
 
 <div class="pageHeader">
@@ -68,7 +94,7 @@ $(function(){
 		</thead>
 		<tbody>
 			<c:forEach var="item" items="${page.result}" varStatus="s">
-			<tr target="slt_objId" rel="${item.id}">
+			<tr target="slt_objId" rel="${item.id}" onclick="cancelVerify('${item.operation}','${item.messageType}')">
 				<td>${s.index + 1}</td>
 				<td>${item.messageId}</td>
 				<td>${item.productOrderId}</td>

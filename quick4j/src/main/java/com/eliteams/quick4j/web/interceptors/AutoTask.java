@@ -1,5 +1,6 @@
 package com.eliteams.quick4j.web.interceptors;
 
+import com.eliteams.quick4j.web.dao.ObtainYieldRecordMapper;
 import com.eliteams.quick4j.web.dao.StockAssignmentViewMapper;
 import com.eliteams.quick4j.web.dao.StockMapper;
 import com.eliteams.quick4j.web.model.DShiftOutput;
@@ -11,6 +12,11 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,7 +35,10 @@ public class AutoTask {
 	
 	@Resource
 	private StockMapper stockMapper;
-
+	
+	@Resource
+	private ObtainYieldRecordMapper obtainYieldRecord;
+	
 	public void obtainYield(){
 		log.debug("获取待分配量开始");
 		List<DShiftOutput> sqlserverList = obtainYieldService.getSqlserverList();
@@ -45,6 +54,23 @@ public class AutoTask {
 			int thisReport = reportYieldService.reportByStockAssignmentView(sav);
 			log.debug(sav+"当前报工完毕，数量为"+thisReport);
 		}
+	}
+	/**
+	 * 自动删除两月之前设备采集数据
+	 */
+	public void autodelet(){
+		Calendar calM=Calendar.getInstance();      
+		calM.add(Calendar.MONTH,-2); 
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date=calM.getTime();
+		String dateString = formatter.format(date);
+		 try {
+				date=formatter.parse(dateString);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		obtainYieldRecord.deleteByTwoMonth(date);
+		log.debug("删除两月前设备采集记录");
 	}
 	
 	//通过待分配量与任务下达的视图进行报工

@@ -1,37 +1,29 @@
 package com.eliteams.quick4j.web.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import com.eliteams.quick4j.web.dao.StockMapper;
-import com.eliteams.quick4j.web.model.StockAssignmentView;
-import org.apache.log4j.Logger;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
-import org.springframework.stereotype.Service;
-
 import com.eliteams.quick4j.core.feature.factory.SapConn;
 import com.eliteams.quick4j.core.feature.orm.mybatis.Page;
 import com.eliteams.quick4j.core.util.OrderUtil;
 import com.eliteams.quick4j.web.dao.ReportYieldMapper;
 import com.eliteams.quick4j.web.dao.SapOrderMapper;
+import com.eliteams.quick4j.web.dao.StockMapper;
+import com.eliteams.quick4j.web.factory.ReportYieldFactory;
 import com.eliteams.quick4j.web.form.ReportByHandForm;
 import com.eliteams.quick4j.web.model.ReportYield;
 import com.eliteams.quick4j.web.model.SapOrder;
 import com.eliteams.quick4j.web.model.Stock;
+import com.eliteams.quick4j.web.model.StockAssignmentView;
 import com.eliteams.quick4j.web.service.ReportYieldService;
 import com.eliteams.quick4j.web.service.SapOrderService;
 import com.eliteams.quick4j.web.service.StockService;
-import com.eliteams.quick4j.web.service.SysSerialNumberService;
-import com.sap.conn.jco.JCoDestination;
-import com.sap.conn.jco.JCoException;
-import com.sap.conn.jco.JCoFunction;
-import com.sap.conn.jco.JCoStructure;
-import com.sap.conn.jco.JCoTable;
+import com.sap.conn.jco.*;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class ReportYieldServiceImp implements ReportYieldService {
@@ -42,7 +34,7 @@ public class ReportYieldServiceImp implements ReportYieldService {
 	private ReportYieldMapper reportYieldMapper;
 	
 	@Resource
-	private SysSerialNumberService sysSerialNumberService;
+	private ReportYieldFactory reportYieldFactory;
 	
 	@Resource
 	private SapOrderService sapOrderService;
@@ -59,7 +51,7 @@ public class ReportYieldServiceImp implements ReportYieldService {
 	@Override
 	public ReportYield reportCurrentYield(ReportYield ry) throws JCoException {
 		
-		log.info("向SAP报工--ReportYieldServiceImp.reporCurrentYield");
+		log.debug("向SAP报工--ReportYieldServiceImp.reporCurrentYield");
 		JCoFunction function = null;
 		JCoDestination destination = SapConn.connect();
 		
@@ -105,8 +97,8 @@ public class ReportYieldServiceImp implements ReportYieldService {
 	@Override
 	public List<ReportYield> getReportYieldListByHandForm(ReportByHandForm reportByHandForm) {
 		ReportYield[] reportYields = reportByHandForm.getReportYield();
-		Subject currentUser = SecurityUtils.getSubject();
-		String username = currentUser.getPrincipal().toString();
+//		Subject currentUser = SecurityUtils.getSubject();
+//		String username = currentUser.getPrincipal().toString();
 		List<ReportYield> ReportYieldList = new LinkedList<>();
 		//先判断可以是否前道工序有问题，有则所有都不可以报工
 		for(ReportYield reportYield:reportYields){
@@ -115,11 +107,12 @@ public class ReportYieldServiceImp implements ReportYieldService {
 			}
 		}
 		for(ReportYield reportYield:reportYields){
-			String messageId = sysSerialNumberService.generateSerialNumberByModelCode(REPORT_MESSAGE_ID);
-			reportYield.setMessageId(messageId);
-			reportYield.setReportUsername(username);
+			reportYieldFactory.createHandReportYield(reportYield);
+//			String messageId = sysSerialNumberService.generateSerialNumberByModelCode(REPORT_MESSAGE_ID);
+//			reportYield.setMessageId(messageId);
+//			reportYield.setReportUsername(username);
 			reportYield.setSaleOrderId(reportByHandForm.getSaleOrderId());
-			reportYield.setOperation(REPORT_OPREATION);
+//			reportYield.setOperation(REPORT_OPREATION);
 			ReportYieldList.add(reportYield);
 		}
 		return ReportYieldList;
@@ -205,10 +198,11 @@ public class ReportYieldServiceImp implements ReportYieldService {
 		log.info("进行冲销报工--ReportYieldServiceImp.cancelReportYield");
 		ReportYield reportYielded = null;
 		try {
-			//获取冲销的消息ID
+			//设置冲销为
 			reportYield.setOperation(CANCEL_OPREATION);
 			reportYielded = reportCurrentYield(reportYield);
 			reportYieldMapper.updateByPrimaryKey(reportYielded);
+
 			updateFinishAndWasteTotal(reportYielded);
 			Stock stock = stockService.getStockByMaterialId(reportYielded.getMaterialId());
 			stockService.updateByStockMaterialId(stock, reportYielded);
@@ -227,22 +221,22 @@ public class ReportYieldServiceImp implements ReportYieldService {
 	 */
 	@Override
 	public void updateFinishAndWasteTotal(ReportYield reportYielded) {
-		log.info("更新完成量、报废量--ReportYieldServiceImp.updateFinishAndWasteTotal");
+		log.debug("更新完成量、报废量--ReportYieldServiceImp.updateFinishAndWasteTotal");
 		try {
-			if(SUC_MESSAGE_TYPE.equals(reportYielded.getMessageType())){
-    //			SapOrder so = new SapOrder();
-                    String productOrderId = reportYielded.getProductOrderId();
-                    SapOrder sapOrder = sapOrderService.getSapOrderInfoById(productOrderId);
-                    if(REPORT_OPREATION.equals(reportYielded.getOperation())){
-                        //报工加上完成量和报废量
-                        sapOrder.setFinishedTotal(sapOrder.getFinishedTotal()+reportYielded.getCurrentYield());
-                        sapOrder.setWasteTotal(sapOrder.getWasteTotal()+reportYielded.getCurrentWaste());
-                    }else if(CANCEL_OPREATION.equals(reportYielded.getOperation())){
-                        //冲销减去完成量和报废量
-                        sapOrder.setFinishedTotal(sapOrder.getFinishedTotal()-reportYielded.getCurrentYield());
-                        sapOrder.setWasteTotal(sapOrder.getWasteTotal()-reportYielded.getCurrentWaste());
-                    }
-                    sapOrderMapper.updateByPrimaryKey(sapOrder);
+			if(SUC_MESSAGE_TYPE.equals(reportYielded.getMessageType())||
+					WARN_MESSAGE_TYPE.equals(reportYielded.getMessageType())){
+				String productOrderId = reportYielded.getProductOrderId();
+				SapOrder sapOrder = sapOrderService.getSapOrderInfoById(productOrderId);
+				if(REPORT_OPREATION.equals(reportYielded.getOperation())){
+					//报工加上完成量和报废量
+					sapOrder.setFinishedTotal(sapOrder.getFinishedTotal()+reportYielded.getCurrentYield());
+					sapOrder.setWasteTotal(sapOrder.getWasteTotal()+reportYielded.getCurrentWaste());
+				}else if(CANCEL_OPREATION.equals(reportYielded.getOperation())){
+					//冲销减去完成量和报废量
+					sapOrder.setFinishedTotal(sapOrder.getFinishedTotal()-reportYielded.getCurrentYield());
+					sapOrder.setWasteTotal(sapOrder.getWasteTotal()-reportYielded.getCurrentWaste());
+				}
+				sapOrderMapper.updateByPrimaryKey(sapOrder);
             }
 		} catch (Exception e) {
 			log.error("更新完成量、报废量出错",e);
@@ -300,17 +294,13 @@ public class ReportYieldServiceImp implements ReportYieldService {
 	}
 
 	private ReportYield reportYieldForCurrentYield(SapOrder sapOrder,int currentYield){
-		ReportYield ry = new ReportYield();
-		ry.setMessageId(sysSerialNumberService.generateSerialNumberByModelCode("BG"));
-		ry.setOperation("A");//报工为A，冲销为B
+		ReportYield ry = reportYieldFactory.createAutoReportYield();
 		ry.setProductOrderId(sapOrder.getProductOrderId());
 		ry.setSaleOrderId(sapOrder.getSaleOrderId());
 		ry.setSaleOrderRow(sapOrder.getSaleOrderRow());
 		ry.setMaterialId(sapOrder.getMaterialId());
 		ry.setMaterialDescribe(sapOrder.getMaterialDescribe());
 		ry.setCurrentYield(currentYield);//当前报工量，取待分配量与所需报工量的较小值
-		ry.setReportUsername("system");
-		ry.setAccountDate(new Date());
 		return ry;
 	}
 
