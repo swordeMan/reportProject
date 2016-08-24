@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.eliteams.quick4j.web.service.ReportYieldService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -63,7 +64,8 @@ public class StockServiceImpl implements StockService {
 	public void updateByStockMaterialId(Stock stock, ReportYield reportYield) throws Exception {
 		String operation = reportYield.getOperation();
 		String messageType = reportYield.getMessageType();
-		if ("S".equals(messageType)) {
+		String userName = reportYield.getReportUsername();
+		if ("S".equals(messageType)&& ReportYieldService.SYSTEM_PERSON.equals(userName)) {
 			try {
 				if("A".equals(operation)){
                     log.info("StockServiceImpl.updateByStockMaterialId，报工完成，更新待分配量");

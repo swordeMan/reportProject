@@ -232,7 +232,7 @@ public class ReportYieldServiceImp implements ReportYieldService {
 					sapOrder.setFinishedTotal(sapOrder.getFinishedTotal()+reportYielded.getCurrentYield());
 					sapOrder.setWasteTotal(sapOrder.getWasteTotal()+reportYielded.getCurrentWaste());
 				}else if(CANCEL_OPREATION.equals(reportYielded.getOperation())){
-					//冲销减去完成量和报废量
+					//系统报工的冲销减去完成量和报废量，手动报工的冲销不改动
 					sapOrder.setFinishedTotal(sapOrder.getFinishedTotal()-reportYielded.getCurrentYield());
 					sapOrder.setWasteTotal(sapOrder.getWasteTotal()-reportYielded.getCurrentWaste());
 				}
