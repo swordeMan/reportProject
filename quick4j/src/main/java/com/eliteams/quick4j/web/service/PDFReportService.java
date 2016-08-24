@@ -15,10 +15,12 @@ public interface PDFReportService {
 	public PdfPTable createTable(int colNumber);
 	public PdfPTable createTable(float[] widths);
 	public PdfPTable createBlankTable();
+	/*//形成返修pdf
+	public void generateReworkPDF(List<ReworkView> reworkView);*/
 	//形成返修pdf
-   
+
 	public void generateReworkPDF(List<ReworkView> reworkView);
 	//形成报废pdf
-	public void generateScrapPDF(List<ScrapView> reworkView,int iNum);
+	public void generateScrapPDF(List<ScrapView> scrapView,int iNum);
 	
 }

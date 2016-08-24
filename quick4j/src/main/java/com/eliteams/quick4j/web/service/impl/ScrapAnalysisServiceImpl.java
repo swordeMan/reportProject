@@ -54,7 +54,7 @@ public class ScrapAnalysisServiceImpl implements ScrapAnalysisService {
 	 * @param f
 	 * @return
 	 */
-	private double setScale(double f){
+	public double setScale(double f){
 		BigDecimal b = new BigDecimal(f);  
 		double f1 = b.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
 		return f1;

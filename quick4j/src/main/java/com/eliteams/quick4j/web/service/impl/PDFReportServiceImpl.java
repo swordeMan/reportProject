@@ -136,8 +136,7 @@ public class PDFReportServiceImpl implements PDFReportService{
 	/**
 	 * 产生返修单pdf
 	 */
-	@Override
-	public void generateReworkPDF(List<ReworkView> reworkView)  {
+	/*public void generateReworkPDF(List<ReworkView> reworkView)  {
 		
 		Document document = new Document(PageSize.A4);
 	
@@ -149,8 +148,8 @@ public class PDFReportServiceImpl implements PDFReportService{
 	            file.createNewFile(); 
 	            PdfWriter.getInstance(document,new FileOutputStream(file));
 	            document.open(); 
-	           /* table.addCell("返修单");
-	            document.add(table);*/
+	            table.addCell("返修单");
+	            document.add(table);
 	            PdfPCell cell = createCell("返   修   单", headfont,Element.ALIGN_CENTER,9,false);
 	            
 	            table.addCell(cell);
@@ -201,7 +200,7 @@ public class PDFReportServiceImpl implements PDFReportService{
 	        		 document.close();
 				} 
 				
-			}  
+			} */ 
 	/**
 	 * 产生报废单pdf
 	 */

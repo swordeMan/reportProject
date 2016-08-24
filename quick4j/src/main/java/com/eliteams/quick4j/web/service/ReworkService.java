@@ -57,5 +57,5 @@ public interface ReworkService {
     * 打印返修单pdf
     * @param reworkId
     */
-   public void printRewokList(String reworkId);
+   /*public void printRewokList(String reworkId);*/
 }
