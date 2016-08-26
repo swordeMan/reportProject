@@ -50,7 +50,7 @@
 		<div class="divider"></div>
 		<table class="list nowrap" width="1000">
 			<tr>
-				<th colspan="4">订单报工信息</th>
+				<th colspan="6">订单报工信息</th>
 			</tr>
 			<tr>
 				<th>报工编号:</th>
