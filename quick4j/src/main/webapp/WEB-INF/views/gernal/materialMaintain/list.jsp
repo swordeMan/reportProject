@@ -65,10 +65,10 @@ $(function(){
 			<tr>
 
 				<th width="20"></th>
-				<th orderField="product_nickname" width="100">产品代码</th>
-				<th orderField="material_describe" width="150">物料描述</th>
-				<th orderField="material_id" width="100">物料编码</th>
-				<th orderField="deivice_describe" width="100">工序</th>
+				<th orderField="product_nickname" width="150">产品代码</th>
+				<th orderField="material_describe" width="200">物料描述</th>
+				<th orderField="material_id" width="150">物料编码</th>
+				<th orderField="deivice_describe" width="150">工序</th>
 
 			</tr>
 		</thead>

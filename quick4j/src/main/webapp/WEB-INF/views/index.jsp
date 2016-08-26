@@ -262,7 +262,8 @@ $(function(){
 										<ul>
 											<li><a href="javascript:;"><span>新建报废单</span></a></li>
 											<li><a href="javascript:;"><span>新建返修单</span></a></li>
-											<li><a href="javascript:;"><span>任务启动</span></a></li>
+											<!-- <li><a href="javascript:;"><span>任务启动</span></a></li> -->
+											<li><a href="javascript:;"><span>产线切换</span></a></li>
 										</ul>
 									</div>
 								</div>
@@ -349,7 +350,7 @@ $(function(){
 											</ul>
 										</div>
 									</div>
-									<div>
+									<!-- <div>
 										<div style="float:left;">
 											<h2 class="contentTitle">一区产线</h2>
 											<ul>
@@ -374,7 +375,7 @@ $(function(){
 												<li><div><a href="rest/assignment/list?deviceId=199" target="navTab" rel="assignmentNav"><span>三区轮辐</span></a></div></li>
 												<li><div><a href="rest/assignment/list?deviceId=200" target="navTab" rel="assignmentNav"><span>三区轮辋</span></a></div></li>
 												<li><div><a href="rest/assignment/list?deviceId=201" target="navTab" rel="assignmentNav"><span>三区合成</span></a></div></li>
-												<!-- <li><div><a class="add" mask="true" href="rest/assignment/assignmentView?deviceId=210" target="dialog" width="670" height="260"><span>三区涂装</span></a></div></li> -->
+												<li><div><a class="add" mask="true" href="rest/assignment/assignmentView?deviceId=210" target="dialog" width="670" height="260"><span>三区涂装</span></a></div></li>
 											</ul>
 										</div>
 										<div style="float:left;">
@@ -387,6 +388,47 @@ $(function(){
 												<li><div><a href="rest/assignment/list?deviceId=205" target="navTab" rel="assignmentNav"><span>四区轮辋</span></a></div></li>
 												<li><div><a href="rest/assignment/list?deviceId=203" target="navTab" rel="assignmentNav"><span>四区合成</span></a></div></li>
 												<li><div><a href="rest/assignment/list?deviceId=210" target="navTab" rel="assignmentNav"><span>四区涂装</span></a></div></li>
+											</ul>
+										</div>
+									</div> -->
+									<div>
+										<div style="float:left;">
+											<h2 class="contentTitle">一区产线</h2>
+											<ul>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=191" target="dialog" width="670" height="260"><span>一区轮辐</span></a></div></li>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=192" target="dialog" width="670" height="260"><span>一区轮辋</span></a></div></li>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=193" target="dialog" width="670" height="260"><span>一区合成</span></a></div></li>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=209" target="dialog" width="670" height="260"><span>一区涂装</span></a></div></li>
+											</ul>
+										</div>
+										<div style="float:left;">
+											<h2 class="contentTitle">二区产线</h2>
+											<ul>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=195" target="dialog" width="670" height="260"><span>二区轮辐</span></a></div></li>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=196" target="dialog" width="670" height="260"><span>二区轮辋</span></a></div></li>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=197" target="dialog" width="670" height="260"><span>二区合成</span></a></div></li>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=211" target="dialog" width="670" height="260"><span>二区涂装</span></a></div></li>
+											</ul>
+										</div>
+										<div style="float:left;">
+											<h2 class="contentTitle">三区产线</h2>
+											<ul>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=199" target="dialog" width="670" height="260"><span>三区轮辐</span></a></div></li>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=200" target="dialog" width="670" height="260"><span>三区轮辋</span></a></div></li>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=201" target="dialog" width="670" height="260"><span>三区合成</span></a></div></li>
+												<!-- <li><div><a class="add" mask="true" href="rest/assignment/assignmentView?deviceId=210" target="dialog" width="670" height="260"><span>三区涂装</span></a></div></li> -->
+											</ul>
+										</div>
+										<div style="float:left;">
+											<h2 class="contentTitle">四区产线</h2>
+											<ul>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=206" target="dialog" width="670" height="260"><span>旋压一</span></a></div></li>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=207" target="dialog" width="670" height="260"><span>旋压二</span></a></div></li>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=208" target="dialog" width="670" height="260"><span>旋压三</span></a></div></li>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=212" target="dialog" width="670" height="260"><span>四区轮辐</span></a></div></li>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=205" target="dialog" width="670" height="260"><span>四区轮辋</span></a></div></li>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=203" target="dialog" width="670" height="260"><span>四区合成</span></a></div></li>
+												<li><div><a class="add" mask="true" href="rest/material/getMaterialInfo?deviceId=210" target="dialog" width="670" height="260"><span>四区涂装</span></a></div></li>
 											</ul>
 										</div>
 									</div>
