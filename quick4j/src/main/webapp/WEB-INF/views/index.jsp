@@ -217,6 +217,7 @@ $(function(){
 									<shiro:hasPermission name="reworkReason:view">
 										<li><a href="rest/reworkReason/list" target="navTab" rel="ReworkReasonNav">返修原因</a></li>
 									</shiro:hasPermission>
+										<li><a href="rest/material/list" target="navTab" rel="MaterialNav">基础物料</a></li>
 								</ul>
 							</li>
 						</ul>

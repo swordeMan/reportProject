@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.MaterialMaintainMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.MaterialMaintain" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="product_nickname" property="productNickname" jdbcType="VARCHAR" />
+    <result column="material_describe" property="materialDescribe" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="deivice_describe" property="deiviceDescribe" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from material_maintain
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.MaterialMaintain" >
+    insert into material_maintain (id, product_nickname, material_describe, 
+      material_id, deivice_describe)
+    values (#{id,jdbcType=BIGINT}, #{productNickname,jdbcType=VARCHAR}, #{materialDescribe,jdbcType=VARCHAR}, 
+      #{materialId,jdbcType=VARCHAR}, #{deiviceDescribe,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.MaterialMaintain" >
+    update material_maintain
+    set product_nickname = #{productNickname,jdbcType=VARCHAR},
+      material_describe = #{materialDescribe,jdbcType=VARCHAR},
+      material_id = #{materialId,jdbcType=VARCHAR},
+      deivice_describe = #{deiviceDescribe,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, product_nickname, material_describe, material_id, deivice_describe
+    from material_maintain
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, product_nickname, material_describe, material_id, deivice_describe
+    from material_maintain
+  </select>
+  <select id="getMaterialInfoByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
+    SELECT * FROM material_maintain  where 1=1
+    	<if test="keywords != null and keywords !='' ">
+				AND (
+					material_describe LIKE "%"#{keywords}"%"
+					or deivice_describe LIKE "%"#{keywords}"%"
+					or product_nickname LIKE "%"#{keywords}"%"
+					)
+   		</if>
+	    <if test="orderByClause != null" >
+	      order by ${orderByClause}
+	    </if>
+  </select>
+</mapper>
