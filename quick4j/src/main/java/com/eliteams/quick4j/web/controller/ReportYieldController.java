@@ -122,7 +122,12 @@ public class ReportYieldController extends GenericController {
 			log.error("报工冲销出错--reportYield.save",e);
 			return json.ajaxDoneError("订单冲销失败");
 		}
-    	return json.ajaxDoneSuccess(cancelReportYielded.getMessage());
+		if(cancelReportYielded.getMessageType().equals("E")){
+			return json.ajaxDoneError(cancelReportYielded.getMessage());
+		}else {
+			return json.ajaxDoneSuccess(cancelReportYielded.getMessage());
+		}
+
    	}
     
     @RequestMapping(value = "/exportExcle")

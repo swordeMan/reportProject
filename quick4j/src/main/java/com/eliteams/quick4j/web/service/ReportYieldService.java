@@ -26,6 +26,8 @@ public interface ReportYieldService{
 	String SUC_MESSAGE_TYPE = "S";//报工或冲销成功
 
 	String WARN_MESSAGE_TYPE = "W";//报工或冲销警告
+
+	String SYSTEM_PERSON = "system";//系统报工人
 	
 	String ERR_MESSAGR_TYPE = "E";
 	
