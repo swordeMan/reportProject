@@ -20,5 +20,4 @@ public interface MaterialMaintainMapper {
     
     List<MaterialMaintain> getMaterialInfoByPageAndKeywords(Page<MaterialMaintain> page,@Param("orderByClause")String orderByClause,@Param("keywords")String keywords);
     
-    List<MaterialMaintain> getMaterialInfoBydeviceDesc(String deviceDesc);
 }

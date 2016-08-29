@@ -10,7 +10,4 @@ public interface MaterialMaintainService {
 	//关键字分页查询物料基础数据表
 	List<MaterialMaintain> getMaterialInfoByPageAndKeywords(Page page,String orderByClause,String keywords);
 	
-	//工序描述查询物料基础信息
-	List<MaterialMaintain> getMaterialInfoBydeviceDesc(String deviceDesc);
-
 }

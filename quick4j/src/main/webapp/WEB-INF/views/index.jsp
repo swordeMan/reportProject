@@ -77,7 +77,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 <!--引入模糊搜索插件  -->
 <script src="js/jquery.autocomplete.js" type="text/javascript"></script>
 
-<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="js/d3.v3.min.js"></script>
 <script src="js/c3.min.js" type="text/javascript"></script>
 <!-- <script src="js/localdata_admin.js?session=Math.random()" type="text/javascript"></script> -->
 

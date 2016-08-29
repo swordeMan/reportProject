@@ -20,8 +20,10 @@ import com.eliteams.quick4j.web.model.Assignment;
 import com.eliteams.quick4j.web.model.DeviceInfo;
 import com.eliteams.quick4j.web.model.MaterialMaintain;
 import com.eliteams.quick4j.web.model.ProductChanged;
+import com.eliteams.quick4j.web.model.ProductingView;
 import com.eliteams.quick4j.web.service.DeviceService;
 import com.eliteams.quick4j.web.service.MaterialMaintainService;
+import com.eliteams.quick4j.web.service.ProductingViewService;
 
 /**
  * 物料维护控制器
@@ -39,6 +41,9 @@ public class MaterialMaintainController extends GenericController{
 	
 	@Resource
 	private DeviceService deviceService;
+	
+	@Resource
+	private ProductingViewService productingViewService;
 	
 	@Resource
 	private ProductChangedMapper productChangedMapper;
@@ -82,13 +87,11 @@ public class MaterialMaintainController extends GenericController{
 		try {
 			String deviceId = request.getParameter("deviceId");
 			int dd = Integer.parseInt(deviceId);
-			DeviceInfo deviceInfo = deviceService.selectDeiviceDescribeByDeviceId(dd);
-			String deviceDescribe = deviceInfo.getDeiviceDescribe();
-			List<MaterialMaintain> materialMaintainList = materialMaintainService.getMaterialInfoBydeviceDesc(deviceDescribe);
-			model.addAttribute("materialMaintainList", materialMaintainList);
+			List<ProductingView> productingViewList = productingViewService.getMaterialInfoBydeviceDesc(dd);
+			model.addAttribute("productingViewList", productingViewList);
 			model.addAttribute("dd", dd);
 		} catch (Exception e) {
-			log.error("根据工序查询物料基础数据错误"+e);
+			log.error("根据工序查询物料基础数据错误",e);
 		}
 		return "switch/productionChanged";
 	}

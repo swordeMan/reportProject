@@ -50,9 +50,4 @@
 	      order by ${orderByClause}
 	    </if>
   </select>
-  <select id="getMaterialInfoBydeviceDesc" resultMap="BaseResultMap" parameterType="java.lang.String">
-  	select id, product_nickname, material_describe, material_id, device_describe, device_id
-    from material_maintain
-    where device_describe=#{deviceDescribe,jdbcType=VARCHAR}
-  </select>
 </mapper>
