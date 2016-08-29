@@ -10,6 +10,8 @@ public class ProductChanged {
     private String materialId;
 
     private Date changeTime;
+    
+    private String workNum;
 
     public Long getId() {
         return id;
@@ -42,4 +44,12 @@ public class ProductChanged {
     public void setChangeTime(Date changeTime) {
         this.changeTime = changeTime;
     }
+
+	public String getWorkNum() {
+		return workNum;
+	}
+
+	public void setWorkNum(String workNum) {
+		this.workNum = workNum;
+	}
 }

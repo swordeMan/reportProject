@@ -102,6 +102,10 @@ public class MaterialMaintainController extends GenericController{
 	@RequestMapping("/change")
     @ResponseBody
    	public Json deleteAssignment(ProductChanged productChanged, Json json) {
+		String workNum = productChanged.getWorkNum();
+		if(workNum == null ||"".equals(workNum)){
+			return json.ajaxDoneError("请刷卡后再提交");
+		}
     	try {
     		productChangedMapper.insert(productChanged);
 		} catch (Exception e) {
