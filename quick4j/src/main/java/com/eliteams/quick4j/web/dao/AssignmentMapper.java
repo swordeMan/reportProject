@@ -19,8 +19,12 @@ public interface AssignmentMapper {
 
     int updateByPrimaryKey(Long id);
     
+    //优先执行，设置启动时间提前一年
+    int updateStartTimeByPrimaryKey(Long id);
+    
     //根据生产订单号在assignment中查询记录
 	Assignment selectByProductOrderId(String productOrderId);
+	
     //根据工序查找物料编码
 	Assignment selectByDeviceIdAndTime(Assignment record);
 	

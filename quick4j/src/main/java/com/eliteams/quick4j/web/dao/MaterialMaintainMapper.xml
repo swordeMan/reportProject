@@ -8,6 +8,7 @@
     <result column="material_id" property="materialId" jdbcType="VARCHAR" />
     <result column="device_describe" property="deviceDescribe" jdbcType="VARCHAR" />
     <result column="device_id" property="deviceId" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from material_maintain
@@ -15,9 +16,9 @@
   </delete>
   <insert id="insert" parameterType="com.eliteams.quick4j.web.model.MaterialMaintain" >
     insert into material_maintain (id, product_nickname, material_describe, 
-      material_id, device_describe, device_id)
+      material_id, device_describe, device_id, state)
     values (#{id,jdbcType=BIGINT}, #{productNickname,jdbcType=VARCHAR}, #{materialDescribe,jdbcType=VARCHAR}, 
-      #{materialId,jdbcType=VARCHAR}, #{deviceDescribe,jdbcType=VARCHAR}, #{deviceId,jdbcType=INTEGER})
+      #{materialId,jdbcType=VARCHAR}, #{deviceDescribe,jdbcType=VARCHAR}, #{deviceId,jdbcType=INTEGER},#{state,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.MaterialMaintain" >
     update material_maintain
@@ -25,16 +26,17 @@
       material_describe = #{materialDescribe,jdbcType=VARCHAR},
       material_id = #{materialId,jdbcType=VARCHAR},
       device_describe = #{deviceDescribe,jdbcType=VARCHAR},
-      device_id = #{deviceId,jdbcType=INTEGER}
+      device_id = #{deviceId,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select id, product_nickname, material_describe, material_id, device_describe, device_id
+    select id, product_nickname, material_describe, material_id, device_describe, device_id, state
     from material_maintain
     where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, product_nickname, material_describe, material_id, device_describe, device_id
+    select id, product_nickname, material_describe, material_id, device_describe, device_id, state
     from material_maintain
   </select>
   <select id="getMaterialInfoByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
@@ -49,5 +51,10 @@
 	    <if test="orderByClause != null" >
 	      order by ${orderByClause}
 	    </if>
+  </select>
+  <select id="getMaterialInfoBydeviceId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select id, product_nickname, material_describe, material_id, device_describe, device_id, state
+    from material_maintain
+    where device_id=#{deviceId,jdbcType=INTEGER}
   </select>
 </mapper>

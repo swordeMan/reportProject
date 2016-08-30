@@ -143,9 +143,9 @@
           p:cacheManager-ref="ehCacheManagerFactory"/>
           
     <!-- 定时器 -->
-    <task:scheduled-tasks>
+    <!-- <task:scheduled-tasks>
         <task:scheduled ref="autoTask" method="obtainYield" cron="0 0/1 * * * ?"/>
         <task:scheduled ref="autoTask" method="autoReport" cron="0 0/60 * * * ?"/>
         <task:scheduled ref="autoTask" method="autodelet" cron="0 0/1440 * * * ?"/>
-	</task:scheduled-tasks>
+	</task:scheduled-tasks> -->
 </beans>

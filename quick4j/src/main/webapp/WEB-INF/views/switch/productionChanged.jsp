@@ -32,6 +32,7 @@ form .material {
 	background-color: transparent;
 	color: white;
 	font-size: 14px;
+	background: none;
 }
 </style>
 <div class="pageContent">
@@ -41,7 +42,7 @@ form .material {
 				<c:choose>
 					<c:when test="${item.changeTime==null}">
 						<div onclick="document.getElementById('conserve${s.index}').click();" style="background:#183152;">
-							<form method="post" action="rest/material/change?callbackType=closeCurrent" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone,'请刷卡提交',workNo);">
+							<form method="post" action="rest/material/change?navTabId=materialNav" class="pageForm" onsubmit="return validateCallback(this, navTabAjaxDone,'请刷卡提交，切换至${item.productNickname}-${item.materialDescribe}(${item.materialId})',workNo);">
 								<input type="hidden" name="deviceId" value="${dd }" style="display: none"/>
 								<input id="workNo" name="workNum" style="width:0;height:0;border:none;padding:0" type="text"/>	
 								<p>${item.productNickname}</p><br>
@@ -54,7 +55,7 @@ form .material {
 					</c:when>
 					<c:otherwise>
 						<div style="background:#8ABB12;">
-							<form method="post" action="rest/material/change?callbackType=closeCurrent" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone,'请刷卡提交',workNo);">
+							<form class="pageForm required-validate">
 								<input type="hidden" name="deviceId" value="${dd }" style="display: none"/>
 								<input id="workNo" name="workNum" style="width:0;height:0;border:none;padding:0" type="text"/>	
 								<p>${item.productNickname}</p><br>

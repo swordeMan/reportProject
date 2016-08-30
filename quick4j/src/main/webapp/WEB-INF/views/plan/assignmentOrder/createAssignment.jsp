@@ -7,38 +7,75 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 %>
 <script type="text/javascript">
 
-$(".materialId").select2();
+//$(".materialId").select2();
 //$('.deiviceDescribe').select2();
-var materialDescribe;
+//var materialDescribe;
+var UnStartSapOrderList;
 
-//得到待下达任务列表
+
+//根据选择的物料得到待下达任务列表
 function getSapOrderList(obj){
+	var userSimpleNameSet = new Set();
 	var i = 0;
 	if(obj == "")
 		return false;
 	$("#assDetailTab tbody").empty();
-	<c:forEach var="sapOrder" items="${sapOrderList}" varStatus="s">
+	$("#user").empty();
+	var url="rest/assignment/getUnStartSapOrderList";//请求后台的url
+	$.post(url,{materialId:obj},function(data){
+		UnStartSapOrderList=data;
+		$.each(data,function(i,s){
+			//待下达任务的订单加到列表中
+			$("#assDetailTab tbody").append($('<tr class="unitBox"><td><input size="15" type="text" name="assignments['+i+'].saleOrderId" value="'+s.saleOrderId+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.saleOrderRow+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.targetSum+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.finishedTotal+'" readonly="readonly"></td><td><input size="15" type="text" name="assignments['+i+'].productOrderId" value="'+s.productOrderId+'" readonly="readonly"></td><td><input size="20" type="text" name="assignments['+i+'].materialDescribe" value="'+s.materialDescribe+'" readonly="readonly"></td><td><input size="10" type="text" name="assignments['+i+'].userSimpleName" value="'+s.userSimpleName+'" readonly="readonly"></td><td><a href="javascript:void(0)" class="btnDel">删除</a></td></tr>'));
+			i++;
+			userSimpleNameSet.add(s.userSimpleName);
+			
+		});
+		console.log(userSimpleNameSet);
+		//客户简称信息加到下拉列表中
+		$("#user").append($('<option value="">-请选择-</option>'));
+		userSimpleNameSet.forEach(function (s) {
+			$("#user").append($('<option value="'+s+'">'+s+'</option>'));
+		});
+		
+		
+	});
+	/* <c:forEach var="sapOrder" items="${sapOrderList}" varStatus="s">
 		if("${sapOrder.materialId}" == obj){
 			$("#assDetailTab tbody").append($('<tr class="unitBox"><td><input size="15" type="text" name="assignments['+i+'].saleOrderId" value="'+"${sapOrder.saleOrderId}"+'" readonly="readonly"></td><td><input size="8" type="text" value="'+"${sapOrder.saleOrderRow}"+'" readonly="readonly"></td><td><input size="8" type="text" value="'+"${sapOrder.targetSum}"+'" readonly="readonly"></td><td><input size="8" type="text" value="'+"${sapOrder.finishedTotal}"+'" readonly="readonly"></td><td><input size="15" type="text" name="assignments['+i+'].productOrderId" value="'+"${sapOrder.productOrderId}"+'" readonly="readonly"></td><td><input size="20" type="text" name="assignments['+i+'].materialDescribe" value="'+"${sapOrder.materialDescribe}"+'" readonly="readonly"></td><td><input size="10" type="text" name="assignments['+i+'].userSimpleName" value="'+"${sapOrder.userSimpleName}"+'" readonly="readonly"></td><td><a href="javascript:void(0)" class="btnDel ">删除</a></td></tr>'));
 			i++;
 			materialDescribe = "${sapOrder.materialDescribe}";
 		}
-	</c:forEach>
+	</c:forEach> */
 	
-	var s = materialDescribeToName(materialDescribe);
-	autoDeviceDesc(s);
-	
-	/* 删除按钮点击事件 */
-	$(".btnDel").click(function(){
-		var $btnDel = $(this);
-		var $tbody = $("#assDetailTab tbody");
-		if ($btnDel.is("[href^=javascript:]")){
-			$btnDel.parents("tr:first").remove();
-			initSuffix($tbody);
-			return false;
-		}
+	/* var s = materialDescribeToName(materialDescribe);
+	autoDeviceDesc(s); */
+}
+
+//根据选择的客户精选待下达任务列表
+function getDecreaseSapOrderList(obj){
+	var i = 0;
+	if(obj == "")
+		return false;
+	$("#assDetailTab tbody").empty();
+	$.each(UnStartSapOrderList,function(i,s){
+		//待下达任务的订单加到列表中
+		if(s.userSimpleName == obj)
+		$("#assDetailTab tbody").append($('<tr class="unitBox"><td><input size="15" type="text" name="assignments['+i+'].saleOrderId" value="'+s.saleOrderId+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.saleOrderRow+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.targetSum+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.finishedTotal+'" readonly="readonly"></td><td><input size="15" type="text" name="assignments['+i+'].productOrderId" value="'+s.productOrderId+'" readonly="readonly"></td><td><input size="20" type="text" name="assignments['+i+'].materialDescribe" value="'+s.materialDescribe+'" readonly="readonly"></td><td><input size="10" type="text" name="assignments['+i+'].userSimpleName" value="'+s.userSimpleName+'" readonly="readonly"></td><td><a href="javascript:void(0)" class="btnDel">删除</a></td></tr>'));
+		i++;
 	});
 }
+
+/* 删除按钮点击事件 */
+$(document).on("click",".btnDel",function(){
+	var $btnDel = $(this);
+	var $tbody = $("#assDetailTab tbody");
+	if ($btnDel.is("[href^=javascript:]")){
+		$btnDel.parents("tr:first").remove();
+		initSuffix($tbody);
+		return false;
+	}
+});
 
 
 function initSuffix($tbody) {
@@ -79,6 +116,8 @@ function autoDeviceDesc(obj){
 <div class="pageContent">
 	<form id="createAssignmentForm" method="post" action="rest/assignment/save?callbackType=closeCurrent" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<!-- <input type="hidden" name="assignment.userSimpleName" class="userSimpleName"/>  -->
+		<input name="assignment.cmdTime" type="hidden" class="date" value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/>"/>
+		<input name="assignment.deviceId" type="hidden" value="${materialMaintainList[0].deviceId}"/>
 		<div class="pageFormContent" layoutH="56">
 			<%-- <p>
 				<label>生产订单：</label>
@@ -87,9 +126,19 @@ function autoDeviceDesc(obj){
 			<p>
 				<label>物料编码：</label>
 				<select class="materialId required" name="assignment.materialId" style="width:60%" onchange="getSapOrderList(this.value)">
-					<c:forEach var="item" items="${materialIdList}" varStatus="s">
-						<option value="${item}" selected="selected">${item}</option>
+					<option value="">-请选择-</option>
+					<c:forEach var="item" items="${materialMaintainList}" varStatus="s">
+						<option value="${item.materialId}">${item.materialId}</option>
 					</c:forEach>
+				</select>
+			</p>
+			<p>
+				<label>客户：</label>
+				<select id="user" style="width:60%" onchange="getDecreaseSapOrderList(this.value)">
+					<option value="">-请选择-</option>
+					<%-- <c:forEach var="item" items="${materialMaintainList}" varStatus="s">
+						<option value="${item.materialId}">${item.materialId}</option>
+					</c:forEach> --%>
 				</select>
 			</p>
 			<%-- <p>
@@ -99,20 +148,21 @@ function autoDeviceDesc(obj){
 			
 			<p>
 				<label>工序：</label>
-				<select class="deiviceDescribe" name="assignment.deviceId" style="width:60%">
-					<%-- <c:forEach var="item" items="${deviceInfoList}" varStatus="s">
+				<input readonly="readonly" type="text" value="${materialMaintainList[0].deviceDescribe}" style="width:30%"/>
+				<%-- <select class="deiviceDescribe" name="assignment.deviceId" style="width:60%">
+					<c:forEach var="item" items="${deviceInfoList}" varStatus="s">
 						<option value="${item.deviceId}" selected="selected">${item.deiviceDescribe}</option>
-					</c:forEach> --%>
-				</select>
+					</c:forEach>
+				</select> --%>
 			</p>
-			<p>
+			<%-- <p>
 				<label>下达日期：</label>
 				<input name="assignment.cmdTime" type="text" class="date" value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/>" readonly="false"/>
 				<a class="inputDateButton" href="javascript:;">选择</a>
-			</p>
+			</p> --%>
 			<p>
 				<label>下达人：</label>
-				<input name="assignment.cmdPerson" style="width:16%" type="text" value="${userInfo.username}" readonly="readonly" size="30"/>
+				<input name="assignment.cmdPerson" style="width:30%" type="text" value="${userInfo.username}" readonly="readonly" size="30"/>
 			</p>
 			<%-- <p>
 				<label>目标量：</label>

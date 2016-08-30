@@ -23,4 +23,9 @@ public class MaterialMaintainServiceImpl implements MaterialMaintainService {
 		return materialMaintainMapper.getMaterialInfoByPageAndKeywords(page, orderByClause, keywords);
 	}
 
+	@Override
+	public List<MaterialMaintain> getMaterialInfoBydeviceId(Integer deviceId) {
+		return materialMaintainMapper.getMaterialInfoBydeviceId(deviceId);
+	}
+
 }

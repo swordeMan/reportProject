@@ -235,4 +235,10 @@ public class SapOrderServiceImpl implements SapOrderService {
 	}
 
 
+	@Override
+	public List<SapOrder> getUnStartSapOrderListByMaterialId(String MaterialId) {
+		return sapOrderMapper.getUnStartSapOrderListByMaterialId(MaterialId);
+	}
+
+
 }

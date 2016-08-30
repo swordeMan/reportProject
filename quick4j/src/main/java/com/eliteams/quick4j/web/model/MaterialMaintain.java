@@ -12,6 +12,8 @@ public class MaterialMaintain {
     private String deviceDescribe;
     
     private Integer deviceId;
+    
+    private Integer state;
 
     public Long getId() {
         return id;
@@ -59,5 +61,13 @@ public class MaterialMaintain {
 
 	public void setDeviceDescribe(String deviceDescribe) {
 		this.deviceDescribe = deviceDescribe;
+	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
 	}
 }
