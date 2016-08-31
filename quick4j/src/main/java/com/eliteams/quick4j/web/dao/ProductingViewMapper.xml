@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.ProductingViewMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.ProductingView" >
+    <result column="product_nickname" property="productNickname" jdbcType="VARCHAR" />
+    <result column="material_describe" property="materialDescribe" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="device_id" property="deviceId" jdbcType="INTEGER" />
+    <result column="device_describe" property="deviceDescribe" jdbcType="VARCHAR" />
+    <result column="change_time" property="changeTime" jdbcType="TIMESTAMP" />
+    <result column="work_num" property="workNum" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.ProductingView" >
+    insert into producting_view (product_nickname, material_describe, 
+      material_id, device_id, device_describe, 
+      change_time, work_num)
+    values (#{productNickname,jdbcType=VARCHAR}, #{materialDescribe,jdbcType=VARCHAR}, 
+      #{materialId,jdbcType=VARCHAR}, #{deviceId,jdbcType=INTEGER}, #{deviceDescribe,jdbcType=VARCHAR}, 
+      #{changeTime,jdbcType=TIMESTAMP}, #{workNum,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select product_nickname, material_describe, material_id, device_id, device_describe, 
+    change_time, work_num
+    from producting_view
+  </select>
+  <select id="getMaterialInfoBydeviceDesc" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select product_nickname, material_describe, material_id, device_id, device_describe, 
+    change_time, work_num
+    from producting_view
+    where device_id=#{deviceId,jdbcType=INTEGER}
+  </select>
+</mapper>

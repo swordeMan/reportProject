@@ -25,12 +25,14 @@ import com.eliteams.quick4j.web.form.CreateAssignmentForm;
 import com.eliteams.quick4j.web.model.Assignment;
 import com.eliteams.quick4j.web.model.AssignmentView;
 import com.eliteams.quick4j.web.model.DeviceInfo;
+import com.eliteams.quick4j.web.model.MaterialMaintain;
 import com.eliteams.quick4j.web.model.ReportYield;
 import com.eliteams.quick4j.web.model.SapOrder;
 import com.eliteams.quick4j.web.model.ScrapReason;
 import com.eliteams.quick4j.web.service.AssignmentService;
 import com.eliteams.quick4j.web.service.AssignmentViewService;
 import com.eliteams.quick4j.web.service.DeviceService;
+import com.eliteams.quick4j.web.service.MaterialMaintainService;
 import com.eliteams.quick4j.web.service.SapOrderService;
 import com.eliteams.quick4j.web.service.ScrapReasonService;
 
@@ -65,6 +67,9 @@ public class AssignmentController {
 	
 	@Resource
 	ScrapReasonService scrapReasonService;
+	
+	@Resource
+	private MaterialMaintainService materialMaintainService;
 	
 	/**
 	 * 单个生产订单任务下达
@@ -151,6 +156,23 @@ public class AssignmentController {
 		}
     	return json.ajaxDoneSuccess("任务启动成功");
    	}
+    /**
+     * 设置任务为优先执行，即设启动时间提前一年
+     * @param id
+     * @param json
+     * @return
+     */
+    @RequestMapping("/first/{id}")
+    @ResponseBody
+   	public Json first(@PathVariable("id") Long id, Json json) {
+    	try {
+    		assignmentMapper.updateStartTimeByPrimaryKey(id);
+		} catch (Exception e) {
+			log.error("设置任务优先执行失败",e);
+			return json.ajaxDoneError("任务优先执行失败");
+		}
+    	return json.ajaxDoneSuccess("任务优先执行成功");
+   	}
     
     /**
      * 查询任务视图中的单条记录，填报报废单
@@ -201,18 +223,23 @@ public class AssignmentController {
      * @return
      */
     @RequestMapping("/getDeviceInfo")
-   	public String getDeviceInfo(Model model) {
+   	public String getDeviceInfo(Model model,HttpServletRequest request) {
     	try {
-			List<DeviceInfo> deviceInfoList = deviceService.selectAllDeviceInfo();
+    		String deviceId = request.getParameter("deviceId");
+			int dd = Integer.parseInt(deviceId);
+			List<MaterialMaintain> materialMaintainList = materialMaintainService.getMaterialInfoBydeviceId(dd);
+			
+			/*List<DeviceInfo> deviceInfoList = deviceService.selectAllDeviceInfo();
 			List<SapOrder> sapOrderList = sapOrderService.selectSapOrderList();
-			List<String> materialIdList = sapOrderService.getMaterialIdFromUnstart();
+			List<String> materialIdList = sapOrderService.getMaterialIdFromUnstart();*/
 			Date now = new Date();
-			model.addAttribute("deviceInfoList", deviceInfoList);
 			model.addAttribute("now",now);
+			model.addAttribute("materialMaintainList", materialMaintainList);
+			/*model.addAttribute("deviceInfoList", deviceInfoList);
 			model.addAttribute("sapOrderList", sapOrderList);
-			model.addAttribute("materialIdList", materialIdList);
+			model.addAttribute("materialIdList", materialIdList);*/
 		} catch (Exception e) {
-			log.error("工序信息查询出错--assignment.getDeviceInfo"+e);
+			log.error("基础物料信息查询出错--assignment.getDeviceInfo",e);
 		}
    		return "plan/assignmentOrder/createAssignment";
    	}
@@ -332,4 +359,23 @@ public class AssignmentController {
 		}
     	return json.ajaxDoneSuccess("任务删除成功");
    	}
+    
+    /**
+     * 根据物料编码查询未下达任务的订单
+     * @param request
+     * @return
+     */
+    @RequestMapping("/getUnStartSapOrderList")
+    @ResponseBody
+    public List<SapOrder> getUnStartSapOrderList(HttpServletRequest request){
+    	List<SapOrder> sapOrderList = null;
+    	try {
+    		String materialId = request.getParameter("materialId");
+    		sapOrderList = sapOrderService.getUnStartSapOrderListByMaterialId(materialId);
+    		
+		} catch (Exception e) {
+			log.error("根据物料编码查询未下达任务的订单出错",e);
+		}
+		return sapOrderList;
+    }
 }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.MaterialMaintainMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.MaterialMaintain" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="product_nickname" property="productNickname" jdbcType="VARCHAR" />
+    <result column="material_describe" property="materialDescribe" jdbcType="VARCHAR" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="device_describe" property="deviceDescribe" jdbcType="VARCHAR" />
+    <result column="device_id" property="deviceId" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from material_maintain
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.MaterialMaintain" >
+    insert into material_maintain (id, product_nickname, material_describe, 
+      material_id, device_describe, device_id, state)
+    values (#{id,jdbcType=BIGINT}, #{productNickname,jdbcType=VARCHAR}, #{materialDescribe,jdbcType=VARCHAR}, 
+      #{materialId,jdbcType=VARCHAR}, #{deviceDescribe,jdbcType=VARCHAR}, #{deviceId,jdbcType=INTEGER},#{state,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.MaterialMaintain" >
+    update material_maintain
+    set product_nickname = #{productNickname,jdbcType=VARCHAR},
+      material_describe = #{materialDescribe,jdbcType=VARCHAR},
+      material_id = #{materialId,jdbcType=VARCHAR},
+      device_describe = #{deviceDescribe,jdbcType=VARCHAR},
+      device_id = #{deviceId,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, product_nickname, material_describe, material_id, device_describe, device_id, state
+    from material_maintain
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, product_nickname, material_describe, material_id, device_describe, device_id, state
+    from material_maintain
+  </select>
+  <select id="getMaterialInfoByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
+    SELECT * FROM material_maintain  where 1=1
+    	<if test="keywords != null and keywords !='' ">
+				AND (
+					material_describe LIKE "%"#{keywords}"%"
+					or device_describe LIKE "%"#{keywords}"%"
+					or product_nickname LIKE "%"#{keywords}"%"
+					)
+   		</if>
+	    <if test="orderByClause != null" >
+	      order by ${orderByClause}
+	    </if>
+  </select>
+  <select id="getMaterialInfoBydeviceId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select id, product_nickname, material_describe, material_id, device_describe, device_id, state
+    from material_maintain
+    where device_id=#{deviceId,jdbcType=INTEGER}
+  </select>
+</mapper>

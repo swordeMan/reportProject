@@ -55,4 +55,7 @@ public interface SapOrderMapper {
 	
 	//查询所有未启动的生产订单中的物料编码
 	List<String> getMaterialIdFromUnstart();
+	
+	//根据物料编码查询所有未启动的生产订单
+    List<SapOrder> getUnStartSapOrderListByMaterialId(String MaterialId);
 }

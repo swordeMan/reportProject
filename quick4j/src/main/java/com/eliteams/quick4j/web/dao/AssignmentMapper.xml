@@ -29,11 +29,16 @@
     values (#{id,jdbcType=BIGINT}, #{productOrderId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, 
       #{materialDescribe,jdbcType=VARCHAR}, #{deviceId,jdbcType=INTEGER}, #{assignmentNum,jdbcType=INTEGER}, 
       #{planTime,jdbcType=DATE}, #{classes,jdbcType=INTEGER}, #{cmdTime,jdbcType=DATE}, 
-      #{cmdPerson,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{saleOrderId,jdbcType=VARCHAR}, #{userSimpleName,jdbcType=VARCHAR}, #{firstReportTime,jdbcType=TIMESTAMP})
+      #{cmdPerson,jdbcType=VARCHAR}, NOW(), #{saleOrderId,jdbcType=VARCHAR}, #{userSimpleName,jdbcType=VARCHAR}, #{firstReportTime,jdbcType=TIMESTAMP})
   </insert>
   <update id="updateByPrimaryKey" parameterType="java.lang.Long" >
     update assignment
     set start_time = NOW()
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateStartTimeByPrimaryKey" parameterType="java.lang.Long" >
+    update assignment
+    set start_time = date_sub(start_time, interval 1 YEAR)
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
