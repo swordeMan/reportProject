@@ -41,7 +41,7 @@
 
         <!--对应数据库表名 -->
 
-        <table tableName="material_maintain">
+        <table tableName="producting_view">
 
         </table>
     </context>

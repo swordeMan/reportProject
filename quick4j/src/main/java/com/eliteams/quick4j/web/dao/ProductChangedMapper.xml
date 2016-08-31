@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.ProductChangedMapper" >
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.ProductChanged" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="device_id" property="deviceId" jdbcType="INTEGER" />
+    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
+    <result column="change_time" property="changeTime" jdbcType="TIMESTAMP" />
+    <result column="work_num" property="workNum" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from product_changed
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.ProductChanged" >
+    insert into product_changed (device_id, material_id, 
+      change_time,work_num)
+    values (#{deviceId,jdbcType=INTEGER}, #{materialId,jdbcType=VARCHAR}, 
+      NOW(),#{workNum,jdbcType=VARCHAR})
+    ON DUPLICATE KEY UPDATE 
+    device_id = #{deviceId,jdbcType=INTEGER},
+    material_id = #{materialId,jdbcType=VARCHAR},
+    change_time = NOW(),
+    work_num = #{workNum,jdbcType=VARCHAR}
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.ProductChanged" >
+    update product_changed
+    set device_id = #{deviceId,jdbcType=INTEGER},
+      material_id = #{materialId,jdbcType=VARCHAR},
+      change_time = #{changeTime,jdbcType=TIMESTAMP},
+      work_num = #{workNum,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, device_id, material_id, change_time, work_num
+    from product_changed
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, device_id, material_id, change_time, work_num
+    from product_changed
+  </select>
+</mapper>

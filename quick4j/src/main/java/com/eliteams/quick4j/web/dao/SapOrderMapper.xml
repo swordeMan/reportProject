@@ -243,4 +243,9 @@
   <select id="getMaterialIdFromUnstart" resultType="java.lang.String">
   	select DISTINCT material_id from sap_order where del_remark != 'X' and ISNULL(state_mark)
   </select>
+  <select id="getUnStartSapOrderListByMaterialId" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select * from sap_order where del_remark != 'X' and target_sum >finished_total and ISNULL(state_mark)
+  	and material_id = #{materialId,jdbcType=VARCHAR}
+  	order by sale_order_id DESC
+  </select>
 </mapper>

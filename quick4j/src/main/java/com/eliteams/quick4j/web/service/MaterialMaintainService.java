@@ -9,6 +9,7 @@ public interface MaterialMaintainService {
 	
 	//关键字分页查询物料基础数据表
 	List<MaterialMaintain> getMaterialInfoByPageAndKeywords(Page page,String orderByClause,String keywords);
+
     //添加新的物料信息
 	public void insertMaterialMaintain(MaterialMaintain materialMaintain);
 	//删除物料信息

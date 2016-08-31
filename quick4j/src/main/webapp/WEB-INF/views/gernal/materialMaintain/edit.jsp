@@ -22,7 +22,7 @@
 			</p>
 				<p>
 				<label>工序:</label>
-				<input name="deiviceDescribe" class="required" type="text"  value="${materialMaintain.deiviceDescribe}" size="30"/>
+				<input name="deviceDescribe" class="required" type="text"  value="${materialMaintain.deviceDescribe}" size="30"/>
 			</p>
 		</div>
 		<c:import url="../../include/formBar.jsp"></c:import>

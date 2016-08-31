@@ -17,6 +17,7 @@ public class MaterialMaintainServiceImpl implements MaterialMaintainService {
 	
 	@Resource
 	private MaterialMaintainMapper materialMaintainMapper;
+
 	/** 
 	 * 查看所有
 	 */
@@ -57,7 +58,6 @@ public class MaterialMaintainServiceImpl implements MaterialMaintainService {
 		return materialMaintainMapper.selectByPrimaryKey(id);
 	}
 	
-
 	@Override
 	public List<MaterialMaintain> getMaterialInfoBydeviceId(Integer deviceId) {
 		return materialMaintainMapper.getMaterialInfoBydeviceId(deviceId);

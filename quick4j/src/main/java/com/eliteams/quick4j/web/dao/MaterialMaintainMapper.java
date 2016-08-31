@@ -19,4 +19,7 @@ public interface MaterialMaintainMapper {
     int updateByPrimaryKey(MaterialMaintain record);
     
     List<MaterialMaintain> getMaterialInfoByPageAndKeywords(Page<MaterialMaintain> page,@Param("orderByClause")String orderByClause,@Param("keywords")String keywords);
+    
+    List<MaterialMaintain> getMaterialInfoBydeviceId(Integer deviceId);
+    
 }

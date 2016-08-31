@@ -9,7 +9,11 @@ public class MaterialMaintain {
 
     private String materialId;
 
-    private String deiviceDescribe;
+    private String deviceDescribe;
+    
+    private Integer deviceId;
+    
+    private Integer state;
 
     public Long getId() {
         return id;
@@ -43,11 +47,27 @@ public class MaterialMaintain {
         this.materialId = materialId == null ? null : materialId.trim();
     }
 
-    public String getDeiviceDescribe() {
-        return deiviceDescribe;
-    }
+	public Integer getDeviceId() {
+		return deviceId;
+	}
 
-    public void setDeiviceDescribe(String deiviceDescribe) {
-        this.deiviceDescribe = deiviceDescribe == null ? null : deiviceDescribe.trim();
-    }
+	public void setDeviceId(Integer deviceId) {
+		this.deviceId = deviceId;
+	}
+
+	public String getDeviceDescribe() {
+		return deviceDescribe;
+	}
+
+	public void setDeviceDescribe(String deviceDescribe) {
+		this.deviceDescribe = deviceDescribe;
+	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
 }

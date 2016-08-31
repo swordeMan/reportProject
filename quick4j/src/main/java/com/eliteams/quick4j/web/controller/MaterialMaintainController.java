@@ -1,5 +1,7 @@
 package com.eliteams.quick4j.web.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,8 +15,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.eliteams.quick4j.core.entity.Json;
 import com.eliteams.quick4j.core.feature.orm.mybatis.Page;
 import com.eliteams.quick4j.core.generic.GenericController;
+import com.eliteams.quick4j.web.dao.ProductChangedMapper;
+import com.eliteams.quick4j.web.model.Assignment;
+import com.eliteams.quick4j.web.model.DeviceInfo;
 import com.eliteams.quick4j.web.model.MaterialMaintain;
+import com.eliteams.quick4j.web.model.ProductChanged;
+import com.eliteams.quick4j.web.model.ProductingView;
+import com.eliteams.quick4j.web.service.DeviceService;
 import com.eliteams.quick4j.web.service.MaterialMaintainService;
+import com.eliteams.quick4j.web.service.ProductingViewService;
 
 /**
  * 物料维护控制器
@@ -29,6 +38,15 @@ public class MaterialMaintainController extends GenericController{
 	
 	@Resource
 	private MaterialMaintainService materialMaintainService;
+	
+	@Resource
+	private DeviceService deviceService;
+	
+	@Resource
+	private ProductingViewService productingViewService;
+	
+	@Resource
+	private ProductChangedMapper productChangedMapper;
 	
 	/**
 	 * 物料基础表页面展示
@@ -53,8 +71,8 @@ public class MaterialMaintainController extends GenericController{
 			materialMaintainService.getMaterialInfoByPageAndKeywords(page, orderByClause, keywords);
 			model.addAttribute(page);
 		} catch (Exception e) {
-			log.error("物料基础数据查询错误"+e);
-		}		
+			log.error("物料基础数据列表查询错误"+e);
+		}
 		return "gernal/materialMaintain/list";
 	}
 	/**
@@ -113,7 +131,6 @@ public class MaterialMaintainController extends GenericController{
 	    model.addAttribute(materialMaintain);
 	    return "gernal/materialMaintain/edit";
 	}
-			log.error("物料基础数据列表查询错误"+e);
 	/**
 	 *修改物料数据
 	 * @param materialMaintain
