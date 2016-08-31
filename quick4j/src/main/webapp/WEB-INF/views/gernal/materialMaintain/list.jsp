@@ -48,9 +48,9 @@ $(function(){
 			</shiro:hasPermission>
 			<shiro:hasPermission name="scrapReason:update">
 				<li><a class="edit" target="dialog" mask="true" height="310"
-				warn="请选择一个报废原因"
+				warn="请选择一个工序物料"
 				href="<c:url value='rest/material/qureyById/{slt_objId}'/>"
-				title="编辑报废原因"><span>编辑</span></a></li>
+				title="编辑工序物料"><span>编辑</span></a></li>
 			</shiro:hasPermission>
 			<shiro:hasPermission name="scrapReason:delete">
 				<li><a class="delete" target="ajaxTodo"
@@ -65,10 +65,10 @@ $(function(){
 			<tr>
 
 				<th width="20"></th>
-				<th orderField="product_nickname" width="100">产品代码</th>
-				<th orderField="material_describe" width="150">物料描述</th>
-				<th orderField="material_id" width="100">物料编码</th>
-				<th orderField="deivice_describe" width="100">工序</th>
+				<th orderField="product_nickname" width="150">产品代码</th>
+				<th orderField="material_describe" width="200">物料描述</th>
+				<th orderField="material_id" width="150">物料编码</th>
+				<th orderField="device_describe" width="150">工序</th>
 
 			</tr>
 		</thead>
@@ -79,7 +79,7 @@ $(function(){
 					<td>${item.productNickname}</td>
 					<td>${item.materialDescribe}</td>
 					<td>${item.materialId}</td>
-					<td>${item.deiviceDescribe}</td>
+					<td>${item.deviceDescribe}</td>
 				</tr>
 			</c:forEach>
 		</tbody>

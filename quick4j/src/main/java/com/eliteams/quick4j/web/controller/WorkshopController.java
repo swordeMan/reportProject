@@ -65,7 +65,7 @@ public class WorkshopController {
 	    return "gernal/workshop/edit";
 	}
 	 /**
-     * 返修原因编辑
+     * 工厂编辑
      */
     @RequestMapping(value ="/update")
     @ResponseBody

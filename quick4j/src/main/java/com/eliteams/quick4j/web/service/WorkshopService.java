@@ -15,10 +15,10 @@ public interface WorkshopService {
 	
 	List<Workshop> getWorkshopByPage(Page page,String orderByClause, String keywords);
 	
-	void insertWorkshop(Workshop Workshop);// 编制新的返修原因，在表中插入
+	void insertWorkshop(Workshop Workshop);// 编制新的工厂，在表中插入
 
-	void deleteWorkshop(int id); // 删除返修原因
+	void deleteWorkshop(int id); // 删除工厂
 
-	void editWorkshop(Workshop workshop); // 修改返修原因
+	void editWorkshop(Workshop workshop); // 修改工厂
 
 }
