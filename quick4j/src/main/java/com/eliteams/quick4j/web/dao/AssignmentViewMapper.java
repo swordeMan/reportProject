@@ -13,7 +13,8 @@ public interface AssignmentViewMapper {
 
     List<AssignmentView> selectAll();
 
-	List<AssignmentView> getSapOrderByPageAndKeywords(Page<AssignmentView> page,@Param("orderByClause")String orderByClause,@Param("keywords")String keywords,@Param("deviceId")Integer deviceId);
+	/*List<AssignmentView> getSapOrderByPageAndKeywords(Page<AssignmentView> page,@Param("orderByClause")String orderByClause,@Param("keywords")String keywords);*/
+    List<AssignmentView> getSapOrderByPageAndKeywords(Page<AssignmentView> page,AssignmentView assignmentView);
 	
 	//根据工序查出对应的物料描述和物料编码，以供报废时查询生产订单使用
 	List<AssignmentView> getMaterialIdAndDescribeByDeviceDes(Integer deviceId);

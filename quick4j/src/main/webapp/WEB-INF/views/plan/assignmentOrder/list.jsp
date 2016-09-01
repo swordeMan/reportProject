@@ -4,16 +4,25 @@
 <form id="pagerForm" method="post" action="rest/assignment/list">
 	<input type="hidden" name="pageNo" value="1" />
 	<input type="hidden" name="pageSize" value="${page.pageSize}" />
-	<input type="hidden" name="orderField" value="${param.orderField}" />
-	<input type="hidden" name="orderDirection" value="${param.orderDirection}" />
-	<input type="hidden" name="deviceId" value="${param.deviceId}" />
+	<%-- <input type="hidden" name="orderField" value="${param.orderField}" />
+	<input type="hidden" name="orderDirection" value="${param.orderDirection}" /> --%>
+	<input type="hidden" name="orderField" value="${assignmentView.orderField}" />
+	<input type="hidden" name="orderDirection" value="${assignmentView.orderDirection}" />
+	<input type="hidden" name="userSimpleName" value="${assignmentView.userSimpleName}" />
+	<input type="hidden" name="saleOrderId" value="${assignmentView.saleOrderId}" />
+	<input type="hidden" name="materialId" value="${assignmentView.materialId}" />
+	<input type="hidden" name="materialDescribe" value="${assignmentView.materialDescribe}" />
+	<input type="hidden" name="deiviceDescribe" value="${assignmentView.deiviceDescribe}" />
+	<input type="hidden" name="cmdPerson" value="${assignmentView.cmdPerson}" />
+	<input type="hidden" name="beginTime" value="<fmt:formatDate value="${assignmentView.beginTime}" pattern="yyyy-MM-dd"/>"/>
+	<input type="hidden" name="stopTime" value="<fmt:formatDate value="${assignmentView.stopTime}" pattern="yyyy-MM-dd"/>"/>
 </form>
 
 <script type="text/javascript">
 $(function(){
-	var orderField = "${orderField}"||null;
+	var orderField = "${assignmentView.orderField}"||null;
 	if(orderField!=null){
-		var orderDirection = "${orderDirection}";
+		var orderDirection = "${assignmentView.orderDirection}";
 		$('th[orderField="'+orderField+'"]').addClass(orderDirection);
 	}
 });
@@ -35,15 +44,13 @@ $(function(){
 		<ul class="searchContent">
 			<li>
 				<label>关键词：</label>
-				<input type="text" name="keywords" value="${keywords}"  alt="模糊搜索"/>
-				
-				<input type="hidden" name="deviceId" value="${param.deviceId}" />
+				<input type="text" name="keywords" value="${assignmentView.keywords}"  alt="模糊搜索"/>
 			</li>
 		</ul>
 		<div class="subBar">
 			<ul>
 				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
-				<!-- <li><a class="button" href="demo_page6.html" target="dialog" mask="true" title="查询框"><span>高级检索</span></a></li> -->
+				<li><a class="button" href="rest/assignment/queriedAccurately" target="dialog" mask="true" title="查询框" height="400"><span>高级检索</span></a></li>
 			</ul>
 		</div>
 	</div>

@@ -2,6 +2,8 @@ package com.eliteams.quick4j.web.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class AssignmentView {
     private Long id;
 
@@ -36,8 +38,37 @@ public class AssignmentView {
     private Integer targetSum;
 
     private Integer finishedTotal;
+    
+    //增加起始时间和终止时间用于高级搜索
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date beginTime;
+    
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date stopTime;
+    
+    //增加关键字、搜索字段、搜索方向等字段
+    private String orderField;
+    private String orderDirection;
+    private String keywords;
+    private String orderByClause;
 
-    public Long getId() {
+    public Date getBeginTime() {
+		return beginTime;
+	}
+
+	public void setBeginTime(Date beginTime) {
+		this.beginTime = beginTime;
+	}
+
+	public Date getStopTime() {
+		return stopTime;
+	}
+
+	public void setStopTime(Date stopTime) {
+		this.stopTime = stopTime;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -137,7 +168,39 @@ public class AssignmentView {
         return deiviceDescribe;
     }
 
-    public void setDeiviceDescribe(String deiviceDescribe) {
+    public String getOrderField() {
+		return orderField;
+	}
+
+	public void setOrderField(String orderField) {
+		this.orderField = orderField;
+	}
+
+	public String getOrderDirection() {
+		return orderDirection;
+	}
+
+	public void setOrderDirection(String orderDirection) {
+		this.orderDirection = orderDirection;
+	}
+
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
+	public String getOrderByClause() {
+		return orderByClause;
+	}
+
+	public void setOrderByClause(String orderByClause) {
+		this.orderByClause = orderByClause;
+	}
+
+	public void setDeiviceDescribe(String deiviceDescribe) {
         this.deiviceDescribe = deiviceDescribe == null ? null : deiviceDescribe.trim();
     }
 

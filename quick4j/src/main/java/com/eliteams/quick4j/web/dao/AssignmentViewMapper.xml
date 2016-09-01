@@ -39,7 +39,7 @@
     device_id,sale_order_row,target_sum,finished_total
     from assignment_view
   </select>
-  <select id="getSapOrderByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
+  <!-- <select id="getSapOrderByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
     SELECT * FROM assignment_view  where 1=1
     	<if test="keywords != null and keywords !='' ">
 				AND (
@@ -51,9 +51,46 @@
 					or sale_order_id LIKE "%"#{keywords}"%"
 					)
    		</if>
-   		 <if test="deviceId != null">
-    			And(device_id =#{deviceId,jdbcType=INTEGER}) and start_time is null
-    	</if>
+   		<if test="orderByClause != null" >
+      			order by ${orderByClause}
+   		</if>
+   		<if test="orderByClause == null" >
+      			order by start_time DESC
+   		</if>
+  </select> -->
+  <select id="getSapOrderByPageAndKeywords" resultMap="BaseResultMap" parameterType="com.eliteams.quick4j.web.model.AssignmentView" >
+    SELECT * FROM assignment_view  where target_sum >finished_total
+    	<if test="keywords != null and keywords !='' ">
+				AND (
+					product_order_id LIKE "%"#{keywords}"%"
+					or material_id   LIKE "%"#{keywords}"%"
+					or material_describe   LIKE "%"#{keywords}"%"
+					or deivice_describe   LIKE "%"#{keywords}"%"
+					or assignment_num   LIKE "%"#{keywords}"%"
+					or sale_order_id LIKE "%"#{keywords}"%"
+					)
+   		</if>
+   		<if test="userSimpleName != null and userSimpleName !='' ">
+				AND (user_simple_name LIKE "%"#{userSimpleName}"%")
+   		</if>
+   		<if test="saleOrderId != null and saleOrderId !='' ">
+				AND (sale_order_id =  #{saleOrderId,jdbcType=VARCHAR})
+   		</if>
+   		<if test="materialId != null and materialId !='' ">
+				AND (material_id LIKE "%"#{materialId}"%")
+   		</if>
+   		<if test="materialDescribe != null and materialDescribe !='' ">
+				AND (material_describe LIKE "%"#{materialDescribe}"%")
+   		</if>
+   		<if test="deiviceDescribe != null and deiviceDescribe !='' ">
+				AND (deivice_describe LIKE "%"#{deiviceDescribe}"%")
+   		</if>
+   		<if test="cmdPerson != null and cmdPerson !='' ">
+				AND (cmd_person =  #{cmdPerson,jdbcType=VARCHAR})
+   		</if>
+   		<if test="beginTime != null and stopTime != null ">
+				AND (cmd_time >=  #{beginTime,jdbcType=DATE}) AND (#{stopTime,jdbcType=DATE} >= cmd_time)
+   		</if>
    		<if test="orderByClause != null" >
       			order by ${orderByClause}
    		</if>

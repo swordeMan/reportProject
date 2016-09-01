@@ -5,6 +5,15 @@
 String path = request.getContextPath();
 String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
+<style>
+tr.unitBox:hover{
+	background-color:#D6E2F3;
+}
+
+.style{
+	background-color:#183152;
+}
+</style>
 <script type="text/javascript">
 
 //$(".materialId").select2();
@@ -26,30 +35,17 @@ function getSapOrderList(obj){
 		UnStartSapOrderList=data;
 		$.each(data,function(i,s){
 			//待下达任务的订单加到列表中
-			$("#assDetailTab tbody").append($('<tr class="unitBox"><td><input size="15" type="text" name="assignments['+i+'].saleOrderId" value="'+s.saleOrderId+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.saleOrderRow+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.targetSum+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.finishedTotal+'" readonly="readonly"></td><td><input size="15" type="text" name="assignments['+i+'].productOrderId" value="'+s.productOrderId+'" readonly="readonly"></td><td><input size="20" type="text" name="assignments['+i+'].materialDescribe" value="'+s.materialDescribe+'" readonly="readonly"></td><td><input size="10" type="text" name="assignments['+i+'].userSimpleName" value="'+s.userSimpleName+'" readonly="readonly"></td><td><a href="javascript:void(0)" class="btnDel">删除</a></td></tr>'));
+			$("#assDetailTab tbody").append($('<tr class="unitBox"><td><input size="15" type="text" name="assignments['+i+'].saleOrderId" value="'+s.saleOrderId+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.saleOrderRow+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.targetSum+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.finishedTotal+'" readonly="readonly"></td><td><input size="15" type="text" name="assignments['+i+'].productOrderId" value="'+s.productOrderId+'" readonly="readonly"></td><td><input size="20" type="text" name="assignments['+i+'].materialDescribe" value="'+s.materialDescribe+'" readonly="readonly"></td><td><input size="10" type="text" name="assignments['+i+'].userSimpleName" value="'+s.userSimpleName+'" readonly="readonly"></td><td><a href="javascript:void(0)" class="btnDel">删除</a><a href="javascript:void(0)"><img class="btnUp" src="<%=basePath%>/themes/default/images/button/toggle_up2.png"></a><a href="javascript:void(0)"><img class="btnDown" src="<%=basePath%>/themes/default/images/button/toggle_down2.png"></a></td></tr>'));
 			i++;
 			userSimpleNameSet.add(s.userSimpleName);
 			
 		});
-		console.log(userSimpleNameSet);
 		//客户简称信息加到下拉列表中
 		$("#user").append($('<option value="">-请选择-</option>'));
 		userSimpleNameSet.forEach(function (s) {
 			$("#user").append($('<option value="'+s+'">'+s+'</option>'));
 		});
-		
-		
 	});
-	/* <c:forEach var="sapOrder" items="${sapOrderList}" varStatus="s">
-		if("${sapOrder.materialId}" == obj){
-			$("#assDetailTab tbody").append($('<tr class="unitBox"><td><input size="15" type="text" name="assignments['+i+'].saleOrderId" value="'+"${sapOrder.saleOrderId}"+'" readonly="readonly"></td><td><input size="8" type="text" value="'+"${sapOrder.saleOrderRow}"+'" readonly="readonly"></td><td><input size="8" type="text" value="'+"${sapOrder.targetSum}"+'" readonly="readonly"></td><td><input size="8" type="text" value="'+"${sapOrder.finishedTotal}"+'" readonly="readonly"></td><td><input size="15" type="text" name="assignments['+i+'].productOrderId" value="'+"${sapOrder.productOrderId}"+'" readonly="readonly"></td><td><input size="20" type="text" name="assignments['+i+'].materialDescribe" value="'+"${sapOrder.materialDescribe}"+'" readonly="readonly"></td><td><input size="10" type="text" name="assignments['+i+'].userSimpleName" value="'+"${sapOrder.userSimpleName}"+'" readonly="readonly"></td><td><a href="javascript:void(0)" class="btnDel ">删除</a></td></tr>'));
-			i++;
-			materialDescribe = "${sapOrder.materialDescribe}";
-		}
-	</c:forEach> */
-	
-	/* var s = materialDescribeToName(materialDescribe);
-	autoDeviceDesc(s); */
 }
 
 //根据选择的客户精选待下达任务列表
@@ -61,35 +57,17 @@ function getDecreaseSapOrderList(obj){
 	$.each(UnStartSapOrderList,function(i,s){
 		//待下达任务的订单加到列表中
 		if(s.userSimpleName == obj)
-		$("#assDetailTab tbody").append($('<tr class="unitBox"><td><input size="15" type="text" name="assignments['+i+'].saleOrderId" value="'+s.saleOrderId+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.saleOrderRow+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.targetSum+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.finishedTotal+'" readonly="readonly"></td><td><input size="15" type="text" name="assignments['+i+'].productOrderId" value="'+s.productOrderId+'" readonly="readonly"></td><td><input size="20" type="text" name="assignments['+i+'].materialDescribe" value="'+s.materialDescribe+'" readonly="readonly"></td><td><input size="10" type="text" name="assignments['+i+'].userSimpleName" value="'+s.userSimpleName+'" readonly="readonly"></td><td><a href="javascript:void(0)" class="btnDel">删除</a></td></tr>'));
+		$("#assDetailTab tbody").append($('<tr class="unitBox"><td><input size="15" type="text" name="assignments['+i+'].saleOrderId" value="'+s.saleOrderId+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.saleOrderRow+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.targetSum+'" readonly="readonly"></td><td><input size="8" type="text" value="'+s.finishedTotal+'" readonly="readonly"></td><td><input size="15" type="text" name="assignments['+i+'].productOrderId" value="'+s.productOrderId+'" readonly="readonly"></td><td><input size="20" type="text" name="assignments['+i+'].materialDescribe" value="'+s.materialDescribe+'" readonly="readonly"></td><td><input size="10" type="text" name="assignments['+i+'].userSimpleName" value="'+s.userSimpleName+'" readonly="readonly"></td><td><a href="javascript:void(0)" class="btnDel">删除</a><a href="javascript:void(0)"><img class="btnUp" src="<%=basePath%>/themes/default/images/button/toggle_up2.png"></a><a href="javascript:void(0)"><img class="btnDown" src="<%=basePath%>/themes/default/images/button/toggle_down2.png"></a></td></tr>'));
 		i++;
 	});
 }
 
-/* 删除按钮点击事件 */
-$(document).on("click",".btnDel",function(){
-	var $btnDel = $(this);
-	var $tbody = $("#assDetailTab tbody");
-	if ($btnDel.is("[href^=javascript:]")){
-		$btnDel.parents("tr:first").remove();
-		initSuffix($tbody);
-		return false;
-	}
+
+/* tr unitBox点击事件 */
+$(document).on("click", "tr.unitBox", function() {
+	$(this).siblings().removeClass("style");
+	$(this).addClass("style");
 });
-
-
-function initSuffix($tbody) {
-	$tbody.find('>tr').each(function(i){
-		$(':input', this).each(function(){
-			var $this = $(this), name = $this.attr('name'), val = $this.val();
-
-			if (name) $this.attr('name', name.replaceSuffix(i));
-
-			if (val && val.indexOf("#index#") >= 0) $this.val(val.replace('#index#',i+1));
-		});
-	});
-}
-
 
 //截取字符串前两位
 function materialDescribeToName(obj){
@@ -182,7 +160,7 @@ function autoDeviceDesc(obj){
 						<th type="text"  name="assignments[#index#].productOrderId">生产订单</th>
 						<th type="text"  name="assignments[#index#].materialDescribe">物料描述</th>
 						<th type="text"  name="assignments[#index#].userSimpleName">客户简称</th>
-						<th type="del" width="25">操作</th>
+						<th type="del" width="65">操作</th>
 					</tr>
 				</thead>
 				<tbody>

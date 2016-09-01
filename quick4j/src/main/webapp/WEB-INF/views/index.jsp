@@ -74,6 +74,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 <script src="js/dwz.combox.js" type="text/javascript"></script>
 <script src="js/dwz.print.js" type="text/javascript"></script>
 
+<!--引入任务下达时几个按钮点击js  -->
+<script src="js/createAssignment.js" type="text/javascript"></script>
+
 <!--引入模糊搜索插件  -->
 <script src="js/jquery.autocomplete.js" type="text/javascript"></script>
 
