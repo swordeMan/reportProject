@@ -98,6 +98,8 @@
 					or product_order_id LIKE "%"#{keywords}"%"
 					or sale_order_id LIKE "%"#{keywords}"%"
 					or report_username LIKE "%"#{keywords}"%"
+                    or material_id LIKE "%"#{keywords}"%"
+                    or material_describe LIKE "%"#{keywords}"%"
 				)
    		</if>
     <if test="orderByClause != null" >
