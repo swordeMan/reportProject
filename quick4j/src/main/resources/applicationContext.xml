@@ -143,9 +143,12 @@
           p:cacheManager-ref="ehCacheManagerFactory"/>
           
     <!-- 定时器 -->
-    <!-- <task:scheduled-tasks>
+     <task:scheduled-tasks>
+         <!--每隔一分钟获取一次-->
         <task:scheduled ref="autoTask" method="obtainYield" cron="0 0/1 * * * ?"/>
-        <task:scheduled ref="autoTask" method="autoReport" cron="0 0/60 * * * ?"/>
-        <task:scheduled ref="autoTask" method="autodelet" cron="0 0/1440 * * * ?"/>
-	</task:scheduled-tasks> -->
+         <!--每个半点报工一次如：1:30,2:30..唔得-->
+        <task:scheduled ref="autoTask" method="autoReport" cron="0 30 * * * ?"/>
+         <!--每天凌晨2点执行自动删除-->
+        <task:scheduled ref="autoTask" method="autodelet" cron="0 0 2 * * ?"/>
+	</task:scheduled-tasks>
 </beans>
