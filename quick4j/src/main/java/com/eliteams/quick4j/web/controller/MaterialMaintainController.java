@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.eliteams.quick4j.core.entity.Json;
 import com.eliteams.quick4j.core.feature.orm.mybatis.Page;
 import com.eliteams.quick4j.core.generic.GenericController;
+import com.eliteams.quick4j.web.dao.DeviceInfoMapper;
 import com.eliteams.quick4j.web.dao.ProductChangedMapper;
 import com.eliteams.quick4j.web.model.Assignment;
 import com.eliteams.quick4j.web.model.DeviceInfo;
@@ -47,6 +48,7 @@ public class MaterialMaintainController extends GenericController{
 	
 	@Resource
 	private ProductChangedMapper productChangedMapper;
+	
 	
 	/**
 	 * 物料基础表页面展示
@@ -81,7 +83,14 @@ public class MaterialMaintainController extends GenericController{
 	 * @return
 	 */
 	@RequestMapping(value = "/toAdd")
-	public String toAdd() {
+	public String toAdd(Model model) {
+		try{
+		List<DeviceInfo> deviceList=deviceService.selectAllDeviceInfo(); 
+		model.addAttribute("deviceList",deviceList);
+	       }
+			catch(Exception e){
+				log.error("查询工序列表错误"+e);
+			}
 			return "gernal/materialMaintain/add";
 	}
    /**
@@ -127,8 +136,14 @@ public class MaterialMaintainController extends GenericController{
 	  */
 	@RequestMapping(value = "/qureyById/{id}")
 	public String qurey(@PathVariable("id")Long id ,Model model){
+		try{
 		MaterialMaintain materialMaintain = materialMaintainService.selectByPrimaryKey(id);
-	    model.addAttribute(materialMaintain);
+		List<DeviceInfo> deviceList=deviceService.selectAllDeviceInfo(); 
+		model.addAttribute("deviceList",deviceList);
+	    model.addAttribute(materialMaintain);}
+		catch(Exception e){
+			log.error("跳转到编辑界面失败"+e);
+		}
 	    return "gernal/materialMaintain/edit";
 	}
 	/**

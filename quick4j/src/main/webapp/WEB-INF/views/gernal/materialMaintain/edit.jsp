@@ -20,9 +20,18 @@
 				<label>物料编码:</label>
 				<input name="materialId" class="required" type="text"  value="${materialMaintain.materialId}" size="30"/>
 			</p>
-				<p>
+			<p>
 				<label>工序:</label>
-				<input name="deviceDescribe" class="required" type="text"  value="${materialMaintain.deviceDescribe}" size="30"/>
+				<select  name="deviceId"  class="required" > 
+				<c:forEach var="item" items="${deviceList}" >
+				<option value="${item.deviceId}">${item.deiviceDescribe}</option>
+				</c:forEach>
+				</select>
+			</p>
+			<p>
+				<label>是否启用：</label>
+				<input name="state"  type="radio" checked value="1" />是
+				<input name="state" type="radio"  value="0" />否
 			</p>
 		</div>
 		<c:import url="../../include/formBar.jsp"></c:import>
