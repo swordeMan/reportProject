@@ -246,6 +246,6 @@
   <select id="getUnStartSapOrderListByMaterialId" resultMap="BaseResultMap" parameterType="java.lang.String">
   	select * from sap_order where del_remark != 'X' and target_sum >finished_total and ISNULL(state_mark)
   	and material_id = #{materialId,jdbcType=VARCHAR}
-  	order by sale_order_id DESC
+  	order by sale_order_id ASC
   </select>
 </mapper>

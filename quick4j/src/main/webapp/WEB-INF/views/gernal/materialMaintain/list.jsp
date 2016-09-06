@@ -48,9 +48,9 @@ $(function(){
 			</shiro:hasPermission>
 			<shiro:hasPermission name="scrapReason:update">
 				<li><a class="edit" target="dialog" mask="true" height="310"
-				warn="请选择一个报废原因"
+				warn="请选择一个工序物料"
 				href="<c:url value='rest/material/qureyById/{slt_objId}'/>"
-				title="编辑报废原因"><span>编辑</span></a></li>
+				title="编辑工序物料"><span>编辑</span></a></li>
 			</shiro:hasPermission>
 			<shiro:hasPermission name="scrapReason:delete">
 				<li><a class="delete" target="ajaxTodo"

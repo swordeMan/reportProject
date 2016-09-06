@@ -107,27 +107,33 @@ public class AssignmentController {
 		return json.ajaxDoneSuccess("任务下达成功");
     }
 	
+	/**
+	 * 查询任务列表
+	 * @param model
+	 * @param page
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/list")
-	public String getAssignmentList(Model model,Page<AssignmentView> page,HttpServletRequest request){
+	public String getAssignmentList(Model model,Page<AssignmentView> page,HttpServletRequest request,AssignmentView assignmentView){
 		String orderField = request.getParameter("orderField");
 		String orderDirection = request.getParameter("orderDirection");
 		String keywords = request.getParameter("keywords");
-		model.addAttribute("orderField",orderField);
+		/*model.addAttribute("orderField",orderField);
     	model.addAttribute("orderDirection",orderDirection);
-    	model.addAttribute("keywords",keywords);
+    	model.addAttribute("keywords",keywords);*/
+		assignmentView.setOrderField(orderField);
+		assignmentView.setOrderDirection(orderDirection);
+		assignmentView.setKeywords(keywords);
+		
     	String orderByClause = null;
     	if(orderField!=null&&!"".equals(orderField)){
     		orderByClause = orderField+" "+orderDirection;
+    		assignmentView.setOrderByClause(orderByClause);
     	}
-    	String deviceId = request.getParameter("deviceId");
-    	model.addAttribute("deviceId", deviceId);
-    	Integer dd = null;
-    	if(deviceId!=null && !"".equals(deviceId)){
-    		dd =  Integer.parseInt(deviceId); 
-    	}
-		
+    	model.addAttribute("assignmentView", assignmentView);
 		try {
-			assignmentViewMapper.getSapOrderByPageAndKeywords(page, orderByClause, keywords, dd);
+			assignmentViewMapper.getSapOrderByPageAndKeywords(page, assignmentView);
 			model.addAttribute("page",page);
 		} catch (Exception e) {
 			log.error("生产订单任务查询出错"+e);
@@ -377,5 +383,14 @@ public class AssignmentController {
 			log.error("根据物料编码查询未下达任务的订单出错",e);
 		}
 		return sapOrderList;
+    }
+    
+    /**
+     * 任务列表高级搜索页面跳转
+     * @return
+     */
+    @RequestMapping("/queriedAccurately")
+    public String queriedAccurately(){
+    	return "plan/assignmentOrder/advancedSearch";
     }
 }

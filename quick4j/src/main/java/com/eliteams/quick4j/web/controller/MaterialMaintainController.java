@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.eliteams.quick4j.core.entity.Json;
 import com.eliteams.quick4j.core.feature.orm.mybatis.Page;
 import com.eliteams.quick4j.core.generic.GenericController;
+import com.eliteams.quick4j.web.dao.DeviceInfoMapper;
 import com.eliteams.quick4j.web.dao.ProductChangedMapper;
 import com.eliteams.quick4j.web.model.Assignment;
 import com.eliteams.quick4j.web.model.DeviceInfo;
@@ -48,6 +49,7 @@ public class MaterialMaintainController extends GenericController{
 	@Resource
 	private ProductChangedMapper productChangedMapper;
 	
+	
 	/**
 	 * 物料基础表页面展示
 	 * @param model
@@ -73,9 +75,96 @@ public class MaterialMaintainController extends GenericController{
 		} catch (Exception e) {
 			log.error("物料基础数据列表查询错误"+e);
 		}
-		
 		return "gernal/materialMaintain/list";
 	}
+	/**
+	 * 添加框展示
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/toAdd")
+	public String toAdd(Model model) {
+		try{
+		List<DeviceInfo> deviceList=deviceService.selectAllDeviceInfo(); 
+		model.addAttribute("deviceList",deviceList);
+	       }
+			catch(Exception e){
+				log.error("查询工序列表错误"+e);
+			}
+			return "gernal/materialMaintain/add";
+	}
+   /**
+   * 添加物料数据
+   * @param materialMaintain
+   * @param json
+   * @return
+   */
+	@RequestMapping(value = "/insert")
+    @ResponseBody
+    public Json save(MaterialMaintain materialMaintain,Json json) {
+		try {
+			materialMaintainService.insertMaterialMaintain(materialMaintain);
+		} catch (Exception e) {
+			log.error("添加物料数据"+e);
+			return json.ajaxDoneError();
+		}
+		return json.ajaxDoneSuccess();			
+	}
+	/**
+	 * 物料数据删除
+	 * @param id
+	 * @param json
+	 * @return
+	 */
+	 @RequestMapping(value ="/delete/{id}")
+	    @ResponseBody
+		public Json delete(@PathVariable("id")Long id ,Json json) {
+
+	    	try {
+	    		materialMaintainService.deleteMaterialMaintain(id);
+			} catch (Exception e) {
+				log.error("物料删除出错"+e);
+				return json.ajaxDoneError();
+			}
+			return json.ajaxDoneSuccess();
+		}
+	 /**
+	  *跳转到编辑界面
+	  * @param id
+	  * @param model
+	  * @return
+	  */
+	@RequestMapping(value = "/qureyById/{id}")
+	public String qurey(@PathVariable("id")Long id ,Model model){
+		try{
+		MaterialMaintain materialMaintain = materialMaintainService.selectByPrimaryKey(id);
+		List<DeviceInfo> deviceList=deviceService.selectAllDeviceInfo(); 
+		model.addAttribute("deviceList",deviceList);
+	    model.addAttribute(materialMaintain);}
+		catch(Exception e){
+			log.error("跳转到编辑界面失败"+e);
+		}
+	    return "gernal/materialMaintain/edit";
+	}
+	/**
+	 *修改物料数据
+	 * @param materialMaintain
+	 * @param json
+	 * @return
+	 */
+	 @RequestMapping(value ="/update")
+	    @ResponseBody
+		public Json update(MaterialMaintain materialMaintain,Json json) {
+
+	    	try {materialMaintainService.editMaterialMaintain(materialMaintain);
+			} 
+	    	catch (Exception e) {
+				log.error("用户删除出错"+e);
+				return json.ajaxDoneError();
+			}
+			return json.ajaxDoneSuccess();
+		}
+
 	/**
 	 * 待切换物料基础数据查询
 	 * @param model

@@ -22,4 +22,6 @@ public interface MaterialMaintainMapper {
     
     List<MaterialMaintain> getMaterialInfoBydeviceId(Integer deviceId);
     
+    String selectMaterialDescribe(String materialId);
+    
 }

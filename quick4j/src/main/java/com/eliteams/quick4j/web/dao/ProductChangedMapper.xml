@@ -40,4 +40,9 @@
     select id, device_id, material_id, change_time, work_num
     from product_changed
   </select>
+   <select id="selectByDeviceId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, device_id, material_id, change_time, work_num
+    from product_changed
+    where device_id = #{deviceId,jdbcType=INTEGER}
+  </select>
 </mapper>

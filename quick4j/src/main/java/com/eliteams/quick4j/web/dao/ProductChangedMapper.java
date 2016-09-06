@@ -13,4 +13,6 @@ public interface ProductChangedMapper {
     List<ProductChanged> selectAll();
 
     int updateByPrimaryKey(ProductChanged record);
+    
+    ProductChanged selectByDeviceId(Integer deviceId);
 }

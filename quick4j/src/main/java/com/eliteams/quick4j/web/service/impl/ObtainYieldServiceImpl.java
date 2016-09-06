@@ -17,13 +17,16 @@ import org.springframework.stereotype.Service;
 import com.eliteams.quick4j.core.feature.factory.DataSourceContextHolder;
 import com.eliteams.quick4j.web.dao.AssignmentMapper;
 import com.eliteams.quick4j.web.dao.DShiftOutputMapper;
+import com.eliteams.quick4j.web.dao.MaterialMaintainMapper;
 import com.eliteams.quick4j.web.dao.ObtainYieldMapper;
 import com.eliteams.quick4j.web.dao.ObtainYieldRecordMapper;
+import com.eliteams.quick4j.web.dao.ProductChangedMapper;
 import com.eliteams.quick4j.web.dao.StockMapper;
 import com.eliteams.quick4j.web.model.Assignment;
 import com.eliteams.quick4j.web.model.DShiftOutput;
 import com.eliteams.quick4j.web.model.ObtainYield;
 import com.eliteams.quick4j.web.model.ObtainYieldRecord;
+import com.eliteams.quick4j.web.model.ProductChanged;
 import com.eliteams.quick4j.web.service.ObtainYieldService;
 
 /**
@@ -46,8 +49,10 @@ public class ObtainYieldServiceImpl implements ObtainYieldService {
 	private StockMapper stockMapper;
 	@Resource
 	private DShiftOutputMapper dShiftOutputMapper;
-
-	
+	@Resource
+	private ProductChangedMapper productChangedMapper;
+	@Resource
+	private MaterialMaintainMapper materialMaintainMapper;
 	/**
 	 * 获取sqlserver表(采集原始信息)的list
 	 */
@@ -75,19 +80,25 @@ public class ObtainYieldServiceImpl implements ObtainYieldService {
 			
 //			从每一条sqlserver中得到当前产量，分别插入更新表和流水记录表
 			long numThree = sqlserverToObtainYield(sqlserver);
-			
-			//通过任务下达来获取物料号
-			Assignment assignment = new Assignment();
 			//将设备号转化为工序号
 			int EqptId=sqlserver.getEqptId();
-			int DeviceId=setEqptIdToDeviceId(EqptId);
-			assignment.setDeviceId(DeviceId);
-			assignment.setStartTime(sqlserver.getOutputDate());
-			assignment = assignmentMapper.selectByDeviceIdAndTime(assignment);
-			if (assignment != null) {
+			int deviceId=setEqptIdToDeviceId(EqptId);
+			
+			ProductChanged productChanged=new ProductChanged();
+			productChanged.setDeviceId(deviceId);
+			//通过任务下达来获取物料号
+	// 		Assignment assignment = new Assignment();
+			//根据工序号进行查询
+			productChanged=productChangedMapper.selectByDeviceId(deviceId);
+		//	assignment.setDeviceId(deviceId);
+		//	assignment.setStartTime(sqlserver.getOutputDate());
+		//	assignment = assignmentMapper.selectByDeviceIdAndTime(assignment);
+			if (productChanged != null) {
+				//获取物料描述
+				String materialdescribe=materialMaintainMapper.selectMaterialDescribe(productChanged.getMaterialId());
 				Map map = new HashMap();
-				map.put("materialDescribe", assignment.getMaterialDescribe());
-				map.put("materialId", assignment.getMaterialId());
+				map.put("materialDescribe", materialdescribe);
+				map.put("materialId",productChanged.getMaterialId());
 				map.put("numThree", numThree);
 				stockMapper.updateByMaterialIdMap(map);//增加待分配量，最近的产量
 			}

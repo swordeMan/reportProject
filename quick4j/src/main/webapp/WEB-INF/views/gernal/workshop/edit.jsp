@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <div class="pageContent">
 	<form method="post" action="rest/workshop/update?callbackType=closeCurrent" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
-	<input type="hidden" name="id" value="${workshop.id}"/>
+
 		<div class="pageFormContent" layoutH="56">
 		    <p>
 				<input name="id" type="hidden" value="${workshop.id}" size="30"/>
