@@ -95,7 +95,7 @@
       			order by ${orderByClause}
    		</if>
    		<if test="orderByClause == null" >
-      			order by start_time DESC
+      			order by start_time DESC,id DESC
    		</if>
   </select>
   <select id="getMaterialIdAndDescribeByDeviceDes" parameterType="java.lang.Integer" resultMap="BaseResultMap">

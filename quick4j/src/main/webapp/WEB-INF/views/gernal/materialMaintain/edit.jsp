@@ -22,11 +22,12 @@
 			</p>
 			<p>
 				<label>工序:</label>
-				<select  name="deviceId"  class="required" > 
+				<input name="deviceDescribe" class="required" type="text"  value="${materialMaintain.deviceDescribe}" size="30"/>
+				<%-- <select  name="deviceId"  class="required" > 
 				<c:forEach var="item" items="${deviceList}" >
 				<option value="${item.deviceId}">${item.deiviceDescribe}</option>
 				</c:forEach>
-				</select>
+				</select> --%>
 			</p>
 			<p>
 				<label>是否启用：</label>

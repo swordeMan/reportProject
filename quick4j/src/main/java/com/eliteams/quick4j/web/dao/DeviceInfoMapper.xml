@@ -36,4 +36,9 @@
     from device_info
     where device_id = #{deviceId,jdbcType=INTEGER}
   </select>
+  <select id="selectDeviceIdByDescribe" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, device_id, deivice_describe
+    from device_info
+    where deivice_describe = #{deiviceDescribe,jdbcType=VARCHAR}
+  </select>
 </mapper>

@@ -44,6 +44,7 @@
     	<if test="keywords != null and keywords !='' ">
 				AND (
 					material_describe LIKE "%"#{keywords}"%"
+					or material_id LIKE "%"#{keywords}"%"
 					or device_describe LIKE "%"#{keywords}"%"
 					or product_nickname LIKE "%"#{keywords}"%"
 					)

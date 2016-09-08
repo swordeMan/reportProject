@@ -19,4 +19,7 @@ public interface DeviceInfoMapper {
     
     //根据工序id查询工序描述
   	DeviceInfo selectDeiviceDescribeByDeviceId(Integer deviceId);
+  	
+  	//根据工序描述查找工序id
+  	DeviceInfo selectDeviceIdByDescribe(String deiviceDescribe);
 }
