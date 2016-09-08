@@ -57,18 +57,10 @@ private static Logger log = Logger.getLogger(UserMapperTest.class); // 初始化
 	@Resource
 	ReportTimeMapper reportTimeMapper;
 
-    /*@Test
+    @Test
     public void test_selectByExampleAndPage() {
-        start();
-        Page<User> page = new Page<>(1, 3);
-        UserExample example = new UserExample();
-        example.createCriteria().andIdGreaterThan(0L);
-        final List<User> users = userMapper.selectByExampleAndPage(page, example);
-        for (User user : users) {
-            System.err.println(user);
-        }
-        end();
-    }*/
+		List<StockAssignmentView> StockAssignmentViewList = stockAssignmentViewMapper.selectAll();
+    }
     
     /*@Test
     public void test_selectBySqlServer() {

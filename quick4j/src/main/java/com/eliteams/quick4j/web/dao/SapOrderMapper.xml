@@ -216,7 +216,7 @@
   	select * from sap_order where sale_order_id = #{saleOrderId,jdbcType=VARCHAR} AND sale_order_row = #{saleOrderRow,jdbcType=VARCHAR} AND del_remark != 'X'
   </select>
   <select id="getBySaleOrderIdAndSimpleDescribe" resultMap="BaseResultMap" parameterType="map">
-  	select * from sap_order where sale_order_id = #{saleOrderId,jdbcType=VARCHAR} AND sale_order_row = #{saleOrderRow,jdbcType=VARCHAR} AND material_describe LIKE "%"#{simpleDescribe}"%" AND del_remark != 'X'
+  	select * from sap_order where sale_order_id = #{saleOrderId,jdbcType=VARCHAR} AND sale_order_row = #{saleOrderRow,jdbcType=VARCHAR} AND material_describe LIKE "%"#{simpleDescribe}"%" AND del_remark != 'X' LIMIT 1
   </select>
   
   <select id="getSapOrderBySaleOrderId" resultMap="OrderNodeResultMap" parameterType="java.lang.String">
