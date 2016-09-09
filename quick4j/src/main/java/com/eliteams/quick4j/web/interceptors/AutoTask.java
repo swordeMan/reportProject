@@ -52,7 +52,7 @@ public class AutoTask {
 		List<StockAssignmentView> StockAssignmentViewList = stockAssignmentViewMapper.selectAll();
 		for(StockAssignmentView sav :StockAssignmentViewList){
 			int thisReport = reportYieldService.reportByStockAssignmentView(sav);
-			log.debug(sav+"当前报工完毕，数量为"+thisReport);
+			log.info(sav+"当前报工完毕，数量为"+thisReport);
 		}
 	}
 	/**
