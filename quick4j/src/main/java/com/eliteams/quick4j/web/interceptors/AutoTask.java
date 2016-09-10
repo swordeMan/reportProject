@@ -51,7 +51,12 @@ public class AutoTask {
 		//任务下达与带分派量的视图列表
 		List<StockAssignmentView> StockAssignmentViewList = stockAssignmentViewMapper.selectAll();
 		for(StockAssignmentView sav :StockAssignmentViewList){
-			int thisReport = reportYieldService.reportByStockAssignmentView(sav);
+			int thisReport = 0;
+			try {
+				thisReport = reportYieldService.reportByStockAssignmentView(sav);
+			} catch (Exception e) {
+				log.error("自动报工失败"+sav,e);
+			}
 			log.info(sav+"当前报工完毕，数量为"+thisReport);
 		}
 	}

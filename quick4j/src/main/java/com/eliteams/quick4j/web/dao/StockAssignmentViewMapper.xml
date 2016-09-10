@@ -1,25 +1,36 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.eliteams.quick4j.web.dao.StockAssignmentViewMapper" >
-  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.StockAssignmentView" >
-    <result column="material_id" property="materialId" jdbcType="VARCHAR" />
-    <result column="stock_num" property="stockNum" jdbcType="BIGINT" />
-    <result column="total_production" property="totalProduction" jdbcType="BIGINT" />
-    <result column="material_describe" property="materialDescribe" jdbcType="VARCHAR" />
-    <result column="product_order_id" property="productOrderId" jdbcType="VARCHAR" />
-    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eliteams.quick4j.web.dao.StockAssignmentViewMapper">
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.StockAssignmentView">
+    <result column="material_id" jdbcType="VARCHAR" property="materialId" />
+    <result column="stock_num" jdbcType="BIGINT" property="stockNum" />
+    <result column="total_production" jdbcType="BIGINT" property="totalProduction" />
+    <result column="material_describe" jdbcType="VARCHAR" property="materialDescribe" />
+    <result column="product_order_id" jdbcType="VARCHAR" property="productOrderId" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="first_report_time" jdbcType="TIMESTAMP" property="firstReportTime" />
+    <result column="target_sum" jdbcType="INTEGER" property="targetSum" />
+    <result column="finished_total" jdbcType="INTEGER" property="finishedTotal" />
+    <result column="waste_total" jdbcType="INTEGER" property="wasteTotal" />
+    <result column="relate_scarp" jdbcType="INTEGER" property="relateScarp" />
+    <result column="assignment_id" jdbcType="BIGINT" property="assignmentId" />
   </resultMap>
-  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.StockAssignmentView" >
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.StockAssignmentView">
     insert into stock_assignment_view (material_id, stock_num, total_production, 
-      material_describe, product_order_id, start_time
+      material_describe, product_order_id, start_time, 
+      first_report_time, target_sum, finished_total, 
+      waste_total, relate_scarp, assignment_id
       )
     values (#{materialId,jdbcType=VARCHAR}, #{stockNum,jdbcType=BIGINT}, #{totalProduction,jdbcType=BIGINT}, 
-      #{materialDescribe,jdbcType=VARCHAR}, #{productOrderId,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}
+      #{materialDescribe,jdbcType=VARCHAR}, #{productOrderId,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{firstReportTime,jdbcType=TIMESTAMP}, #{targetSum,jdbcType=INTEGER}, #{finishedTotal,jdbcType=INTEGER}, 
+      #{wasteTotal,jdbcType=INTEGER}, #{relateScarp,jdbcType=INTEGER}, #{assignmentId,jdbcType=BIGINT}
       )
   </insert>
-  <select id="selectAll" resultMap="BaseResultMap" >
+  <select id="selectAll" resultMap="BaseResultMap">
     select material_id, stock_num, total_production, material_describe, product_order_id, 
-    start_time
+    start_time, first_report_time, target_sum, finished_total, waste_total, relate_scarp, 
+    assignment_id
     from stock_assignment_view
   </select>
 </mapper>
