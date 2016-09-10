@@ -59,8 +59,8 @@
     where device_id=#{deviceId,jdbcType=INTEGER}
   </select>
    <select id="selectMaterialDescribe" resultType="java.lang.String" parameterType="java.lang.String">
-  	material_describe
+  select material_describe
     from material_maintain
-    where material_id=#{materialId,jdbcType=String}
+    where material_id=#{materialId,jdbcType=VARCHAR}
   </select>
 </mapper>
