@@ -47,4 +47,6 @@ public interface AssignmentMapper {
 	
 	//根据用户输入的三个查询条件查询对应的报工（报废日期、物料描述和客户简称）
     List<Assignment> obtainAssignmentByCriteriaQuery(Assignment assignment);
+
+	void firstReport(long id);
 }

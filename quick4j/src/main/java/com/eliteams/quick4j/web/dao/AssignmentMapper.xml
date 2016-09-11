@@ -36,6 +36,11 @@
     set start_time = NOW()
     where id = #{id,jdbcType=BIGINT}
   </update>
+    <update id="firstReport" parameterType="java.lang.Long" >
+        update assignment
+        set first_report_time = NOW()
+        where id = #{id,jdbcType=BIGINT}
+    </update>
   <update id="updateStartTimeByPrimaryKey" parameterType="java.lang.Long" >
     update assignment
     set start_time = date_sub(start_time, interval 1 YEAR)
@@ -98,7 +103,7 @@
   </select>
   
   <select id="obtainAssignmentByCriteriaQuery" resultMap="BaseResultMap" parameterType="com.eliteams.quick4j.web.model.Assignment" >
-    select * from assignment where start_time=(select max(start_time) from assignment where material_id = #{materialId,jdbcType=VARCHAR} and #{startTime,jdbcType=TIMESTAMP}>start_time
+    select * from assignment where first_report_time=(select max(first_report_time) from assignment where material_id = #{materialId,jdbcType=VARCHAR} and #{startTime,jdbcType=TIMESTAMP}>first_report_time
     	<if test="userSimpleName != null and userSimpleName != '' "  >
       AND(
       	 user_simple_name = #{userSimpleName,jdbcType=VARCHAR}

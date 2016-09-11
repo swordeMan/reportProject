@@ -4,7 +4,6 @@ import com.eliteams.quick4j.web.dao.ObtainYieldRecordMapper;
 import com.eliteams.quick4j.web.dao.StockAssignmentViewMapper;
 import com.eliteams.quick4j.web.dao.StockMapper;
 import com.eliteams.quick4j.web.model.DShiftOutput;
-import com.eliteams.quick4j.web.model.Stock;
 import com.eliteams.quick4j.web.model.StockAssignmentView;
 import com.eliteams.quick4j.web.service.ObtainYieldService;
 import com.eliteams.quick4j.web.service.ReportYieldService;
@@ -48,11 +47,17 @@ public class AutoTask {
 	
 	public void autoReport(){
 		log.debug("开始进行自动报工");
-		//任务下达与带分派量的视图列表
+		/* 任务下达与带分派量的视图列表 */
 		List<StockAssignmentView> StockAssignmentViewList = stockAssignmentViewMapper.selectAll();
 		for(StockAssignmentView sav :StockAssignmentViewList){
-			int thisReport = reportYieldService.reportByStockAssignmentView(sav);
-			log.debug(sav+"当前报工完毕，数量为"+thisReport);
+			int thisReport = 0;
+			try {
+				if(sav.getProductOrderId()!=null)
+				thisReport = reportYieldService.reportByStockAssignmentView(sav);
+			} catch (Exception e) {
+				log.error("自动报工失败",e);
+			}
+			log.info(sav+"当前报工完毕，数量为"+thisReport);
 		}
 	}
 	/**

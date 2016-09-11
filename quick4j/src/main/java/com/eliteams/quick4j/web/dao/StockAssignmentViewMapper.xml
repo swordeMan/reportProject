@@ -8,18 +8,29 @@
     <result column="material_describe" property="materialDescribe" jdbcType="VARCHAR" />
     <result column="product_order_id" property="productOrderId" jdbcType="VARCHAR" />
     <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="first_report_time" property="firstReportTime" jdbcType="TIMESTAMP" />
+    <result column="target_sum" property="targetSum" jdbcType="INTEGER" />
+    <result column="finished_total" property="finishedTotal" jdbcType="INTEGER" />
+    <result column="waste_total" property="wasteTotal" jdbcType="INTEGER" />
+    <result column="relate_scarp" property="relateScarp" jdbcType="INTEGER" />
+    <result column="assignment_id" property="assignmentId" jdbcType="BIGINT" />
   </resultMap>
   <insert id="insert" parameterType="com.eliteams.quick4j.web.model.StockAssignmentView" >
     insert into stock_assignment_view (material_id, stock_num, total_production, 
-      material_describe, product_order_id, start_time
+      material_describe, product_order_id, start_time, 
+      first_report_time, target_sum, finished_total, 
+      waste_total, relate_scarp, assignment_id
       )
     values (#{materialId,jdbcType=VARCHAR}, #{stockNum,jdbcType=BIGINT}, #{totalProduction,jdbcType=BIGINT}, 
-      #{materialDescribe,jdbcType=VARCHAR}, #{productOrderId,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}
+      #{materialDescribe,jdbcType=VARCHAR}, #{productOrderId,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{firstReportTime,jdbcType=TIMESTAMP}, #{targetSum,jdbcType=INTEGER}, #{finishedTotal,jdbcType=INTEGER}, 
+      #{wasteTotal,jdbcType=INTEGER}, #{relateScarp,jdbcType=INTEGER}, #{assignmentId,jdbcType=BIGINT}
       )
   </insert>
   <select id="selectAll" resultMap="BaseResultMap" >
     select material_id, stock_num, total_production, material_describe, product_order_id, 
-    start_time
-    from stock_assignment_view ORDER BY start_time ASC
+    start_time, first_report_time, target_sum, finished_total, waste_total, relate_scarp, 
+    assignment_id
+    from stock_assignment_view
   </select>
 </mapper>

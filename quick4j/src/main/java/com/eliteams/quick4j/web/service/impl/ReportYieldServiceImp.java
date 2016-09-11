@@ -3,6 +3,7 @@ package com.eliteams.quick4j.web.service.impl;
 import com.eliteams.quick4j.core.feature.factory.SapConn;
 import com.eliteams.quick4j.core.feature.orm.mybatis.Page;
 import com.eliteams.quick4j.core.util.OrderUtil;
+import com.eliteams.quick4j.web.dao.AssignmentMapper;
 import com.eliteams.quick4j.web.dao.ReportYieldMapper;
 import com.eliteams.quick4j.web.dao.SapOrderMapper;
 import com.eliteams.quick4j.web.dao.StockMapper;
@@ -47,6 +48,9 @@ public class ReportYieldServiceImp implements ReportYieldService {
 
 	@Resource
 	private StockMapper stockMapper;
+
+	@Resource
+	private AssignmentMapper assignmentMapper;
 	
 	@Override
 	public ReportYield reportCurrentYield(ReportYield ry) throws JCoException {
@@ -268,6 +272,10 @@ public class ReportYieldServiceImp implements ReportYieldService {
 		//计算未完成量:可报工量=目标量+报废量+关联报废量-完成量
 		int requiredTotal = sapOrder.getTargetSum()+sapOrder.getWasteTotal()+sapOrder.getRelateScarp()-sapOrder.getFinishedTotal();
 		if(requiredTotal>0&&stockNum>0){
+			//增加首次报工时间
+			if(null==sav.getFirstReportTime()){
+				assignmentMapper.firstReport(sav.getAssignmentId());
+			}
 			int currentYield = (int) (requiredTotal<stockNum?requiredTotal:stockNum);
 			//进行报工
 			ReportYield reportYield = reportYieldForCurrentYield(sapOrder, currentYield);
@@ -276,6 +284,7 @@ public class ReportYieldServiceImp implements ReportYieldService {
 				reportYielded = reportCurrentYield(reportYield);
 				reportYieldMapper.insert(reportYielded);
 				updateFinishAndWasteTotal(reportYielded);//更新sapOrder表完成数
+
 			} catch (JCoException e) {
 				log.error("通过接口对sap进行自动报工错误",e);
 			}

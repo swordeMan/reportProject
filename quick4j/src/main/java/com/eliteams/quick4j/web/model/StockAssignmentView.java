@@ -15,6 +15,18 @@ public class StockAssignmentView {
 
     private Date startTime;
 
+    private Date firstReportTime;
+
+    private Integer targetSum;
+
+    private Integer finishedTotal;
+
+    private Integer wasteTotal;
+
+    private Integer relateScarp;
+
+    private Long assignmentId;
+
     public String getMaterialId() {
         return materialId;
     }
@@ -62,7 +74,52 @@ public class StockAssignmentView {
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
-    public String toString(){
-    	return "订单"+productOrderId+"物料id"+materialId+"物料描述"+materialDescribe+"原有待分配量"+stockNum;
+
+    public Date getFirstReportTime() {
+        return firstReportTime;
+    }
+
+    public void setFirstReportTime(Date firstReportTime) {
+        this.firstReportTime = firstReportTime;
+    }
+
+    public Integer getTargetSum() {
+        return targetSum;
+    }
+
+    public void setTargetSum(Integer targetSum) {
+        this.targetSum = targetSum;
+    }
+
+    public Integer getFinishedTotal() {
+        return finishedTotal;
+    }
+
+    public void setFinishedTotal(Integer finishedTotal) {
+        this.finishedTotal = finishedTotal;
+    }
+
+    public Integer getWasteTotal() {
+        return wasteTotal;
+    }
+
+    public void setWasteTotal(Integer wasteTotal) {
+        this.wasteTotal = wasteTotal;
+    }
+
+    public Integer getRelateScarp() {
+        return relateScarp;
+    }
+
+    public void setRelateScarp(Integer relateScarp) {
+        this.relateScarp = relateScarp;
+    }
+
+    public Long getAssignmentId() {
+        return assignmentId;
+    }
+
+    public void setAssignmentId(Long assignmentId) {
+        this.assignmentId = assignmentId;
     }
 }
