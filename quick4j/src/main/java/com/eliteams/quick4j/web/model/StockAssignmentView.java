@@ -122,7 +122,4 @@ public class StockAssignmentView {
     public void setAssignmentId(Long assignmentId) {
         this.assignmentId = assignmentId;
     }
-    public String toString(){
-        return "订单"+productOrderId+"物料id"+materialId+"物料描述"+materialDescribe+"原有待分配量"+stockNum;
-    }
 }

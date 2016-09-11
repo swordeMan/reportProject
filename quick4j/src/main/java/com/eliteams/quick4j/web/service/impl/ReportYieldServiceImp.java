@@ -273,7 +273,7 @@ public class ReportYieldServiceImp implements ReportYieldService {
 		int requiredTotal = sapOrder.getTargetSum()+sapOrder.getWasteTotal()+sapOrder.getRelateScarp()-sapOrder.getFinishedTotal();
 		if(requiredTotal>0&&stockNum>0){
 			//增加首次报工时间
-			if(null!=sav.getFirstReportTime()){
+			if(null==sav.getFirstReportTime()){
 				assignmentMapper.firstReport(sav.getAssignmentId());
 			}
 			int currentYield = (int) (requiredTotal<stockNum?requiredTotal:stockNum);
