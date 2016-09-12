@@ -29,6 +29,7 @@ import com.eliteams.quick4j.web.service.SapOrderService;
 import com.eliteams.quick4j.web.service.ScrapService;
 import com.eliteams.quick4j.web.service.SysSerialNumberService;
 import com.eliteams.quick4j.web.service.UserInfoService;
+import com.eliteams.quick4j.web.service.WorkshopService;
 import com.sap.conn.jco.JCoException;
 
 /*
@@ -70,7 +71,8 @@ public class ScrapServiceImpl implements ScrapService {
 	private ScrapViewMapper scrapViewMapper;
 	@Resource
 	private PDFReportService pdfReportService;
-	
+	@Resource
+	private WorkshopService workshopService;
 	// List<OrderNode> orderNodeList;
 	/**
 	 * 查询所有报废列表
@@ -85,13 +87,17 @@ public class ScrapServiceImpl implements ScrapService {
 	 * 调用cmd打印报废单
 	 * @return
 	 */
-	public boolean printScrapPdf(String scrapId,int iNum){  
+	public boolean printScrapPdf(String scrapId,int iNum,String productionProcess){  
 		String iNums=String.valueOf(iNum);
+		String print=selectPrint(productionProcess);
         try{  
-        	
         	String  fileName=scrapId+iNums;
-          //  Runtime.getRuntime().exec("cmd.exe /c\"D:\\福昕pdf\\Foxit Reader\\FoxitReader.exe\"/p" +"D:\\text.pdf"); 
-            Runtime.getRuntime().exec("D:\\福昕pdf\\Foxit Reader\\FoxitReader.exe /p D:\\scrap\\"+fileName+".pdf ");
+        	if(print==null|| "".equals(print)){
+        		 Runtime.getRuntime().exec("D:\\福昕pdf\\Foxit Reader\\FoxitReader.exe /p D:\\scrap\\"+fileName+".pdf ");
+        	}else{
+        		 Runtime.getRuntime().exec("D:\\福昕pdf\\Foxit Reader\\FoxitReader.exe /p D:\\scrap\\"+fileName+".pdf ");
+        	}
+         //   Runtime.getRuntime().exec("D:\\福昕pdf\\Foxit Reader\\FoxitReader.exe /p D:\\scrap\\"+fileName+".pdf ");
         //D:\福昕pdf\Foxit Reader\FoxitReader.exe /p "D:\text.pdf"
             return true;  
         }catch(Exception e){  
@@ -99,8 +105,15 @@ public class ScrapServiceImpl implements ScrapService {
             return false;  
         }  
     } 
-	
-	
+	/**
+	 * 选择打印机
+	 */
+	public String selectPrint(String productionProcess ){
+	String workshop="新工厂"+productionProcess.substring(0,2);
+	String print=workshopService.selectByworkshop(workshop).getPrint();
+		return print;
+		
+	}
 	/**
 	 * 向报废记录表中插入报废记录；向scrap_reason_relation关联表中插入记录
 	 */
@@ -142,13 +155,13 @@ public class ScrapServiceImpl implements ScrapService {
 			scrapReasonRelationMapper.insert(scrapReasonRelation);
 		}
 		 //打印pdf
-		 printScrapList(scrap.getScrapId());
+		 printScrapList(scrap.getScrapId(),scrap.getProductionProcess());
 	}
 	/**
 	 * 打印报废单pdf
 	 * @param scrapId
 	 */
-	public void printScrapList(String scrapId){
+	public void printScrapList(String scrapId,String productionProcess){
 		 //查询reworkView视图
 		 List<ScrapView> scrapViewList2= scrapViewMapper.selectById(scrapId);
 		//创建新的list
@@ -162,13 +175,13 @@ public class ScrapServiceImpl implements ScrapService {
 					scrapViewList.add(scrapViewList2.get(i));
 					//每过6个导出一个pdf并打印
 					 pdfReportService.generateScrapPDF(scrapViewList,i);
-					 printScrapPdf(scrapId,i);
+					 printScrapPdf(scrapId,i,productionProcess);
 					 //清除列表
 					 scrapViewList.clear();	
 				}
 				if((i+1)==scrapViewList2.size()){
 					 pdfReportService.generateScrapPDF(scrapViewList,i);
-					 printScrapPdf(scrapId,i);
+					 printScrapPdf(scrapId,i,productionProcess);
 				}
 		}
 		 //导出pdf
@@ -199,7 +212,7 @@ public class ScrapServiceImpl implements ScrapService {
 			scrapReasonRelationMapper.insert(scrapReasonRelation);
 		}
 		 //打印pdf
-		 printScrapList(scrap.getScrapId());
+		 printScrapList(scrap.getScrapId(),scrap.getProductionProcess());
 	}
 	
 	//得到关联报废列表,不包含自身

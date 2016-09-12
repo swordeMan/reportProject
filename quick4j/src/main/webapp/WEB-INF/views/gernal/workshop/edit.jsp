@@ -12,7 +12,10 @@
 				<label>车间</label>
 				<input name="workshop" class="required" type="text" value="${workshop.workshop}" size="30"/>
 			</p>
-			
+			<p>
+				<label>打印机</label>
+				<input name="print" type="text" value="${workshop.print}" size="30"/>
+			</p>
 		</div>
 		<c:import url="../../include/formBar.jsp"></c:import>
 	</form>
