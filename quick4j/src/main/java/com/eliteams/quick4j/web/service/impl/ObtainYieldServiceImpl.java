@@ -85,7 +85,8 @@ public class ObtainYieldServiceImpl implements ObtainYieldService {
 			int deviceId=setEqptIdToDeviceId(EqptId);
 			
 			ProductChanged productChanged=new ProductChanged();
-			productChanged.setDeviceId(deviceId);
+			
+			//productChanged.setDeviceId(deviceId);
 			//通过任务下达来获取物料号
 	// 		Assignment assignment = new Assignment();
 			//根据工序号进行查询
