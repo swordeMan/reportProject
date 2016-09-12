@@ -22,4 +22,6 @@ public interface WorkshopMapper {
 	List<Workshop> getWorkshopByPage(Page<Workshop> page);
 
 	List<Workshop> getWorkshopByPageAndKeywords(Page<Workshop> page,@Param("orderByClause")String orderByClause, @Param("keywords")String keywords);
+    //通过产区进行查询
+	Workshop selectByWorkshop(String workshop);
 }

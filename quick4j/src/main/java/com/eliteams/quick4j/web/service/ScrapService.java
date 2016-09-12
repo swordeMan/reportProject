@@ -57,7 +57,7 @@ public interface ScrapService {
 	List<Scrap> getRelatedScrap(Scrap scrap);
 	
 	//打印报废pdf
-	public void printScrapList(String scrapId);
+	public void printScrapList(String scrapId,String productionProcess);
 	
 	//自身报废报工更新sapOrder中报废量和完成量
 	void updateFinishAndWasteTotalByScrapSelf(ReportYield reportYielded);

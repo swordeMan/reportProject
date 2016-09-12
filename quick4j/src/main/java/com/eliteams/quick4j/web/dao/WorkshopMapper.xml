@@ -3,35 +3,39 @@
 <mapper namespace="com.eliteams.quick4j.web.dao.WorkshopMapper" >
   <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.Workshop" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="
-workshop" property="
-workshop" jdbcType="VARCHAR" />
-    <result column="factory" property="factory" jdbcType="VARCHAR" />
+    <result column="workshop" property="workshop" jdbcType="VARCHAR" />
+    <result column="print" property="print" jdbcType="VARCHAR" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from workshop where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.eliteams.quick4j.web.model.Workshop" >
-    insert into workshop (id,workshop,factory)
-    values (#{id,jdbcType=INTEGER}, #{workshop,jdbcType=VARCHAR}, #{factory,jdbcType=VARCHAR})
+    insert into workshop (id,workshop,print)
+    values (#{id,jdbcType=INTEGER}, #{workshop,jdbcType=VARCHAR}, #{print,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.Workshop" >
-    update workshop set workshop = #{workshop,jdbcType=VARCHAR},factory = #{factory,jdbcType=VARCHAR} where id = #{id,jdbcType=INTEGER}
+    update workshop set workshop = #{workshop,jdbcType=VARCHAR},print = #{print,jdbcType=VARCHAR} where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select id, 
-workshop, factory
+workshop, print
     from workshop
     where id = #{id,jdbcType=INTEGER}
   </select>
+   <select id="selectByWorkshop" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, 
+workshop, print
+    from workshop
+    where workshop = #{workshop,jdbcType=VARCHAR}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, 
-workshop, factory
+workshop, print
     from workshop
   </select>
    <select id="getWorkshopByPage" resultMap="BaseResultMap" parameterType="com.eliteams.quick4j.core.feature.orm.mybatis.Page">
     select id, 
-workshop, factory
+workshop, print
     from workshop workshop ORDER BY id DESC
   </select>
   <select id="getWorkshopByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >

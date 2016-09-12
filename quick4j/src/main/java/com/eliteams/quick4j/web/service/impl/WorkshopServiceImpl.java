@@ -71,5 +71,13 @@ public List<Workshop> getWorkshopByPage(Page page,String orderByClause,String ke
 		// TODO Auto-generated method stub
 		return workshopMapper.selectByPrimaryKey(id);
 	}
+	/**
+	 * 根据厂区进行查询
+	 */
+	@Override
+	public Workshop selectByworkshop(String workshop) {
+		
+		return workshopMapper.selectByWorkshop(workshop);
+	}
 
 }
