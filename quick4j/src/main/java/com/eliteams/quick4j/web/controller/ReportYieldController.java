@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.eliteams.quick4j.core.entity.ReportException;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,7 +76,9 @@ public class ReportYieldController extends GenericController {
         		notification.append("\r\n").append(ryed.getProductOrderId()).append(ryed.getMessage());
         	}
         	return json.ajaxConfirmSuccess(notification.toString());
-		} catch (Exception e) {
+		} catch (ReportException re){
+			return json.ajaxDoneError("本条报工数量不正确！");
+		}catch (Exception e) {
 			log.error("手动报工提交出错--reportYield.doReportByHand",e);
 			return json.ajaxDoneError("系统数据出现异常");
 		}

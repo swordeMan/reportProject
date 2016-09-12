@@ -2,6 +2,7 @@ package com.eliteams.quick4j.web.service;
 
 import java.util.List;
 
+import com.eliteams.quick4j.core.entity.ReportException;
 import com.eliteams.quick4j.core.feature.orm.mybatis.Page;
 import com.eliteams.quick4j.web.form.ReportByHandForm;
 import com.eliteams.quick4j.web.model.ReportYield;
@@ -47,7 +48,7 @@ public interface ReportYieldService{
 	 * @param reportByHandForm
 	 * @return
 	 */
-	List<ReportYield> getReportYieldListByHandForm(ReportByHandForm reportByHandForm);
+	List<ReportYield> getReportYieldListByHandForm (ReportByHandForm reportByHandForm) throws ReportException;
 	
 	/**
 	 * 循环报工

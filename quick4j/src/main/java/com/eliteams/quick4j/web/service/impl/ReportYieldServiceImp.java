@@ -1,5 +1,6 @@
 package com.eliteams.quick4j.web.service.impl;
 
+import com.eliteams.quick4j.core.entity.ReportException;
 import com.eliteams.quick4j.core.feature.factory.SapConn;
 import com.eliteams.quick4j.core.feature.orm.mybatis.Page;
 import com.eliteams.quick4j.core.util.OrderUtil;
@@ -99,7 +100,7 @@ public class ReportYieldServiceImp implements ReportYieldService {
 
 
 	@Override
-	public List<ReportYield> getReportYieldListByHandForm(ReportByHandForm reportByHandForm) {
+	public List<ReportYield> getReportYieldListByHandForm(ReportByHandForm reportByHandForm) throws ReportException {
 		ReportYield[] reportYields = reportByHandForm.getReportYield();
 //		Subject currentUser = SecurityUtils.getSubject();
 //		String username = currentUser.getPrincipal().toString();
@@ -123,7 +124,12 @@ public class ReportYieldServiceImp implements ReportYieldService {
 	}
 	
 	//判断该条订单能否被报工
-	private boolean validateCanReportByHand(ReportYield ry,ReportYield[] reportYields){
+	private boolean validateCanReportByHand(ReportYield ry,ReportYield[] reportYields) throws ReportException{
+		String productId = ry.getProductOrderId();
+		SapOrder sapOrder = sapOrderService.getSapOrderInfoById(productId);
+		if(ry.getCurrentYield()>sapOrder.getTargetSum()-sapOrder.getFinishedTotal()+sapOrder.getWasteTotal()+sapOrder.getRelateScarp()){
+			throw new ReportException("本条报工数量不正确");
+		}
 		String simpleDescribe = OrderUtil.simplifyMaterialDescribe(ry.getMaterialDescribe());
 		if(simpleDescribe.equals(OrderUtil.SPIN)||simpleDescribe.equals(OrderUtil.SPORK)||simpleDescribe.equals(OrderUtil.RIM)){
 			return true;
