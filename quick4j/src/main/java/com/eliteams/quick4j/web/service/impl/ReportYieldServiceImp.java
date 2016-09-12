@@ -225,23 +225,25 @@ public class ReportYieldServiceImp implements ReportYieldService {
 	 */
 	@Override
 	public void updateFinishAndWasteTotal(ReportYield reportYielded) {
-		log.debug("更新完成量、报废量--ReportYieldServiceImp.updateFinishAndWasteTotal");
+		log.info("更新完成量、报废量--ReportYieldServiceImp.updateFinishAndWasteTotal");
 		try {
 			if(SUC_MESSAGE_TYPE.equals(reportYielded.getMessageType())||
 					WARN_MESSAGE_TYPE.equals(reportYielded.getMessageType())){
 				String productOrderId = reportYielded.getProductOrderId();
 				SapOrder sapOrder = sapOrderService.getSapOrderInfoById(productOrderId);
 				if(REPORT_OPREATION.equals(reportYielded.getOperation())){
-					//报工加上完成量和报废量
+					//报工加上完成量和报废量，手动报工没有报废量了
 					sapOrder.setFinishedTotal(sapOrder.getFinishedTotal()+reportYielded.getCurrentYield());
-					sapOrder.setWasteTotal(sapOrder.getWasteTotal()+reportYielded.getCurrentWaste());
+//					sapOrder.setWasteTotal(sapOrder.getWasteTotal()+reportYielded.getCurrentWaste());
 				}else if(CANCEL_OPREATION.equals(reportYielded.getOperation())){
 					//系统报工的冲销减去完成量和报废量，手动报工的冲销不改动
 					sapOrder.setFinishedTotal(sapOrder.getFinishedTotal()-reportYielded.getCurrentYield());
-					sapOrder.setWasteTotal(sapOrder.getWasteTotal()-reportYielded.getCurrentWaste());
+//					sapOrder.setWasteTotal(sapOrder.getWasteTotal()-reportYielded.getCurrentWaste());
 				}
 				sapOrderMapper.updateByPrimaryKey(sapOrder);
-            }
+            }else {
+				log.info("更新完成量、报废量失败，sap不是成功或警告");
+			}
 		} catch (Exception e) {
 			log.error("更新完成量、报废量出错",e);
 		}

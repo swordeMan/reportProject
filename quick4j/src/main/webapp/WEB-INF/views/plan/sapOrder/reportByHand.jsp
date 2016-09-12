@@ -9,6 +9,7 @@ function validateCurrentYield(id){
 	var finishedTotal = parseInt($("#finishedTotal"+id).val());
 	var wasteTotal = parseInt($("#wasteTotal"+id).val());
 	if(currentYield>(targetSum-finishedTotal+wasteTotal)){
+		$("#currentYield"+id).val('');
 		alertMsg.warn('本条报工数量不正确！');
 	}
 	
