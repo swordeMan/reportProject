@@ -5,7 +5,7 @@ public class Workshop {
 
     private String workshop;
 
-    private String factory;
+    private String print;
 
     public Integer getId() {
         return id;
@@ -23,11 +23,11 @@ public class Workshop {
         this.workshop = workshop == null ? null : workshop.trim();
     }
 
-    public String getFactory() {
-        return factory;
+    public String getPrint() {
+        return print;
     }
 
-    public void setFactory(String factory) {
-        this.factory = factory == null ? null : factory.trim();
+    public void setPrint(String print) {
+        this.print = print == null ? null : print.trim();
     }
 }

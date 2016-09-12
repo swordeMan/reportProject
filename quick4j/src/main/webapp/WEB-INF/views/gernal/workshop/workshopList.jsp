@@ -61,6 +61,10 @@ $(function(){
 				<th width="20"></th>
 				<th orderField="workshop" width="200">车间</th>
 			</tr>
+			<tr>
+			   <th width="40"></th>
+			   <th orderField="print" width="200"></th>
+			</tr>
 		</thead>
 		<tbody>
 			<c:forEach var="item" items="${page.result}" varStatus="s">
@@ -68,7 +72,7 @@ $(function(){
 
 					<td>${s.index + 1}</td>
 					<td>${item.workshop}</td>
-
+                    <td>${item.print}</td>
 				</tr>
 			</c:forEach>
 		</tbody>

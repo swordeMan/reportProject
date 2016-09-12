@@ -20,5 +20,6 @@ public interface WorkshopService {
 	void deleteWorkshop(int id); // 删除工厂
 
 	void editWorkshop(Workshop workshop); // 修改工厂
-
+    
+	Workshop selectByworkshop(String workshop);//通过产区进行查询
 }

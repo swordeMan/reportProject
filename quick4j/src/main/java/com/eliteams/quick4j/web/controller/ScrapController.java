@@ -326,7 +326,8 @@ public class ScrapController extends GenericController {
 	@ResponseBody
 	public Json printRework(@PathVariable("scrapId")String scrapId,Json json){
 		try {
-			scrapService.printScrapList(scrapId);
+			String productionProcess=scrapService.selectByscrapId(scrapId).getProductionProcess();
+			scrapService.printScrapList(scrapId,productionProcess);
 		} catch (Exception e) {
 			log.error("打印报废单错误"+e);
 			return json.ajaxDoneError();
