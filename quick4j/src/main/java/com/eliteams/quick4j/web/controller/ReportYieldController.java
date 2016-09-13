@@ -77,7 +77,7 @@ public class ReportYieldController extends GenericController {
         	}
         	return json.ajaxConfirmSuccess(notification.toString());
 		} catch (ReportException re){
-			return json.ajaxDoneError("本条报工数量不正确！");
+			return json.ajaxDoneError(re.getMessage());
 		}catch (Exception e) {
 			log.error("手动报工提交出错--reportYield.doReportByHand",e);
 			return json.ajaxDoneError("系统数据出现异常");
