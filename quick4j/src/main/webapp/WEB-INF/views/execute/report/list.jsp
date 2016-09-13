@@ -84,7 +84,7 @@ function cancelVerify(operation,type) {
 				<th orderField="material_id" width="100">物料编码</th>
 				<th orderField="material_describe" width="180">物料描述</th>
 				<th orderField="current_yield" width="80">报工量</th>
-				<!-- <th orderField="current_waste" width="80">报废量</th> -->
+				<th orderField="current_waste" width="80">报废量</th>
 				<th orderField="message_type" width="100">SAP类型</th>
 				<th orderField="message" width="300">SAP消息文本</th>
 				<th orderField="report_username" width="100">报工人</th>
@@ -113,7 +113,7 @@ function cancelVerify(operation,type) {
 				<td>${item.materialId}</td>
 				<td>${item.materialDescribe}</td>
 				<td>${item.currentYield}</td>
-				<%-- <td>${item.currentWaste}</td> --%>
+				<td>${item.currentWaste}</td>
 				<td>
 					<c:if test="${item.messageType=='S'}">
 						成功

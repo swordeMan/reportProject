@@ -95,7 +95,14 @@ public class ScrapServiceImpl implements ScrapService {
         	if(print==null|| "".equals(print)){
         		 Runtime.getRuntime().exec("D:\\福昕pdf\\Foxit Reader\\FoxitReader.exe /p D:\\scrap\\"+fileName+".pdf ");
         	}else{
-        		 Runtime.getRuntime().exec("D:\\福昕pdf\\Foxit Reader\\FoxitReader.exe /p D:\\scrap\\"+fileName+".pdf ");
+        		 String[] printarray=print.split(" ");
+        		 String path="D:\\福昕pdf\\Foxit Reader\\FoxitReader.exe /t D:\\scrap\\"+fileName+".pdf "+printarray[0];
+        		 for (int i = 1; i < printarray.length; i++) {
+             		path=path+"\""+" "+printarray[i];
+     			}
+             	String cmdPath=path;
+        		 
+        		 Runtime.getRuntime().exec(cmdPath);
         	}
          //   Runtime.getRuntime().exec("D:\\福昕pdf\\Foxit Reader\\FoxitReader.exe /p D:\\scrap\\"+fileName+".pdf ");
         //D:\福昕pdf\Foxit Reader\FoxitReader.exe /p "D:\text.pdf"

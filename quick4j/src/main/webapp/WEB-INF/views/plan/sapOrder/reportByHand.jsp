@@ -3,18 +3,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <script type="text/javascript">
 function validateCurrentYield(id){
-	//var currentWaste = parseInt($("#currentWaste"+id).val());
+	var currentWaste = parseInt($("#currentWaste"+id).val());
 	var currentYield = parseInt($("#currentYield"+id).val());
 	var targetSum = parseInt($("#targetSum"+id).val());
 	var finishedTotal = parseInt($("#finishedTotal"+id).val());
 	var wasteTotal = parseInt($("#wasteTotal"+id).val());
 	if(currentYield>(targetSum-finishedTotal+wasteTotal)){
-		$("#currentYield"+id).val('');
 		alertMsg.warn('本条报工数量不正确！');
+		return false;
 	}
 	
 }
-/*function validateCurrentWaste(id){
+function validateCurrentWaste(id){
 	var currentWaste = parseInt($("#currentWaste"+id).val());
 	var currentYield = parseInt($("#currentYield"+id).val());
 	var targetSum = parseInt($("#targetSum"+id).val());
@@ -22,8 +22,9 @@ function validateCurrentYield(id){
 	var wasteTotal = parseInt($("#wasteTotal"+id).val());
 	if(currentWaste>(finishedTotal-wasteTotal)){
 		alertMsg.warn('本条报废数量不正确！');
+		return false;
 	}
-}*/
+}
 </script>
 
 <div class="pageContent">
@@ -66,7 +67,7 @@ function validateCurrentYield(id){
 						<th type="text">完成数</th>
 						<th type="text">报废数</th>
 						<th type="text" name="reportYield[#index#].currentYield">本次报工量</th>
-						<%--<th type="text" name="reportYield[#index#].currentWaste">本次报废量</th>--%>
+						<th type="text" name="reportYield[#index#].currentWaste">本次报废量</th>
 						<th type="text" name="reportYield[#index#].accountDate">记账日期</th>
 						<th type="del" width="25">操作</th>
 					</tr>
@@ -82,7 +83,7 @@ function validateCurrentYield(id){
 							<td><input size="5" type="text" value="${item.finishedTotal}" class="digits textInput" readonly="readonly" id="finishedTotal${s.index}"></td>
 							<td><input size="5" type="text" value="${item.wasteTotal}" class="digits textInput" readonly="readonly" id="wasteTotal${s.index}"></td>
 							<td><input size="6" type="text" name="reportYield[${s.index}].currentYield" class="digits required textInput" id="currentYield${s.index}" onblur="validateCurrentYield(${s.index})" ></td>
-							<%--<td><input size="6" type="text" name="reportYield[${s.index}].currentWaste" value="0" class="digits required textInput" id="currentWaste${s.index}" onblur="validateCurrentWaste(${s.index})"></td>--%>
+							<td><input size="6" type="text" name="reportYield[${s.index}].currentWaste" value="0" class="digits required textInput" id="currentWaste${s.index}" onblur="validateCurrentWaste(${s.index})"></td>
 							<td><input size="8" type="text" name="reportYield[${s.index}].accountDate" value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/>" class="date required" readonly="true"/>
 								<a class="inputDateButton" href="javascript:;">选择</a></td>
 							<td><a href="javascript:void(0)" class="btnDel ">删除</a></td>
