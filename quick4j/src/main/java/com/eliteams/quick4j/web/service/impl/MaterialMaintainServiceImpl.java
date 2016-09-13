@@ -50,10 +50,12 @@ public class MaterialMaintainServiceImpl implements MaterialMaintainService {
 	 */
 	@Override
 	public void editMaterialMaintain(MaterialMaintain materialMaintain) {
-		Integer deviceId=deviceInfoMapper.selectDeviceIdByDescribe(materialMaintain.getDeviceDescribe()).getDeviceId();
+		/*Integer deviceId=deviceInfoMapper.selectDeviceIdByDescribe(materialMaintain.getDeviceDescribe()).getDeviceId();
 		if(deviceId!=null){
 			materialMaintain.setDeviceId(deviceId);
-		}
+		}*/
+		String deviceDescribes=deviceInfoMapper.selectDeiviceDescribeByDeviceId(materialMaintain.getDeviceId()).getDeiviceDescribe();
+		materialMaintain.setDeviceDescribe(deviceDescribes);
 		materialMaintainMapper.updateByPrimaryKey(materialMaintain);
 	}
 	/**
