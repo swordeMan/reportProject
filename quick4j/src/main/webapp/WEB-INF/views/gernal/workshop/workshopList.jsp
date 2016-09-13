@@ -60,10 +60,7 @@ $(function(){
 			<tr>
 				<th width="20"></th>
 				<th orderField="workshop" width="200">车间</th>
-			</tr>
-			<tr>
-			   <th width="40"></th>
-			   <th orderField="print" width="200"></th>
+			    <th orderField="print" width="200">打印机</th>
 			</tr>
 		</thead>
 		<tbody>
