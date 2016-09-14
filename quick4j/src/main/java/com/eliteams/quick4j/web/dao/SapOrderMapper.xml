@@ -102,16 +102,16 @@
     insert into sap_order (product_order_id, product_order_type, 
       sale_order_id, sale_order_row, user_simple_name, 
       manufacture_version, material_id, material_describe, 
-      target_sum, finished_total, waste_total, relate_scarp, state_mark,
+      target_sum, finished_total, waste_total, state_mark,
       unit, plan_start_date, plan_end_date, 
       del_remark, state, create_time
       )
     values (#{productOrderId,jdbcType=VARCHAR}, #{productOrderType,jdbcType=VARCHAR}, 
       #{saleOrderId,jdbcType=VARCHAR}, #{saleOrderRow,jdbcType=VARCHAR}, #{userSimpleName,jdbcType=VARCHAR}, 
       #{manufactureVersion,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{materialDescribe,jdbcType=VARCHAR}, 
-      #{targetSum,jdbcType=INTEGER}, #{finishedTotal,jdbcType=INTEGER}, #{wasteTotal,jdbcType=INTEGER}, #{relateScarp,jdbcType=INTEGER},
+      #{targetSum,jdbcType=INTEGER}, #{finishedTotal,jdbcType=INTEGER}, #{wasteTotal,jdbcType=INTEGER},
       #{stateMark,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR}, #{planStartDate,jdbcType=DATE}, #{planEndDate,jdbcType=DATE}, 
-      #{delRemark,jdbcType=CHAR}, #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      #{delRemark,jdbcType=CHAR}, #{state,jdbcType=VARCHAR}, NOW()
       )
       ON DUPLICATE KEY UPDATE 
       product_order_type = #{productOrderType,jdbcType=VARCHAR},
@@ -124,7 +124,6 @@
       target_sum = #{targetSum,jdbcType=INTEGER},
       finished_total = #{finishedTotal,jdbcType=INTEGER},
       waste_total = #{wasteTotal,jdbcType=INTEGER},
-      relate_scarp = #{relateScarp,jdbcType=INTEGER},
       state_mark = #{stateMark,jdbcType=INTEGER},
       unit = #{unit,jdbcType=VARCHAR},
       plan_start_date = #{planStartDate,jdbcType=DATE},
