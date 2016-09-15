@@ -19,6 +19,19 @@ function getScrapNum(){
 $(".buttonActive").click(function(){
 	getScrapNum();
 })
+
+function validateIllustration(obj){
+	var url="rest/scrapReason/selectByPrimaryKey";//请求后台的url
+	if($(obj).val()=="")
+	return;//无值，返回 
+	$.post(url,{'id':$(obj).val()},function(data){
+		if(data.sReason=="其他"){
+			$(obj).parents("tr").find("input[name*='illustration']").addClass("required");
+		}else{
+			$(obj).parents("tr").find("input[name*='illustration']").removeClass("required");
+		}
+	});
+}
 </script>
 
 <div class="pageContent">
@@ -120,7 +133,7 @@ $(".buttonActive").click(function(){
 				<tbody>
 					<tr class="unitBox">
 						<td>
-							<select class="required" name="scrapReasonRelation[0].sReasonId" style="width:80%">
+							<select class="required" name="scrapReasonRelation[0].sReasonId" style="width:80%" onblur="validateIllustration(this)">
 								<c:forEach var="item" items="${scrapReasonList}" varStatus="s">
 									<option value="${item.id}" selected="selected">${item.sReason}</option>
 								</c:forEach>
