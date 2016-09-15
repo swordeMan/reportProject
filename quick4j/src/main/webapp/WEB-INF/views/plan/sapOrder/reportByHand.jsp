@@ -14,7 +14,7 @@ function validateCurrentYield(id){
 	}
 	
 }
-function validateCurrentWaste(id){
+/*function validateCurrentWaste(id){
 	var currentWaste = parseInt($("#currentWaste"+id).val());
 	var currentYield = parseInt($("#currentYield"+id).val());
 	var targetSum = parseInt($("#targetSum"+id).val());
@@ -24,7 +24,7 @@ function validateCurrentWaste(id){
 		alertMsg.warn('本条报废数量不正确！');
 		return false;
 	}
-}
+}*/
 </script>
 
 <div class="pageContent">
