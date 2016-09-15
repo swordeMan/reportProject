@@ -130,9 +130,9 @@ public class ReportYieldServiceImp implements ReportYieldService {
 		if(ry.getCurrentYield()>sapOrder.getTargetSum()-sapOrder.getFinishedTotal()+sapOrder.getWasteTotal()+sapOrder.getRelateScarp()){
 			throw new ReportException("本条报工数量不正确");
 		}
-		if(ry.getCurrentWaste()>sapOrder.getFinishedTotal()-sapOrder.getWasteTotal()){
+		/*if(ry.getCurrentWaste()>sapOrder.getFinishedTotal()-sapOrder.getWasteTotal()){
 			throw new ReportException("本条报废数量不正确");
-		}
+		}*/
 		String simpleDescribe = OrderUtil.simplifyMaterialDescribe(ry.getMaterialDescribe());
 		if(simpleDescribe.equals(OrderUtil.SPIN)||simpleDescribe.equals(OrderUtil.SPORK)||simpleDescribe.equals(OrderUtil.RIM)){
 			return true;
