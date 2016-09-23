@@ -19,6 +19,7 @@
     <result column="sale_order_row" jdbcType="VARCHAR" property="saleOrderRow" />
     <result column="target_sum" jdbcType="INTEGER" property="targetSum" />
     <result column="finished_total" jdbcType="INTEGER" property="finishedTotal" />
+    <result column="state" jdbcType="INTEGER" property="state" />
   </resultMap>
   <insert id="insert" parameterType="com.eliteams.quick4j.web.model.AssignmentView" >
     insert into assignment_view (id, product_order_id, material_id, 
@@ -36,7 +37,7 @@
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, product_order_id, material_id, material_describe, assignment_num, plan_time, 
     classes, cmd_time, cmd_person, start_time, sale_order_id, user_simple_name, deivice_describe, 
-    device_id,sale_order_row,target_sum,finished_total
+    device_id,sale_order_row,target_sum,finished_total,state
     from assignment_view
   </select>
   <!-- <select id="getSapOrderByPageAndKeywords" resultMap="BaseResultMap" parameterType="map" >
@@ -109,7 +110,7 @@
   <select id="selectAssignmentViewById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select id, product_order_id, material_id, material_describe, assignment_num, plan_time, 
     classes, cmd_time, cmd_person, start_time, sale_order_id, user_simple_name, deivice_describe, 
-    device_id,sale_order_row,target_sum,finished_total
+    device_id,sale_order_row,target_sum,finished_total,state
     from assignment_view
     where id = #{id,jdbcType=BIGINT}
   </select>

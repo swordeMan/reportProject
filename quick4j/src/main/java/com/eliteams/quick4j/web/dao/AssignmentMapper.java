@@ -22,6 +22,12 @@ public interface AssignmentMapper {
     //优先执行，设置启动时间提前一年
     int updateStartTimeByPrimaryKey(Long id);
     
+    //任务暂停，设置状态为1
+    int suspendAssignment(Long id);
+    
+    //任务启动，改状态为0
+    int reStartAssignment(Long id);
+    
     //根据生产订单号在assignment中查询记录
 	Assignment selectByProductOrderId(String productOrderId);
 	

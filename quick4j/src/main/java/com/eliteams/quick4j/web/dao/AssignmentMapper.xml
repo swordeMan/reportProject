@@ -16,6 +16,7 @@
     <result column="sale_order_id" property="saleOrderId" jdbcType="VARCHAR" />
     <result column="user_simple_name" jdbcType="VARCHAR" property="userSimpleName" />
     <result column="first_report_time" property="firstReportTime" jdbcType="TIMESTAMP" />
+    <result column="state" jdbcType="INTEGER" property="state" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from assignment
@@ -36,6 +37,16 @@
     set start_time = NOW()
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <update id="suspendAssignment" parameterType="java.lang.Long" >
+    update assignment
+    set state = '1'
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="reStartAssignment" parameterType="java.lang.Long" >
+    update assignment
+    set state = '0'
+    where id = #{id,jdbcType=BIGINT}
+  </update>
     <update id="firstReport" parameterType="java.lang.Long" >
         update assignment
         set first_report_time = NOW()
@@ -48,19 +59,19 @@
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select id, product_order_id, material_id, material_describe, device_id, assignment_num, 
-    plan_time, classes, cmd_time, cmd_person, start_time, sale_order_id, user_simple_name, first_report_time
+    plan_time, classes, cmd_time, cmd_person, start_time, sale_order_id, user_simple_name, first_report_time, state
     from assignment
     where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, product_order_id, material_id, material_describe, device_id, assignment_num, 
-    plan_time, classes, cmd_time, cmd_person, start_time, sale_order_id, user_simple_name, first_report_time
+    plan_time, classes, cmd_time, cmd_person, start_time, sale_order_id, user_simple_name, first_report_time, state
     from assignment
     ORDER BY product_order_id DESC
   </select>
   <select id="selectByProductOrderId" resultMap="BaseResultMap" parameterType="java.lang.String">
  	select id, product_order_id, material_id, material_describe, device_id, assignment_num, 
-    start_time, classes, cmd_time, cmd_person, start_time, sale_order_id, user_simple_name, first_report_time
+    start_time, classes, cmd_time, cmd_person, start_time, sale_order_id, user_simple_name, first_report_time, state
     from assignment
     where product_order_id = #{productOrderId,jdbcType=VARCHAR}
  </select>

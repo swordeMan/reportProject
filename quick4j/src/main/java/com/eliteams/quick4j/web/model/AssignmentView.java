@@ -52,7 +52,18 @@ public class AssignmentView {
     private String keywords;
     private String orderByClause;
 
-    public Date getBeginTime() {
+    //增加任务状态：暂停和重启
+    private Integer state;
+    
+    public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
+	public Date getBeginTime() {
 		return beginTime;
 	}
 

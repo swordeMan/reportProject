@@ -181,6 +181,42 @@ public class AssignmentController {
    	}
     
     /**
+     * 暂停任务
+     * @param id
+     * @param json
+     * @return
+     */
+    @RequestMapping("/suspend/{id}")
+    @ResponseBody
+   	public Json suspend(@PathVariable("id") Long id, Json json) {
+    	try {
+    		assignmentMapper.suspendAssignment(id);
+		} catch (Exception e) {
+			log.error("暂停任务失败",e);
+			return json.ajaxDoneError("任务暂停失败");
+		}
+    	return json.ajaxDoneSuccess("任务暂停成功");
+   	}
+    
+    /**
+     * 重启任务
+     * @param id
+     * @param json
+     * @return
+     */
+    @RequestMapping("/restart/{id}")
+    @ResponseBody
+   	public Json restart(@PathVariable("id") Long id, Json json) {
+    	try {
+    		assignmentMapper.reStartAssignment(id);
+		} catch (Exception e) {
+			log.error("重启任务失败",e);
+			return json.ajaxDoneError("重启任务失败");
+		}
+    	return json.ajaxDoneSuccess("重启任务成功");
+   	}
+    
+    /**
      * 查询任务视图中的单条记录，填报报废单
      * @param id
      * @param model
