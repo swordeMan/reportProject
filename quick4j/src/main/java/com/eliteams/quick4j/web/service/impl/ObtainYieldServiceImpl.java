@@ -182,7 +182,7 @@ public class ObtainYieldServiceImpl implements ObtainYieldService {
 	@Override
 	public Date getDateForSelect() {
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.MINUTE, -1); // 减少30分钟
+		cal.add(Calendar.MINUTE, -476); // 减少30分钟
 		// Cal.add(Calendar.HOUR,-3); // 目前時間加3小時
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = cal.getTime();
