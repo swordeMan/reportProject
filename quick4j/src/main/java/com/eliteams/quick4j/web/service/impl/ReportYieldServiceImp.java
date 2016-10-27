@@ -56,7 +56,7 @@ public class ReportYieldServiceImp implements ReportYieldService {
 	@Override
 	public ReportYield reportCurrentYield(ReportYield ry) throws JCoException {
 		
-		log.debug("向SAP报工--ReportYieldServiceImp.reporCurrentYield");
+		log.info("向SAP报工--ReportYieldServiceImp.reporCurrentYield");
 		JCoFunction function = null;
 		JCoDestination destination = SapConn.connect();
 		
@@ -183,9 +183,10 @@ public class ReportYieldServiceImp implements ReportYieldService {
 		List<ReportYield> reportYieldedList = new ArrayList<ReportYield>(5);
 		for(ReportYield reportYield:reportYieldList){
 			//报工完毕拥有回传参数的报工单
-			ReportYield reportYielded = reportCurrentYield(reportYield);
+			ReportYield reportYielded = new ReportYield();
+			reportYielded = reportCurrentYield(reportYield);
 			reportYieldMapper.insert(reportYielded);
-			updateFinishAndWasteTotal(reportYielded);//更新sapOrder表完成数
+			//updateFinishAndWasteTotal(reportYielded);//更新sapOrder表完成数
 			reportYieldedList.add(reportYielded);
 		}
 		return reportYieldedList;
@@ -216,7 +217,7 @@ public class ReportYieldServiceImp implements ReportYieldService {
 			reportYielded = reportCurrentYield(reportYield);
 			reportYieldMapper.updateByPrimaryKey(reportYielded);
 
-			updateFinishAndWasteTotal(reportYielded);
+			//updateFinishAndWasteTotal(reportYielded);
 			Stock stock = stockService.getStockByMaterialId(reportYielded.getMaterialId());
 			stockService.updateByStockMaterialId(stock, reportYielded);
 		} catch (JCoException e) {
@@ -234,10 +235,9 @@ public class ReportYieldServiceImp implements ReportYieldService {
 	 */
 	@Override
 	public void updateFinishAndWasteTotal(ReportYield reportYielded) {
-		log.info("更新完成量、报废量--ReportYieldServiceImp.updateFinishAndWasteTotal");
 		try {
-			if(SUC_MESSAGE_TYPE.equals(reportYielded.getMessageType())||
-					WARN_MESSAGE_TYPE.equals(reportYielded.getMessageType())){
+			if(SUC_MESSAGE_TYPE.equals(reportYielded.getMessageType())){
+				log.info("更新完成量、报废量--ReportYieldServiceImp.updateFinishAndWasteTotal");
 				String productOrderId = reportYielded.getProductOrderId();
 				SapOrder sapOrder = sapOrderService.getSapOrderInfoById(productOrderId);
 				if(REPORT_OPREATION.equals(reportYielded.getOperation())){
@@ -294,7 +294,7 @@ public class ReportYieldServiceImp implements ReportYieldService {
 			try {
 				reportYielded = reportCurrentYield(reportYield);
 				reportYieldMapper.insert(reportYielded);
-				updateFinishAndWasteTotal(reportYielded);//更新sapOrder表完成数
+				//updateFinishAndWasteTotal(reportYielded);//更新sapOrder表完成数
 
 			} catch (JCoException e) {
 				log.error("通过接口对sap进行自动报工错误",e);
