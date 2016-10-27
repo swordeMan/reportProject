@@ -46,6 +46,9 @@ public class Assignment {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date firstReportTime;
     
+    //增加任务状态：暂停和重启
+    private Integer state;
+    
     public Long getId() {
         return id;
     }
@@ -172,5 +175,13 @@ public class Assignment {
 
 	public void setFirstReportTime(Date firstReportTime) {
 		this.firstReportTime = firstReportTime;
+	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
 	}
 }

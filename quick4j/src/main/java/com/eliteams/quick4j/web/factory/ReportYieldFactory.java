@@ -8,6 +8,8 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -62,9 +64,19 @@ public class ReportYieldFactory {
         reportYield.setMessageId(messageId);//设置消息ID
         reportYield.setReportUsername("system");//报工人
         reportYield.setOperation(ReportYieldService.REPORT_OPREATION);//设为A
-        reportYield.setAccountDate(new Date());
+        //提前八个小时作为记账日期
+        reportYield.setAccountDate(getTime());
         return reportYield;
     }
-
+    /**
+     * 记账日期提前八个小时
+     * @return 提前八小时的日期date
+     */
+    public Date getTime(){
+    	Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.HOUR,-8); // 目前時間加3小時
+		Date date = cal.getTime();
+	    return date;
+    }
 
 }

@@ -27,14 +27,14 @@ $(function(){
 	}
 });
 
-/* function verify(startTime){
-	if(startTime!=null && startTime!=""){
+function verify(state){
+	if(state=='1'){
 		//alertMsg.warn("该任务已启动，禁止操作！");
-		$('.delete').hide();
+		$('#restart').show();
 	}else{
-		$('.delete').show();
+		$('#restart').hide();
 	}
-} */
+}
 
 </script>
 
@@ -62,6 +62,8 @@ $(function(){
 			<!-- <li><a class="add" target="dialog" mask="true" width="980" height="490" href="rest/assignment/getDeviceInfo"><span>任务下达</span></a></li> -->
 			<!-- <li><a class="edit" target="ajaxTodo" warn="请选择一个任务" href="rest/assignment/startAssignment/{slt_objId}" title="你确定要启动该条任务吗?"><span>任务启动</span></a></li> -->
 			<li><a class="edit" target="ajaxTodo" warn="请选择一个任务" href="rest/assignment/first/{slt_objId}" title="你确定要优先执行该条任务吗?"><span>优先执行</span></a></li>
+			<li><a class="edit" target="ajaxTodo" warn="请选择一个任务" href="rest/assignment/suspend/{slt_objId}" title="你确定要暂停该条任务吗?"><span>任务暂停</span></a></li>
+			<li><a id="restart" class="edit" target="ajaxTodo" warn="请选择一个任务" href="rest/assignment/restart/{slt_objId}" title="你确定要重启该条任务吗?" style="display: none"><span>任务重启</span></a></li>
 			<li><a class="add" target="dialog" mask="true" width="800" height="470" rel="newScrapNav" warn="请选择一条任务" href="<c:url value='rest/assignment/queryAssignmentView/{slt_objId}'/>" title="新建报废单"><span>新建报废单</span></a></li>
 			<li><a class="delete" target="ajaxTodo" href="rest/assignment/deleteAssignment/{slt_objId}" warn="请选择一条任务" title="你确定要删除吗?"><span>任务删除</span></a></li>
 		</ul>
@@ -88,6 +90,7 @@ $(function(){
 				<!-- <th width="40">单位</th> -->
 				<th orderField="cmd_time" width="90">下达日期</th>
 				<th orderField="start_time" width="130">启动时间</th>
+				<th orderField="state" width="80">状态</th>
 				<!-- <th width="40">删除标记</th> -->
 				<!-- <th width="150">状态</th> -->
 				<!-- <th width="85">新建时间</th> -->
@@ -95,7 +98,7 @@ $(function(){
 		</thead>
 		<tbody>
 			<c:forEach var="item" items="${page.result}" varStatus="s">
-			<tr target="slt_objId" rel="${item.id}" onclick="verify('${item.startTime}')">
+			<tr target="slt_objId" rel="${item.id}" onclick="verify('${item.state}')">
 				<td>${s.index + 1}</td>
 				<td>${item.productOrderId}</td>
 				<%-- <td>${item.productOrderType}</td> --%>
@@ -117,6 +120,14 @@ $(function(){
 				<%-- <td>${item.delRemark}</td> --%>
 				<%-- <td>${item.state}</td> --%>
 				<%-- <td><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd"/></td> --%>
+				<td>
+					<c:if test="${item.state=='0'}">
+						正常
+					</c:if>
+					<c:if test="${item.state=='1'}">
+						暂停
+					</c:if>
+				</td>
 			</tr>
 		</c:forEach>
 		</tbody>

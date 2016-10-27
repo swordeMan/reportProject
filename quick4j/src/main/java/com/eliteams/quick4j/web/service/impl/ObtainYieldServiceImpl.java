@@ -24,6 +24,7 @@ import com.eliteams.quick4j.web.dao.ProductChangedMapper;
 import com.eliteams.quick4j.web.dao.StockMapper;
 import com.eliteams.quick4j.web.model.Assignment;
 import com.eliteams.quick4j.web.model.DShiftOutput;
+import com.eliteams.quick4j.web.model.MaterialMaintain;
 import com.eliteams.quick4j.web.model.ObtainYield;
 import com.eliteams.quick4j.web.model.ObtainYieldRecord;
 import com.eliteams.quick4j.web.model.ProductChanged;
@@ -96,14 +97,16 @@ public class ObtainYieldServiceImpl implements ObtainYieldService {
 		//	assignment = assignmentMapper.selectByDeviceIdAndTime(assignment);
 			if (productChanged != null) {
 				//获取物料描述
-				String materialdescribe=materialMaintainMapper.selectMaterialDescribe(productChanged.getMaterialId());
+				MaterialMaintain materialMaintain=new MaterialMaintain();
+				materialMaintain.setDeviceId(productChanged.getDeviceId());
+				materialMaintain.setMaterialId(productChanged.getMaterialId());
+				String materialdescribe=materialMaintainMapper.selectMaterialDescribe(materialMaintain);
 				Map map = new HashMap();
 				map.put("materialDescribe", materialdescribe);
 				map.put("materialId",productChanged.getMaterialId());
 				map.put("numThree", numThree);
 				stockMapper.updateByMaterialIdMap(map);//增加待分配量，最近的产量
-			}
-	    	  
+			}  
 		}
 	}
 	
@@ -179,7 +182,7 @@ public class ObtainYieldServiceImpl implements ObtainYieldService {
 	@Override
 	public Date getDateForSelect() {
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.MINUTE, -1); // 减少30分钟
+		cal.add(Calendar.MINUTE, -476); // 减少30分钟
 		// Cal.add(Calendar.HOUR,-3); // 目前時間加3小時
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = cal.getTime();

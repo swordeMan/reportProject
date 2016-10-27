@@ -245,27 +245,20 @@ $(function(){
 				</ul>
 				<div class="navTab-panel tabsPageContent layoutBox" layoutH="0">
 					<div class="page unitBox">
-						<!-- <div class="accountInfo">
-						</div> -->
-						<div class="pageFormContent" id="main">
-							<!-- <ul>
-								<li><div><a class="add" target="dialog" mask="true" max="true" href="rest/scrap/add"><span>新建报废单</span></a></div></li>
-								<li><div><a class="add" target="dialog" mask="true" max="true" href="rest/scrap/criteriaQuery"><span>新建报废单</span></a></div></li>
-								<li><div><a class="add" target="dialog" mask="true" width="800" height="470" href="rest/assignment/getDeviceInfo"><span>任务下达</span></a></div></li>
-								<li><div><a class="add" target="dialog" mask="true" width="870" height="360" max="true" href="rest/rework/insertRework"><span>新建返修单</span></a></div></li>
-								<li><div><a href="rest/assignment/list" target="navTab" rel="assignmentNav"><span>任务启动</span></a></div></li>
-							</ul> -->
-								 <!-- <a class="buttonActive" href="rest/sapOrder/testInsert" target="_blank"><span>点击数据获取</span></a> -->
-								<!--<a class="button" href="rest/sapOrder/testReport" target="_blank"><span>点击生产报工</span></a> -->
-							<!-- <div class="divider"></div> -->
-
-							<div class="tabs" currentIndex="0" eventType="click">
+						<div class="pageFormContent">
+							<ul>
+								<li style="float:left;"><a href="rest/homePage/scrap_create" target="navTab" rel="sNav" style="text-decoration: none;font-weight: bold;font-size: 14px"><div style="width:170px; height:100px; background-image:url(<%=basePath%>/themes/default/images/homePageMenu/scrap_create.png);background-repeat:no-repeat;"></div>新建报废单</a></li>
+								<li style="float:left;"><a href="rest/homePage/rework_create" target="navTab" rel="rNav" style="text-decoration: none;font-weight: bold;font-size: 14px"><div style="width:170px; height:100px; background-image:url(<%=basePath%>/themes/default/images/homePageMenu/rework_create.png); background-repeat:no-repeat;"></div>新建返修单</a></li>
+								<li style="float:left;"><a href="rest/homePage/productLine_switch" target="navTab" rel="pNav" style="text-decoration: none;font-weight: bold;font-size: 14px"><div style="width:170px; height:100px; background-image:url(<%=basePath%>/themes/default/images/homePageMenu/productLine_switch.png); background-repeat:no-repeat;"></div>产线切换</a></li>
+								<li style="float:left;"><a href="rest/homePage/assignment_order" target="navTab" rel="aNav" style="text-decoration: none;font-weight: bold;font-size: 14px"><div style="width:170px; height:100px; background-image:url(<%=basePath%>/themes/default/images/homePageMenu/assignment_order.png); background-repeat:no-repeat;"></div>任务下达</a></li>
+							</ul>
+							<!-- <div class="tabs" currentIndex="0" eventType="click">
 								<div class="tabsHeader">
 									<div class="tabsHeaderContent">
 										<ul>
 											<li><a href="javascript:;"><span>新建报废单</span></a></li>
 											<li><a href="javascript:;"><span>新建返修单</span></a></li>
-											<!-- <li><a href="javascript:;"><span>任务启动</span></a></li> -->
+											<li><a href="javascript:;"><span>任务启动</span></a></li>
 											<li><a href="javascript:;"><span>产线切换</span></a></li>
 											<li><a href="javascript:;"><span>任务下达</span></a></li>
 										</ul>
@@ -297,7 +290,7 @@ $(function(){
 												<li><div><a class="add" mask="true" href="rest/assignment/assignmentView?deviceId=199" target="dialog" width="670" height="260"><span>三区轮辐</span></a></div></li>
 												<li><div><a class="add" mask="true" href="rest/assignment/assignmentView?deviceId=200" target="dialog" width="670" height="260"><span>三区轮辋</span></a></div></li>
 												<li><div><a class="add" mask="true" href="rest/assignment/assignmentView?deviceId=201" target="dialog" width="670" height="260"><span>三区合成</span></a></div></li>
-												<!-- <li><div><a class="add" mask="true" href="rest/assignment/assignmentView?deviceId=210" target="dialog" width="670" height="260"><span>三区涂装</span></a></div></li> -->
+												<li><div><a class="add" mask="true" href="rest/assignment/assignmentView?deviceId=210" target="dialog" width="670" height="260"><span>三区涂装</span></a></div></li>
 											</ul>
 										</div>
 										<div style="float:left;">
@@ -336,7 +329,7 @@ $(function(){
 											<h2 class="contentTitle">三区产线</h2>
 											<ul>
 												<li><div><a class="add" mask="true" href="rest/rework/insertRework?deviceId=201" target="navTab" width="670" height="260"><span>三区合成</span></a></div></li>
-												<!-- <li><div><a class="add" mask="true" href="rest/rework/insertRework?deviceId=一区涂装" target="navTab" width="670" height="260"><span>三区涂装</span></a></div></li> -->
+												<li><div><a class="add" mask="true" href="rest/rework/insertRework?deviceId=一区涂装" target="navTab" width="670" height="260"><span>三区涂装</span></a></div></li>
 												<li><div><a class="add" mask="true" href="rest/rework/insertRework?deviceId=199" target="navTab" width="670" height="260"><span>三区轮辐</span></a></div></li>
 												<li><div><a class="add" mask="true" href="rest/rework/insertRework?deviceId=200" target="navTab" width="670" height="260"><span>三区轮辋</span></a></div></li>
 											</ul>
@@ -354,47 +347,6 @@ $(function(){
 											</ul>
 										</div>
 									</div>
-									<!-- <div>
-										<div style="float:left;">
-											<h2 class="contentTitle">一区产线</h2>
-											<ul>
-												<li><div><a href="rest/assignment/list?deviceId=191" target="navTab" rel="assignmentNav"><span>一区轮辐</span></a></div></li>
-												<li><div><a href="rest/assignment/list?deviceId=192" target="navTab" rel="assignmentNav"><span>一区轮辋</span></a></div></li>
-												<li><div><a href="rest/assignment/list?deviceId=193" target="navTab" rel="assignmentNav"><span>一区合成</span></a></div></li>
-												<li><div><a href="rest/assignment/list?deviceId=209" target="navTab" rel="assignmentNav"><span>一区涂装</span></a></div></li>
-											</ul>
-										</div>
-										<div style="float:left;">
-											<h2 class="contentTitle">二区产线</h2>
-											<ul>
-												<li><div><a href="rest/assignment/list?deviceId=195" target="navTab" rel="assignmentNav"><span>二区轮辐</span></a></div></li>
-												<li><div><a href="rest/assignment/list?deviceId=196" target="navTab" rel="assignmentNav"><span>二区轮辋</span></a></div></li>
-												<li><div><a href="rest/assignment/list?deviceId=197" target="navTab" rel="assignmentNav"><span>二区合成</span></a></div></li>
-												<li><div><a href="rest/assignment/list?deviceId=211" target="navTab" rel="assignmentNav"><span>二区涂装</span></a></div></li>
-											</ul>
-										</div>
-										<div style="float:left;">
-											<h2 class="contentTitle">三区产线</h2>
-											<ul>
-												<li><div><a href="rest/assignment/list?deviceId=199" target="navTab" rel="assignmentNav"><span>三区轮辐</span></a></div></li>
-												<li><div><a href="rest/assignment/list?deviceId=200" target="navTab" rel="assignmentNav"><span>三区轮辋</span></a></div></li>
-												<li><div><a href="rest/assignment/list?deviceId=201" target="navTab" rel="assignmentNav"><span>三区合成</span></a></div></li>
-												<li><div><a class="add" mask="true" href="rest/assignment/assignmentView?deviceId=210" target="dialog" width="670" height="260"><span>三区涂装</span></a></div></li>
-											</ul>
-										</div>
-										<div style="float:left;">
-											<h2 class="contentTitle">四区产线</h2>
-											<ul>
-												<li><div><a href="rest/assignment/list?deviceId=206" target="navTab" rel="assignmentNav"><span>旋压一</span></a></div></li>
-												<li><div><a href="rest/assignment/list?deviceId=207" target="navTab" rel="assignmentNav"><span>旋压二</span></a></div></li>
-												<li><div><a href="rest/assignment/list?deviceId=208" target="navTab" rel="assignmentNav"><span>旋压三</span></a></div></li>
-												<li><div><a href="rest/assignment/list?deviceId=212" target="navTab" rel="assignmentNav"><span>四区轮辐</span></a></div></li>
-												<li><div><a href="rest/assignment/list?deviceId=205" target="navTab" rel="assignmentNav"><span>四区轮辋</span></a></div></li>
-												<li><div><a href="rest/assignment/list?deviceId=203" target="navTab" rel="assignmentNav"><span>四区合成</span></a></div></li>
-												<li><div><a href="rest/assignment/list?deviceId=210" target="navTab" rel="assignmentNav"><span>四区涂装</span></a></div></li>
-											</ul>
-										</div>
-									</div> -->
 									<div>
 										<div style="float:left;">
 											<h2 class="contentTitle">一区产线</h2>
@@ -420,7 +372,7 @@ $(function(){
 												<li><div><a href="rest/material/getMaterialInfo?deviceId=199" max="true" target="navTab" rel="materialNav"><span>三区轮辐</span></a></div></li>
 												<li><div><a href="rest/material/getMaterialInfo?deviceId=200" max="true" target="navTab" rel="materialNav"><span>三区轮辋</span></a></div></li>
 												<li><div><a href="rest/material/getMaterialInfo?deviceId=201" max="true" target="navTab" rel="materialNav"><span>三区合成</span></a></div></li>
-												<!-- <li><div><a href="rest/assignment/assignmentView?deviceId=210" max="true" target="navTab" rel="materialNav"><span>三区涂装</span></a></div></li> -->
+												<li><div><a href="rest/assignment/assignmentView?deviceId=210" max="true" target="navTab" rel="materialNav"><span>三区涂装</span></a></div></li>
 											</ul>
 										</div>
 										<div style="float:left;">
@@ -461,7 +413,7 @@ $(function(){
 												<li><div><a class="add" mask="true" href="rest/assignment/getDeviceInfo?deviceId=199" target="dialog" width="980" height="490"><span>三区轮辐</span></a></div></li>
 												<li><div><a class="add" mask="true" href="rest/assignment/getDeviceInfo?deviceId=200" target="dialog" width="980" height="490"><span>三区轮辋</span></a></div></li>
 												<li><div><a class="add" mask="true" href="rest/assignment/getDeviceInfo?deviceId=201" target="dialog" width="980" height="490"><span>三区合成</span></a></div></li>
-												<!-- <li><div><a class="add" mask="true" href="rest/assignment/getDeviceInfo?deviceId=210" target="dialog" width="980" height="490"><span>三区涂装</span></a></div></li> -->
+												<li><div><a class="add" mask="true" href="rest/assignment/getDeviceInfo?deviceId=210" target="dialog" width="980" height="490"><span>三区涂装</span></a></div></li>
 											</ul>
 										</div>
 										<div style="float:left;">
@@ -478,10 +430,10 @@ $(function(){
 										</div>
 									</div>
 								</div>
-								<!-- <div class="tabsFooter">
+								<div class="tabsFooter">
 									<div class="tabsFooterContent"></div>
-								</div> -->
-							</div>
+								</div>
+							</div> -->
 						</div>
 					</div>
 				</div>

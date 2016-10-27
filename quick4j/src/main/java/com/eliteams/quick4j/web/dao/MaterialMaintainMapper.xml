@@ -58,9 +58,9 @@
     from material_maintain
     where device_id=#{deviceId,jdbcType=INTEGER}
   </select>
-   <select id="selectMaterialDescribe" resultType="java.lang.String" parameterType="java.lang.String">
+   <select id="selectMaterialDescribe" resultType="java.lang.String" parameterType="com.eliteams.quick4j.web.model.MaterialMaintain">
   	SELECT material_describe
     from material_maintain
-    where material_id=#{materialId,jdbcType=VARCHAR}
+    where material_id=#{materialId,jdbcType=VARCHAR} and device_id=#{deviceId,jdbcType=INTEGER}
   </select>
 </mapper>

@@ -41,7 +41,7 @@ form .material {
 				<c:forEach var="item" items="${productingViewList}" varStatus="s">
 				<c:choose>
 					<c:when test="${item.changeTime==null}">
-						<div onclick="document.getElementById('conserve${s.index}').click();" style="background:#183152;">
+						<div onclick="document.getElementById('conserve${s.index}').click();" style="background:#FF4040;">
 							<form method="post" action="rest/material/change?navTabId=materialNav" class="pageForm" onsubmit="return validateCallback(this, navTabAjaxDone,'请刷卡提交，切换至${item.productNickname}-${item.materialDescribe}(${item.materialId})',workNo);">
 								<input type="hidden" name="deviceId" value="${dd }" style="display: none"/>
 								<input id="workNo" name="workNum" style="width:0;height:0;border:none;padding:0" type="text"/>	

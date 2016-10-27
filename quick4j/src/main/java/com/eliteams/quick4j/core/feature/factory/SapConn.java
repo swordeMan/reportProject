@@ -28,11 +28,11 @@ public class SapConn {
 	//	connectionProperties.setProperty(DestinationDataProvider.JCO_PASSWD, "123456");//密码
 		
 		
-		connectionProperties.setProperty(DestinationDataProvider.JCO_ASHOST, "192.168.18.20");//测试服务器
+	    connectionProperties.setProperty(DestinationDataProvider.JCO_ASHOST, "192.168.18.20");//测试服务器
 	    connectionProperties.setProperty(DestinationDataProvider.JCO_SYSNR, "10");//系统编号
-		connectionProperties.setProperty(DestinationDataProvider.JCO_CLIENT, "300");//sap集团
-		connectionProperties.setProperty(DestinationDataProvider.JCO_USER, "JUPIN");//sap用户名
-		connectionProperties.setProperty(DestinationDataProvider.JCO_PASSWD, "123456");//密码
+	    connectionProperties.setProperty(DestinationDataProvider.JCO_CLIENT, "300");//sap集团
+	    connectionProperties.setProperty(DestinationDataProvider.JCO_USER, "JUPIN");//sap用户名
+	    connectionProperties.setProperty(DestinationDataProvider.JCO_PASSWD, "123456");//密码
 		//connectionProperties.setProperty(DestinationDataProvider.JCO_LANG, "");//登录语言
 		//connectionProperties.setProperty(DestinationDataProvider.JCO_POOL_CAPACITY, "");//最大连接数
 		//connectionProperties.setProperty(DestinationDataProvider.JCO_PEAK_LIMIT, "");//最大连接线程
