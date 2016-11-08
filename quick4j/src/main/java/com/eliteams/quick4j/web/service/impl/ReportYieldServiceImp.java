@@ -145,17 +145,20 @@ public class ReportYieldServiceImp implements ReportYieldService {
 				//说明历史上该订单没有报工，应该检查这次的数组里面有没有。没有的话，直接return false
 				//有的话，等于0 直接return false
 				//没有的话，跳到下一次上层循环
-				if(so.getFinishedTotal()<=0){
-					if(isContain(childId, reportYields)){
-						for(ReportYield currentRy :reportYields){
-							if(currentRy.getProductOrderId().equals(childId)&&currentRy.getCurrentYield()==0){
-								return false;
+				if(so!=null){//只有含有子订单时再做后续判断
+					if(so.getFinishedTotal()<=0){
+						if(isContain(childId, reportYields)){
+							for(ReportYield currentRy :reportYields){
+								if(currentRy.getProductOrderId().equals(childId)&&currentRy.getCurrentYield()==0){
+									return false;
+								}
 							}
+						}else{
+							return false;
 						}
-					}else{
-						return false;
 					}
 				}
+
 			}
 			return true;//所有子订单都遍历结束了
 		}

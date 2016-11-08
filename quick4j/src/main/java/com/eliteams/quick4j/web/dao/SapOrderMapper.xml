@@ -209,7 +209,14 @@
   	select * from sap_order where product_order_id = #{productOrderId,jdbcType=VARCHAR} AND del_remark != 'X'
   </select>
   <select id="getSapOrderListBySaleOrderId" resultMap="BaseResultMap" parameterType="java.lang.String">
-  	select * from sap_order where sale_order_id = #{saleOrderId,jdbcType=VARCHAR} AND del_remark != 'X'
+  	select * from sap_order where sale_order_id = #{saleOrderId,jdbcType=VARCHAR} AND del_remark != 'X'ORDER BY
+	locate(
+		LEFT (
+			`sap_order`.`material_describe`,
+			2
+		),
+		'轮辐,轮辋,合成,钢圈'
+	)
   </select>
   <select id="getSapOrderListBySaleOrderIdAndSaleOrderRow" resultMap="BaseResultMap" parameterType="map">
   	select * from sap_order where sale_order_id = #{saleOrderId,jdbcType=VARCHAR} AND sale_order_row = #{saleOrderRow,jdbcType=VARCHAR} AND del_remark != 'X'
